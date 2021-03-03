@@ -1,0 +1,669 @@
+time 1514260598
+new [description:"Ceci est un test" entry:"1514260598" modified:"1514260598" priority:"L" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514261026
+old [description:"Ceci est un test" entry:"1514260598" modified:"1514260598" priority:"L" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [description:"Ceci est un test" entry:"1514260598" modified:"1514261026" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514261070
+old [description:"Ceci est un test" entry:"1514260598" modified:"1514261026" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." description:"Ceci est un test" entry:"1514260598" modified:"1514261070" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514261110
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." description:"Ceci est un test" entry:"1514260598" modified:"1514261070" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514261110" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514297294
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514261110" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297294:"\/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514297294" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514297548
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297294:"\/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514297294" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297294:"\/home\/canalguada\/.taskrc" annotation_1514297548:"\/home\/canalguada\/.task" description:"Ceci est un test" entry:"1514260598" modified:"1514297548" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514297931
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297294:"\/home\/canalguada\/.taskrc" annotation_1514297548:"\/home\/canalguada\/.task" description:"Ceci est un test" entry:"1514260598" modified:"1514297548" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297548:"\/home\/canalguada\/.task" description:"Ceci est un test" entry:"1514260598" modified:"1514297931" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514297935
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" annotation_1514297548:"\/home\/canalguada\/.task" description:"Ceci est un test" entry:"1514260598" modified:"1514297931" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514297935" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514298015
+old [annotation_1514261070:"Nouvelle annotation ajoutée.\r\nMultiligne bien sûr." annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514297935" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514298015" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514298027
+old [annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" entry:"1514260598" modified:"1514298015" project:"taskwarriorweb" status:"pending" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+new [annotation_1514261110:"Lien vers un fichier : \/home\/canalguada\/.taskrc" description:"Ceci est un test" end:"1514298027" entry:"1514260598" modified:"1514298027" project:"taskwarriorweb" status:"deleted" tags:"test" uuid:"a39f6c3d-dbdf-451e-831b-c3eceb3d6e3c"]
+---
+time 1514337146
+new [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337146" project:"wallpaper:historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+---
+time 1514337417
+old [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337146" project:"wallpaper:historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+new [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337417" project:"wallpaper historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+---
+time 1514337442
+old [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337417" project:"wallpaper historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+new [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337442" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+---
+time 1514337825
+old [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337442" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+new [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337825" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+---
+time 1514338467
+old [description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514337825" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+new [annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514338467" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+---
+time 1514338539
+new [description:"Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" modified:"1514338539" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+---
+time 1514338639
+old [annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d'écran courant" entry:"1514337146" modified:"1514338467" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"600d1ef2-3c7a-49e9-bcc5-73e12ef60131"]
+new [annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d\\---
+time 1514339035
+old [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d\\&open;description:" modified:"1514338539" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+new [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d écran courant" entry:"1514339035" modified:"1514339035" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+---
+time 1514339056
+old [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d écran courant" entry:"1514339035" modified:"1514339035" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+new [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d'écran courant" entry:"1514339035" modified:"1514339056" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+---
+time 1514339300
+old [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d'écran courant" entry:"1514339035" modified:"1514339056" project:"wallpaper" status:"pending" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+new [Lire la configuration à partir de \/home\/canalguada\/.config\/wallpaper" entry:"1514338539" annotation_1514338467:"Créer un fichier nommé current dans le répertoire de configuration $XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fond d'écran courant" end:"1514339298" entry:"1514339035" modified:"1514339300" project:"wallpaper" status:"deleted" uuid:"502c9768-6f15-4560-8457-f01c7942d4c5"]
+---
+time 1514339395
+new [description:"Sauvegarder le fonds d'écran en cours" entry:"1514339395" modified:"1514339395" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514339458
+old [description:"Sauvegarder le fonds d'écran en cours" entry:"1514339395" modified:"1514339395" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514339458:"$XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fonds d'écran en cours" entry:"1514339395" modified:"1514339458" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514339776
+old [annotation_1514339458:"$XDG_CONFIG_HOME\/wallpaper" description:"Sauvegarder le fonds d'écran en cours" entry:"1514339395" modified:"1514339458" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514339776" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514339868
+new [description:"Déplacer la configuration annotate:~\/.config\/wallpaper" entry:"1514339868" modified:"1514339868" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514339895
+old [description:"Déplacer la configuration annotate:~\/.config\/wallpaper" entry:"1514339868" modified:"1514339868" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [description:"Déplacer la configuration" entry:"1514339868" modified:"1514339895" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514339912
+old [description:"Déplacer la configuration" entry:"1514339868" modified:"1514339895" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514339912:"~\/.config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514339912" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514339995
+old [description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514339776" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514339995:"~\/.config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514339995" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514340057
+old [annotation_1514339912:"~\/.config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514339912" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514339912:"~\/.config\/wallpaper" description:".config\/wallpaper" entry:"1514339868" modified:"1514340057" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514340092
+old [annotation_1514339912:"~\/.config\/wallpaper" description:".config\/wallpaper" entry:"1514339868" modified:"1514340057" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514339912:"~\/.config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514340092" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514340131
+old [annotation_1514339912:"~\/.config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514340092" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [description:"Déplacer la configuration" entry:"1514339868" modified:"1514340131" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514340144
+old [description:"Déplacer la configuration" entry:"1514339868" modified:"1514340131" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514340144" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514340153
+old [annotation_1514339995:"~\/.config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514339995" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514340153" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514340173
+old [description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514340153" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514340173" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514386692
+new [description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386692" status:"pending" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514386739
+old [description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386692" status:"pending" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386739" status:"pending" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514386904
+old [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386739" status:"pending" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386904" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514387082
+old [annotation_1514340144:".config\/wallpaper" description:"Déplacer la configuration" entry:"1514339868" modified:"1514340144" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514387082" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514387111
+old [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mise à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514386904" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514387111" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514387486
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours" entry:"1514339395" modified:"1514340173" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"\/en cours\/en cours d'utilisation\/" entry:"1514339395" modified:"1514387486" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514387533
+old [annotation_1514340173:".config\/wallpaper\/current" description:"\/en cours\/en cours d'utilisation\/" entry:"1514339395" modified:"1514387486" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond décran en cours dutilisation" entry:"1514339395" modified:"1514387533" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514387563
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond décran en cours dutilisation" entry:"1514339395" modified:"1514387533" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514387563" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514387605
+old [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514387111" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour" entry:"1514386692" modified:"1514387605" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514387650
+old [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour" entry:"1514386692" modified:"1514387605" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514387650" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514389975
+new [description:"Créer un thème oomox qui mime le thème deepin-dark" entry:"1514389975" modified:"1514389975" status:"pending" tags:"desktop" uuid:"baa0c31f-548a-4a3c-af33-543003722944"]
+---
+time 1514419083
+old [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514387082" project:"wallpaper" status:"pending" tags:"linux,bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514419083" project:"wallpaper" status:"pending" tags:"bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514419092
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514387563" project:"wallpaper.historique" status:"pending" tags:"linux,bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419092" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514419107
+old [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514419083" project:"wallpaper" status:"pending" tags:"bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514419107" project:"wallpaper" status:"pending" tags:"bash,shell" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514419113
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419092" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419113" project:"wallpaper.historique" status:"pending" tags:"bash,sshell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514419124
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419113" project:"wallpaper.historique" status:"pending" tags:"bash,sshell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419124" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514419135
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419124" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419135" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514419304
+new [description:"Lister n derniers fonds d'écran utilisés" entry:"1514419304" modified:"1514419304" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514419350
+old [description:"Lister n derniers fonds d'écran utilisés" entry:"1514419304" modified:"1514419304" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+new [annotation_1514419350:".config\/wallpaper\/history" description:"Lister n derniers fonds d'écran utilisés" entry:"1514419304" modified:"1514419350" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514423236
+new [description:"Packager pour flatpak le thème deepin" entry:"1514423236" modified:"1514423236" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+---
+time 1514423309
+old [description:"Packager pour flatpak le thème deepin" entry:"1514423236" modified:"1514423236" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+new [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Packager pour flatpak le thème deepin" entry:"1514423236" modified:"1514423309" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+---
+time 1514427514
+new [description:"Déplacer les sauvegardes de profils dans un répertoire à part" entry:"1514427514" modified:"1514427514" project:"webbrowsers" status:"pending" uuid:"98fc3e60-32c1-44e5-b7e5-5b3cd369aa21"]
+---
+time 1514427591
+old [description:"Déplacer les sauvegardes de profils dans un répertoire à part" entry:"1514427514" modified:"1514427514" project:"webbrowsers" status:"pending" uuid:"98fc3e60-32c1-44e5-b7e5-5b3cd369aa21"]
+new [annotation_1514427591:".config\/webbrowsers" description:"Déplacer les sauvegardes de profils dans un répertoire à part" entry:"1514427514" modified:"1514427591" project:"webbrowsers" status:"pending" uuid:"98fc3e60-32c1-44e5-b7e5-5b3cd369aa21"]
+---
+time 1514427654
+new [description:"Modifier les lanceurs" entry:"1514427654" modified:"1514427654" project:"webbrowsers" status:"pending" uuid:"c806f5d2-6fea-4ca6-801d-cb0b25d0eae3"]
+---
+time 1514427677
+old [description:"Modifier les lanceurs" entry:"1514427654" modified:"1514427654" project:"webbrowsers" status:"pending" uuid:"c806f5d2-6fea-4ca6-801d-cb0b25d0eae3"]
+new [annotation_1514427677:".local\/share\/applications" description:"Modifier les lanceurs" entry:"1514427654" modified:"1514427677" project:"webbrowsers" status:"pending" uuid:"c806f5d2-6fea-4ca6-801d-cb0b25d0eae3"]
+---
+time 1514427789
+new [description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1514427789" project:"duply" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+---
+time 1514427889
+old [description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1514427789" project:"duply" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+new [annotation_1514427889:"Scripts\/duplicity" description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1514427889" project:"duply" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+---
+time 1514428045
+new [description:"Implémenter les commandes suivant et précédent" entry:"1514428045" modified:"1514428045" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"7c4fe9ed-f68a-41b1-b711-02d16f8cc6ce"]
+---
+time 1514428300
+old [annotation_1514340173:".config\/wallpaper\/current" description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514419135" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514428300" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514468921
+old [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Packager pour flatpak le thème deepin" entry:"1514423236" modified:"1514423309" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+new [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Créer le paquet du thème deepin" entry:"1514423236" modified:"1514468921" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+---
+time 1514469147
+old [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Créer le paquet du thème deepin" entry:"1514423236" modified:"1514468921" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+new [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Créer les paquets flatpak pour le thème deepin" entry:"1514423236" modified:"1514469147" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+---
+time 1514472185
+old [annotation_1514386739:"Ajouter la catégorie \"Scripts\" pour qu'ils apparaissent dans les menus Openbox" description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514387650" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514472185" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514472274
+old [annotation_1514419350:".config\/wallpaper\/history" description:"Lister n derniers fonds d'écran utilisés" entry:"1514419304" modified:"1514419350" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+new [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés" entry:"1514419304" modified:"1514472274" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514472348
+old [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés" entry:"1514419304" modified:"1514472274" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+new [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés." entry:"1514419304" modified:"1514472348" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514483639
+new [description:"Supprimer les entrées grub non utilisées" entry:"1514483639" modified:"1514483639" status:"pending" tags:"grub,desktop" uuid:"78f3416f-15ca-4b06-9197-c8126cddb54d"]
+---
+time 1514484234
+old [description:"Supprimer les entrées grub non utilisées" entry:"1514483639" modified:"1514483639" status:"pending" tags:"grub,desktop" uuid:"78f3416f-15ca-4b06-9197-c8126cddb54d"]
+new [annotation_1514484234:"\/etc\/grub.d\/40_custom" description:"Supprimer les entrées grub non utilisées" entry:"1514483639" modified:"1514484234" status:"pending" tags:"grub,desktop" uuid:"78f3416f-15ca-4b06-9197-c8126cddb54d"]
+---
+time 1514484725
+old [annotation_1514484234:"\/etc\/grub.d\/40_custom" description:"Supprimer les entrées grub non utilisées" entry:"1514483639" modified:"1514484234" status:"pending" tags:"grub,desktop" uuid:"78f3416f-15ca-4b06-9197-c8126cddb54d"]
+new [annotation_1514484234:"\/etc\/grub.d\/40_custom" description:"Supprimer les entrées grub non utilisées" end:"1514484725" entry:"1514483639" modified:"1514484725" status:"completed" tags:"grub,desktop" uuid:"78f3416f-15ca-4b06-9197-c8126cddb54d"]
+---
+time 1514484780
+old [description:"Mettre à jour des lanceurs personnalisés" entry:"1514386692" modified:"1514472185" status:"pending" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+new [description:"Mettre à jour des lanceurs personnalisés" end:"1514484780" entry:"1514386692" modified:"1514484780" status:"completed" tags:"desktop" uuid:"f33925a0-b480-4c9b-9141-c97883a681b1"]
+---
+time 1514486314
+new [description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486314" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1514486342
+old [description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486314" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+new [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486342" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1514486387
+old [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486342" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+new [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486387" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1514486410
+old [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486387" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+new [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" annotation_1514486410:"https:\/\/wiki.archlinux.org\/index.php\/GRUB#Additional_arguments" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486410" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1514505733
+old [annotation_1514427677:".local\/share\/applications" description:"Modifier les lanceurs" entry:"1514427654" modified:"1514427677" project:"webbrowsers" status:"pending" uuid:"c806f5d2-6fea-4ca6-801d-cb0b25d0eae3"]
+new [annotation_1514427677:".local\/share\/applications" description:"Modifier les lanceurs" end:"1514505733" entry:"1514427654" modified:"1514505733" project:"webbrowsers" status:"completed" uuid:"c806f5d2-6fea-4ca6-801d-cb0b25d0eae3"]
+---
+time 1514510700
+old [annotation_1514427591:".config\/webbrowsers" description:"Déplacer les sauvegardes de profils dans un répertoire à part" entry:"1514427514" modified:"1514427591" project:"webbrowsers" status:"pending" uuid:"98fc3e60-32c1-44e5-b7e5-5b3cd369aa21"]
+new [annotation_1514427591:".config\/webbrowsers" description:"Déplacer les sauvegardes de profils dans un répertoire à part" end:"1514510700" entry:"1514427514" modified:"1514510700" project:"webbrowsers" status:"completed" uuid:"98fc3e60-32c1-44e5-b7e5-5b3cd369aa21"]
+---
+time 1514513543
+new [description:"Créer les raccourcis dont ne disposent pas Metacity et autres" entry:"1514513543" modified:"1514513543" status:"pending" tags:"desktop,bash,shell,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+---
+time 1514513767
+old [description:"Créer les raccourcis dont ne disposent pas Metacity et autres" entry:"1514513543" modified:"1514513543" status:"pending" tags:"desktop,bash,shell,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+new [description:"Créer les scripts permettant une gestion des fenêtres à la Openbox" entry:"1514513543" modified:"1514513767" status:"pending" tags:"desktop,bash,shell,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+---
+time 1514520325
+new [description:"Résilier l'abonnement Amazon Prime" due:"1514588400" entry:"1514520325" modified:"1514520325" status:"pending" tags:"achats" uuid:"94e4de76-7c63-41ad-91e4-71ba9eb92da3"]
+---
+time 1514573606
+old [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514419107" project:"wallpaper" status:"pending" tags:"bash,shell" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514573606" project:"wallpaper" status:"pending" tags:"bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514573612
+old [description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514428300" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514573612
+old [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés." entry:"1514419304" modified:"1514472348" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+new [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés." entry:"1514419304" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514573612
+old [description:"Implémenter les commandes suivant et précédent" entry:"1514428045" modified:"1514428045" project:"wallpaper.historique" status:"pending" tags:"bash,shell" uuid:"7c4fe9ed-f68a-41b1-b711-02d16f8cc6ce"]
+new [description:"Implémenter les commandes suivant et précédent" entry:"1514428045" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"7c4fe9ed-f68a-41b1-b711-02d16f8cc6ce"]
+---
+time 1514573612
+old [description:"Créer les scripts permettant une gestion des fenêtres à la Openbox" entry:"1514513543" modified:"1514513767" status:"pending" tags:"desktop,bash,shell,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+new [description:"Créer les scripts permettant une gestion des fenêtres à la Openbox" entry:"1514513543" modified:"1514573612" status:"pending" tags:"desktop,bash,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+---
+time 1514694212
+new [description:"Placer les éléments en fonction de l'écran primaire" entry:"1514694212" modified:"1514694212" status:"pending" tags:"bash,stalonetray,multiload" uuid:"ceead3ac-bc82-4a88-ab1e-3a120dd6a862"]
+---
+time 1514699996
+new [description:"Recompiler les modules pour le nouveau kernel" entry:"1514699996" modified:"1514699996" status:"pending" tags:"vm,vmware" uuid:"867c6dde-3bfb-49ed-81c0-2f7d54aac587"]
+---
+time 1514700047
+new [description:"Mettre à jour l'image Windows pour une utilisation avec Virtualbox." entry:"1514700047" modified:"1514700047" status:"pending" tags:"vm,vmware" uuid:"7e8e4b0f-673f-479b-8613-a9c2ad4d75d0"]
+---
+time 1514742210
+old [description:"Résilier l'abonnement Amazon Prime" due:"1514588400" entry:"1514520325" modified:"1514520325" status:"pending" tags:"achats" uuid:"94e4de76-7c63-41ad-91e4-71ba9eb92da3"]
+new [description:"Résilier l'abonnement Amazon Prime" due:"1515106800" entry:"1514520325" modified:"1514742210" status:"pending" tags:"achats" uuid:"94e4de76-7c63-41ad-91e4-71ba9eb92da3"]
+---
+time 1514831168
+new [description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514831168" status:"pending" tags:"webbrowsers" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+---
+time 1514831219
+old [description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514831168" status:"pending" tags:"webbrowsers" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+new [annotation_1514831219:"Utiliser la commande de substitution si c'est le cas." description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514831219" status:"pending" tags:"webbrowsers" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+---
+time 1514858929
+old [description:"Résilier l'abonnement Amazon Prime" due:"1515106800" entry:"1514520325" modified:"1514742210" status:"pending" tags:"achats" uuid:"94e4de76-7c63-41ad-91e4-71ba9eb92da3"]
+new [description:"Résilier l'abonnement Amazon Prime" due:"1515106800" end:"1514858929" entry:"1514520325" modified:"1514858929" status:"completed" tags:"achats" uuid:"94e4de76-7c63-41ad-91e4-71ba9eb92da3"]
+---
+time 1514861461
+old [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" entry:"1514339868" modified:"1514573606" project:"wallpaper" status:"pending" tags:"bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+new [annotation_1514340144:".config\/wallpaper" description:"Lire la configuration dans ce repertoire" end:"1514861461" entry:"1514339868" modified:"1514861461" project:"wallpaper" status:"completed" tags:"bash" uuid:"932806ca-1411-4569-becb-a6bc03e648e5"]
+---
+time 1514861484
+old [description:"Sauvegarder le fond d'écran en cours d'utilisation" entry:"1514339395" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+new [description:"Sauvegarder le fond d'écran en cours d'utilisation" end:"1514861484" entry:"1514339395" modified:"1514861484" project:"wallpaper.historique" status:"completed" tags:"bash" uuid:"5f1de6a2-a9db-4758-95b1-981af3d7ae66"]
+---
+time 1514866952
+old [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés." entry:"1514419304" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+new [annotation_1514419350:".config\/wallpaper\/history" description:"Lister les n derniers fichiers utilisés." end:"1514866952" entry:"1514419304" modified:"1514866952" project:"wallpaper.historique" status:"completed" tags:"bash" uuid:"58aca205-3a6f-40bd-9ec9-2880455ea6c5"]
+---
+time 1514866962
+old [description:"Implémenter les commandes suivant et précédent" entry:"1514428045" modified:"1514573612" project:"wallpaper.historique" status:"pending" tags:"bash" uuid:"7c4fe9ed-f68a-41b1-b711-02d16f8cc6ce"]
+new [description:"Implémenter les commandes suivant et précédent" end:"1514866962" entry:"1514428045" modified:"1514866962" project:"wallpaper.historique" status:"completed" tags:"bash" uuid:"7c4fe9ed-f68a-41b1-b711-02d16f8cc6ce"]
+---
+time 1514866991
+old [description:"Mettre à jour l'image Windows pour une utilisation avec Virtualbox." entry:"1514700047" modified:"1514700047" status:"pending" tags:"vm,vmware" uuid:"7e8e4b0f-673f-479b-8613-a9c2ad4d75d0"]
+new [description:"Mettre à jour l'image Windows pour une utilisation avec Virtualbox." end:"1514866991" entry:"1514700047" modified:"1514866991" status:"completed" tags:"vm,vmware" uuid:"7e8e4b0f-673f-479b-8613-a9c2ad4d75d0"]
+---
+time 1514868136
+old [annotation_1514831219:"Utiliser la commande de substitution si c'est le cas." description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514831219" status:"pending" tags:"webbrowsers" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+new [annotation_1514831219:"Utiliser la commande de substitution si c'est le cas." description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514868136" project:"webbrowsers" status:"pending" tags:"bash" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+---
+time 1514990667
+new [description:"Tester l'utilisation de la bibliothèque click" entry:"1514990667" modified:"1514990667" project:"pom" status:"pending" uuid:"19dbe684-ecaf-403c-9b64-858e78613d4c"]
+---
+time 1514990695
+old [description:"Tester l'utilisation de la bibliothèque click" entry:"1514990667" modified:"1514990667" project:"pom" status:"pending" uuid:"19dbe684-ecaf-403c-9b64-858e78613d4c"]
+new [annotation_1514990695:"http:\/\/click.pocoo.org\/5\/" description:"Tester l'utilisation de la bibliothèque click" entry:"1514990667" modified:"1514990695" project:"pom" status:"pending" uuid:"19dbe684-ecaf-403c-9b64-858e78613d4c"]
+---
+time 1515019121
+new [description:"Utiliser des liens pour la gestion des favoris" entry:"1515019121" modified:"1515019121" project:"wallpaper" status:"pending" uuid:"cb2b4042-53ac-4539-a899-de415e887f20"]
+---
+time 1515019266
+old [description:"Utiliser des liens pour la gestion des favoris" entry:"1515019121" modified:"1515019121" project:"wallpaper" status:"pending" uuid:"cb2b4042-53ac-4539-a899-de415e887f20"]
+new [description:"Utiliser des liens pour la gestion des favoris" entry:"1515019121" modified:"1515019266" project:"wallpaper" status:"pending" tags:"bash" uuid:"cb2b4042-53ac-4539-a899-de415e887f20"]
+---
+time 1515020035
+new [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515020035" project:"webbrowsers" status:"pending" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+---
+time 1515021672
+old [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515020035" project:"webbrowsers" status:"pending" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+new [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515021672" project:"webbrowsers" status:"pending" tags:"bash" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+---
+time 1515021672
+old [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515021672" project:"webbrowsers" status:"pending" tags:"bash" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+new [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515021672" project:"webbrowsers" status:"pending" tags:"bash,ini" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+---
+time 1515021693
+old [description:"Utiliser l'icône du programme lancé si possible" entry:"1515020035" modified:"1515021672" project:"webbrowsers" status:"pending" tags:"bash,ini" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+new [description:"Utiliser l'icône du programme lancé si possible" end:"1515021693" entry:"1515020035" modified:"1515021693" project:"webbrowsers" status:"completed" tags:"bash,ini" uuid:"de3681a3-e495-403a-9a1f-b263f16fc51c"]
+---
+time 1515030178
+old [annotation_1514831219:"Utiliser la commande de substitution si c'est le cas." description:"Vérifier que l'application n'est pas déjà lancée" entry:"1514831168" modified:"1514868136" project:"webbrowsers" status:"pending" tags:"bash" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+new [annotation_1514831219:"Utiliser la commande de substitution si c'est le cas." description:"Vérifier que l'application n'est pas déjà lancée" end:"1515030178" entry:"1514831168" modified:"1515030178" project:"webbrowsers" status:"completed" tags:"bash" uuid:"6f5650e1-e5d2-4cc7-b6cc-e27c318d9586"]
+---
+time 1515030323
+new [description:"Éviter d'utiliser le répertoire attendu par profile sync daemon quand possible" entry:"1515030323" modified:"1515030323" project:"webbrowsers" status:"pending" tags:"bash" uuid:"ac1ecbf5-b89e-416c-a64a-6ade5970d3dc"]
+---
+time 1515122894
+new [description:"Utiliser flameshot pour les captures d'écran" entry:"1515122894" modified:"1515122894" status:"pending" tags:"desktop" uuid:"26d1cb9a-f777-4e11-9588-fa7bbd5bafdf"]
+---
+time 1515162017
+old [description:"Créer un thème oomox qui mime le thème deepin-dark" entry:"1514389975" modified:"1514389975" status:"pending" tags:"desktop" uuid:"baa0c31f-548a-4a3c-af33-543003722944"]
+new [description:"Créer un thème oomox qui mime le thème deepin-dark" end:"1515162017" entry:"1514389975" modified:"1515162017" status:"completed" tags:"desktop" uuid:"baa0c31f-548a-4a3c-af33-543003722944"]
+---
+time 1515169768
+old [description:"Utiliser flameshot pour les captures d'écran" entry:"1515122894" modified:"1515122894" status:"pending" tags:"desktop" uuid:"26d1cb9a-f777-4e11-9588-fa7bbd5bafdf"]
+new [annotation_1515169768:"bin\/screenshot" description:"Utiliser flameshot pour les captures d'écran" entry:"1515122894" modified:"1515169768" status:"pending" tags:"desktop" uuid:"26d1cb9a-f777-4e11-9588-fa7bbd5bafdf"]
+---
+time 1515169781
+old [annotation_1515169768:"bin\/screenshot" description:"Utiliser flameshot pour les captures d'écran" entry:"1515122894" modified:"1515169768" status:"pending" tags:"desktop" uuid:"26d1cb9a-f777-4e11-9588-fa7bbd5bafdf"]
+new [annotation_1515169768:"bin\/screenshot" description:"Utiliser flameshot pour les captures d'écran" end:"1515169781" entry:"1515122894" modified:"1515169781" status:"completed" tags:"desktop" uuid:"26d1cb9a-f777-4e11-9588-fa7bbd5bafdf"]
+---
+time 1515175409
+new [description:"Dédier un répertoire pour une librairie de scripts" entry:"1515175409" modified:"1515175409" status:"pending" tags:"bash" uuid:"82838c1a-b3c7-4d41-9e2c-84930584d53a"]
+---
+time 1515175511
+old [description:"Dédier un répertoire pour une librairie de scripts" entry:"1515175409" modified:"1515175409" status:"pending" tags:"bash" uuid:"82838c1a-b3c7-4d41-9e2c-84930584d53a"]
+new [annotation_1515175511:"~\/.local\/lib\/bash" description:"Dédier un répertoire pour une librairie de scripts" entry:"1515175409" modified:"1515175511" status:"pending" tags:"bash" uuid:"82838c1a-b3c7-4d41-9e2c-84930584d53a"]
+---
+time 1515211072
+old [description:"Utiliser des liens pour la gestion des favoris" entry:"1515019121" modified:"1515019266" project:"wallpaper" status:"pending" tags:"bash" uuid:"cb2b4042-53ac-4539-a899-de415e887f20"]
+new [description:"Utiliser des liens pour la gestion des favoris" end:"1515211072" entry:"1515019121" modified:"1515211072" project:"wallpaper" status:"completed" tags:"bash" uuid:"cb2b4042-53ac-4539-a899-de415e887f20"]
+---
+time 1515344134
+old [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Créer les paquets flatpak pour le thème deepin" entry:"1514423236" modified:"1514469147" status:"pending" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+new [annotation_1514423309:"https:\/\/github.com\/flathub\/org.gtk.Gtk3theme.Arc-Dark" description:"Créer les paquets flatpak pour le thème deepin" end:"1515344134" entry:"1514423236" modified:"1515344134" status:"completed" tags:"desktop,flatpak" uuid:"6b695d01-6e54-4c15-aa10-fbd7411e7d73"]
+---
+time 1515382731
+new [description:"Désinstaller firewalld et configurer le pare-feu" due:"1515452400" entry:"1515382731" modified:"1515382731" status:"pending" tags:"system" uuid:"daccabca-7052-4ddf-b9f1-f4fbdc4971c3"]
+---
+time 1515427360
+old [description:"Désinstaller firewalld et configurer le pare-feu" due:"1515452400" entry:"1515382731" modified:"1515382731" status:"pending" tags:"system" uuid:"daccabca-7052-4ddf-b9f1-f4fbdc4971c3"]
+new [description:"Désinstaller firewalld et configurer le pare-feu" due:"1515452400" end:"1515427360" entry:"1515382731" modified:"1515427360" status:"completed" tags:"system" uuid:"daccabca-7052-4ddf-b9f1-f4fbdc4971c3"]
+---
+time 1515629850
+old [description:"Créer les scripts permettant une gestion des fenêtres à la Openbox" entry:"1514513543" modified:"1514573612" status:"pending" tags:"desktop,bash,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+new [description:"Créer les scripts permettant une gestion des fenêtres à la Openbox" end:"1515629850" entry:"1514513543" modified:"1515629850" status:"completed" tags:"desktop,bash,wm" uuid:"74efe964-8fee-4a81-b30f-0707b037251f"]
+---
+time 1515683250
+new [description:"Harmoniser si possible les plugins Oy my Zsh et Bash-It" entry:"1515683250" modified:"1515683250" status:"pending" tags:"bash,zsh" uuid:"507c57d3-f9e1-4936-a1f6-9e890804031e"]
+---
+time 1515721555
+old [description:"Placer les éléments en fonction de l'écran primaire" entry:"1514694212" modified:"1514694212" status:"pending" tags:"bash,stalonetray,multiload" uuid:"ceead3ac-bc82-4a88-ab1e-3a120dd6a862"]
+new [description:"Placer les éléments en fonction de l'écran primaire" end:"1515721555" entry:"1514694212" modified:"1515721555" status:"completed" tags:"bash,stalonetray,multiload" uuid:"ceead3ac-bc82-4a88-ab1e-3a120dd6a862"]
+---
+time 1515721599
+old [annotation_1515175511:"~\/.local\/lib\/bash" description:"Dédier un répertoire pour une librairie de scripts" entry:"1515175409" modified:"1515175511" status:"pending" tags:"bash" uuid:"82838c1a-b3c7-4d41-9e2c-84930584d53a"]
+new [annotation_1515175511:"~\/.local\/lib\/bash" description:"Dédier un répertoire pour une librairie de scripts" end:"1515721599" entry:"1515175409" modified:"1515721599" status:"completed" tags:"bash" uuid:"82838c1a-b3c7-4d41-9e2c-84930584d53a"]
+---
+time 1515721632
+old [description:"Recompiler les modules pour le nouveau kernel" entry:"1514699996" modified:"1514699996" status:"pending" tags:"vm,vmware" uuid:"867c6dde-3bfb-49ed-81c0-2f7d54aac587"]
+new [annotation_1515721632:"Résolu avec le nouveau paquet AUR" description:"Recompiler les modules pour le nouveau kernel" entry:"1514699996" modified:"1515721632" status:"pending" tags:"vm,vmware" uuid:"867c6dde-3bfb-49ed-81c0-2f7d54aac587"]
+---
+time 1515721637
+old [annotation_1515721632:"Résolu avec le nouveau paquet AUR" description:"Recompiler les modules pour le nouveau kernel" entry:"1514699996" modified:"1515721632" status:"pending" tags:"vm,vmware" uuid:"867c6dde-3bfb-49ed-81c0-2f7d54aac587"]
+new [annotation_1515721632:"Résolu avec le nouveau paquet AUR" description:"Recompiler les modules pour le nouveau kernel" end:"1515721637" entry:"1514699996" modified:"1515721637" status:"completed" tags:"vm,vmware" uuid:"867c6dde-3bfb-49ed-81c0-2f7d54aac587"]
+---
+time 1515939238
+new [description:"Harmoniser au mieux les lignes de statut bash et zsh utilisant powerline" entry:"1515939238" modified:"1515939238" status:"pending" tags:"desktop,shell" uuid:"c477c586-0b30-47b0-a3a9-efdb16312d7f"]
+---
+time 1515939393
+new [description:"Reconfigurer les plugins pour le développement en python" entry:"1515939393" modified:"1515939393" status:"pending" tags:"vim" uuid:"7510b9df-99de-403e-8ca6-a52cc97fd5ec"]
+---
+time 1515939462
+old [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" annotation_1514486410:"https:\/\/wiki.archlinux.org\/index.php\/GRUB#Additional_arguments" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1514486410" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+new [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" annotation_1514486410:"https:\/\/wiki.archlinux.org\/index.php\/GRUB#Additional_arguments" annotation_1515939462:"Vérifier l'image Slax en l'essayant dans Virtualbox" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1515939462" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1516072351
+old [description:"Harmoniser au mieux les lignes de statut bash et zsh utilisant powerline" entry:"1515939238" modified:"1515939238" status:"pending" tags:"desktop,shell" uuid:"c477c586-0b30-47b0-a3a9-efdb16312d7f"]
+new [description:"Harmoniser au mieux les lignes de statut bash et zsh utilisant powerline" end:"1516072351" entry:"1515939238" modified:"1516072351" status:"completed" tags:"desktop,shell" uuid:"c477c586-0b30-47b0-a3a9-efdb16312d7f"]
+---
+time 1516072395
+old [description:"Reconfigurer les plugins pour le développement en python" entry:"1515939393" modified:"1515939393" status:"pending" tags:"vim" uuid:"7510b9df-99de-403e-8ca6-a52cc97fd5ec"]
+new [description:"Reconfigurer les plugins pour le développement en python" end:"1516072395" entry:"1515939393" modified:"1516072395" status:"completed" tags:"vim" uuid:"7510b9df-99de-403e-8ca6-a52cc97fd5ec"]
+---
+time 1516126503
+new [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126503" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516126520
+old [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126503" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516126520:"bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126520" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516126536
+old [annotation_1516126520:"bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126520" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516126520:"bin\/click-topleft" annotation_1516126536:"bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126536" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516128518
+old [annotation_1516126520:"bin\/click-topleft" annotation_1516126536:"bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516126536" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516126520:"bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128518" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516128522
+old [annotation_1516126520:"bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128518" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128522" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516128544
+old [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128522" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516128544:"~\/bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128544" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516128628
+old [annotation_1516128544:"~\/bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128544" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516128544:"~\/bin\/click-topleft" annotation_1516128628:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128628" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516129238
+old [annotation_1516128544:"~\/bin\/click-topleft" annotation_1516128628:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516128628" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516128628:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129238" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516129242
+old [annotation_1516128628:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129238" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129242" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516129260
+old [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129242" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516129260:".\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129260" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516129629
+old [annotation_1516129260:".\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129260" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129629" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516129647
+old [description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129629" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516129647:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129647" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516148326
+old [annotation_1516129647:"~\/bin\/click-topright" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516129647" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516129647:"~\/bin\/click-topright" annotation_1516148326:"~\/bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516148326" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1516989088
+new [description:"Créer les classes de base pour l'introspection des fichiers multimedia" entry:"1516989088" modified:"1516989088" project:"cglibrary.media" status:"pending" tags:"python" uuid:"4087cd39-e679-468f-81ee-2e2b86fff75f"]
+---
+time 1516989191
+old [description:"Créer les classes de base pour l'introspection des fichiers multimedia" entry:"1516989088" modified:"1516989088" project:"cglibrary.media" status:"pending" tags:"python" uuid:"4087cd39-e679-468f-81ee-2e2b86fff75f"]
+new [annotation_1516989191:"~\/PycharmProjects\/cglibrary\/cglibrary\/media" description:"Créer les classes de base pour l'introspection des fichiers multimedia" entry:"1516989088" modified:"1516989191" project:"cglibrary.media" status:"pending" tags:"python" uuid:"4087cd39-e679-468f-81ee-2e2b86fff75f"]
+---
+time 1517061310
+old [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" annotation_1514486410:"https:\/\/wiki.archlinux.org\/index.php\/GRUB#Additional_arguments" annotation_1515939462:"Vérifier l'image Slax en l'essayant dans Virtualbox" description:"Ajouter les entrées pour les fichiers isos disponibles" entry:"1514486314" modified:"1515939462" status:"pending" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+new [annotation_1514486342:"https:\/\/github.com\/aguslr\/multibootusb" annotation_1514486387:"https:\/\/wiki.archlinux.org\/index.php\/Multiboot_USB_drive" annotation_1514486410:"https:\/\/wiki.archlinux.org\/index.php\/GRUB#Additional_arguments" annotation_1515939462:"Vérifier l'image Slax en l'essayant dans Virtualbox" description:"Ajouter les entrées pour les fichiers isos disponibles" end:"1517061310" entry:"1514486314" modified:"1517061310" status:"completed" tags:"desktop,grub" uuid:"dd5d5e6e-2e11-4c27-afe1-a38133034135"]
+---
+time 1517065824
+old [annotation_1516129647:"~\/bin\/click-topright" annotation_1516148326:"~\/bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" entry:"1516126503" modified:"1516148326" status:"pending" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+new [annotation_1516129647:"~\/bin\/click-topright" annotation_1516148326:"~\/bin\/click-topleft" description:"Modifier pour tenir compte de l'écran où se trouve la souris" end:"1517065824" entry:"1516126503" modified:"1517065824" status:"completed" tags:"desktop,bash" uuid:"649f9f7f-bd80-4759-ba26-db0ea225489f"]
+---
+time 1517080704
+new [description:"Prévoir l'absence de gdm ou équivalent dans les commandes passées" entry:"1517080704" modified:"1517080704" status:"pending" tags:"desktop,obleave" uuid:"38de3416-8bec-4cb6-9e35-f4be391a84fb"]
+---
+time 1517114914
+new [description:"Mettre à jour pour supprimer les avertissements et déplacer le log dans le répertoire utilisateur" entry:"1517114914" modified:"1517114914" status:"pending" tags:"desktop,obmenu" uuid:"20d89be7-424d-4518-85e2-9bf61356a2f9"]
+---
+time 1517115625
+new [description:"Vérfier à quoi correspond l'erreur: Invalid byte sequence in conversion input" entry:"1517115625" modified:"1517115625" project:"wallpaper" status:"pending" tags:"bash" uuid:"b84ef89a-cce2-4ae2-aead-c451b4261549"]
+---
+time 1517116263
+new [description:"Harmoniser les configurations Openbox" entry:"1517116263" modified:"1517116263" status:"pending" tags:"desktop" uuid:"1fc0efb3-b06a-421f-9ce3-d78ca0e8cb21"]
+---
+time 1517284911
+new [description:"Trouver un équivalent de spamassassin moins gourmand en ressources" entry:"1517284911" modified:"1517284911" status:"pending" tags:"admin,mail" uuid:"7688a463-6a60-40cd-8f94-71b27ba94eba"]
+---
+time 1517287789
+new [description:"Déboguer seahorse" entry:"1517287789" modified:"1517287789" status:"pending" tags:"admin" uuid:"55054125-4252-4569-bce8-7c41cd33d252"]
+---
+time 1553864675
+old [annotation_1516989191:"~\/PycharmProjects\/cglibrary\/cglibrary\/media" description:"Créer les classes de base pour l'introspection des fichiers multimedia" entry:"1516989088" modified:"1516989191" project:"cglibrary.media" status:"pending" tags:"python" uuid:"4087cd39-e679-468f-81ee-2e2b86fff75f"]
+new [annotation_1516989191:"~\/PycharmProjects\/cglibrary\/cglibrary\/media" description:"Créer les classes de base pour l'introspection des fichiers multimedia" end:"1553864675" entry:"1516989088" modified:"1553864675" project:"cglibrary.media" status:"completed" tags:"python" uuid:"4087cd39-e679-468f-81ee-2e2b86fff75f"]
+---
+time 1563626785
+old [description:"Éviter d'utiliser le répertoire attendu par profile sync daemon quand possible" entry:"1515030323" modified:"1515030323" project:"webbrowsers" status:"pending" tags:"bash" uuid:"ac1ecbf5-b89e-416c-a64a-6ade5970d3dc"]
+new [description:"Éviter d'utiliser le répertoire attendu par profile sync daemon quand possible" end:"1563626785" entry:"1515030323" modified:"1563626785" project:"webbrowsers" status:"completed" tags:"bash" uuid:"ac1ecbf5-b89e-416c-a64a-6ade5970d3dc"]
+---
+time 1563626794
+old [description:"Vérfier à quoi correspond l'erreur: Invalid byte sequence in conversion input" entry:"1517115625" modified:"1517115625" project:"wallpaper" status:"pending" tags:"bash" uuid:"b84ef89a-cce2-4ae2-aead-c451b4261549"]
+new [description:"Vérfier à quoi correspond l'erreur: Invalid byte sequence in conversion input" end:"1563626794" entry:"1517115625" modified:"1563626794" project:"wallpaper" status:"completed" tags:"bash" uuid:"b84ef89a-cce2-4ae2-aead-c451b4261549"]
+---
+time 1563626805
+old [description:"Déboguer seahorse" entry:"1517287789" modified:"1517287789" status:"pending" tags:"admin" uuid:"55054125-4252-4569-bce8-7c41cd33d252"]
+new [description:"Déboguer seahorse" end:"1563626805" entry:"1517287789" modified:"1563626805" status:"completed" tags:"admin" uuid:"55054125-4252-4569-bce8-7c41cd33d252"]
+---
+time 1563626808
+old [description:"Harmoniser les configurations Openbox" entry:"1517116263" modified:"1517116263" status:"pending" tags:"desktop" uuid:"1fc0efb3-b06a-421f-9ce3-d78ca0e8cb21"]
+new [description:"Harmoniser les configurations Openbox" end:"1563626808" entry:"1517116263" modified:"1563626808" status:"completed" tags:"desktop" uuid:"1fc0efb3-b06a-421f-9ce3-d78ca0e8cb21"]
+---
+time 1563626836
+old [description:"Prévoir l'absence de gdm ou équivalent dans les commandes passées" entry:"1517080704" modified:"1517080704" status:"pending" tags:"desktop,obleave" uuid:"38de3416-8bec-4cb6-9e35-f4be391a84fb"]
+new [description:"Prévoir l'absence de gdm ou équivalent dans les commandes passées" end:"1563626836" entry:"1517080704" modified:"1563626836" status:"completed" tags:"desktop,obleave" uuid:"38de3416-8bec-4cb6-9e35-f4be391a84fb"]
+---
+time 1563626896
+old [description:"Mettre à jour pour supprimer les avertissements et déplacer le log dans le répertoire utilisateur" entry:"1517114914" modified:"1517114914" status:"pending" tags:"desktop,obmenu" uuid:"20d89be7-424d-4518-85e2-9bf61356a2f9"]
+new [description:"Mettre à jour pour supprimer les avertissements et déplacer le log dans le répertoire utilisateur" end:"1563626896" entry:"1517114914" modified:"1563626896" status:"completed" tags:"desktop,obmenu" uuid:"20d89be7-424d-4518-85e2-9bf61356a2f9"]
+---
+time 1563626965
+old [description:"Harmoniser si possible les plugins Oy my Zsh et Bash-It" entry:"1515683250" modified:"1515683250" status:"pending" tags:"bash,zsh" uuid:"507c57d3-f9e1-4936-a1f6-9e890804031e"]
+new [description:"Harmoniser si possible les plugins Oy my Zsh et Bash-It" end:"1563626965" entry:"1515683250" modified:"1563626965" status:"completed" tags:"bash,zsh" uuid:"507c57d3-f9e1-4936-a1f6-9e890804031e"]
+---
+time 1563629411
+new [description:"Utiliser des chemins relatifs à la racine dans la base de données" entry:"1563629411" modified:"1563629411" priority:"L" project:"dlna" status:"pending" tags:"python" uuid:"2748e1f7-1b29-4411-a402-85822bc20f3d"]
+---
+time 1563630401
+old [annotation_1514427889:"Scripts\/duplicity" description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1514427889" project:"duply" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+new [annotation_1514427889:"Scripts\/duplicity" description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1563630401" priority:"L" project:"vorta" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+---
+time 1563630569
+old [annotation_1514427889:"Scripts\/duplicity" description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1563630401" priority:"L" project:"vorta" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+new [description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1563630569" priority:"L" project:"vorta" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+---
+time 1563630610
+old [annotation_1514990695:"http:\/\/click.pocoo.org\/5\/" description:"Tester l'utilisation de la bibliothèque click" entry:"1514990667" modified:"1514990695" project:"pom" status:"pending" uuid:"19dbe684-ecaf-403c-9b64-858e78613d4c"]
+new [annotation_1514990695:"http:\/\/click.pocoo.org\/5\/" description:"Tester l'utilisation de la bibliothèque click" end:"1563630610" entry:"1514990667" modified:"1563630610" project:"pom" status:"deleted" uuid:"19dbe684-ecaf-403c-9b64-858e78613d4c"]
+---
+time 1563630625
+old [description:"Mettre à jour les fichiers de configuration" entry:"1514427789" modified:"1563630569" priority:"L" project:"vorta" status:"pending" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+new [description:"Mettre à jour les fichiers de configuration" end:"1563630625" entry:"1514427789" modified:"1563630625" priority:"L" project:"vorta" status:"deleted" uuid:"a41d6fde-aeca-4f23-b6fc-59c4d3901a93"]
+---
+time 1564328560
+new [description:"Finir d'implémenter la classe 'Media'" entry:"1564328560" modified:"1564328560" project:"cglibrary" status:"pending" tags:"python" uuid:"dd1acda5-8ec2-486b-8277-4b8c393d9968"]
+---
+time 1564328722
+old [description:"Finir d'implémenter la classe 'Media'" entry:"1564328560" modified:"1564328560" project:"cglibrary" status:"pending" tags:"python" uuid:"dd1acda5-8ec2-486b-8277-4b8c393d9968"]
+new [annotation_1564328722:"\/home\/canalguada\/PycharmProjects\/cglibrary\/cglibrary\/media\/media.py" description:"Finir d'implémenter la classe 'Media'" entry:"1564328560" modified:"1564328722" project:"cglibrary" status:"pending" tags:"python" uuid:"dd1acda5-8ec2-486b-8277-4b8c393d9968"]
+---
+time 1568645662
+new [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1568645662" status:"pending" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+---
+time 1568645828
+old [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1568645662" status:"pending" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+new [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1568645828" status:"pending" tags:"emby" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+---
+time 1581353583
+old [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1568645828" status:"pending" tags:"emby" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+new [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1581353583" priority:"M" status:"pending" tags:"emby" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+---
+time 1581353583
+old [description:"Créer un compte Google pour la Freebox Mini" entry:"1568645662" modified:"1581353583" priority:"M" status:"pending" tags:"emby" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+new [description:"Créer un compte Google pour la Freebox Mini" end:"1581353583" entry:"1568645662" modified:"1581353583" priority:"M" status:"completed" tags:"emby" uuid:"5f07445a-aac0-4a32-871c-f700c4ba54b6"]
+---
+time 1581353612
+old [description:"Trouver un équivalent de spamassassin moins gourmand en ressources" entry:"1517284911" modified:"1517284911" status:"pending" tags:"admin,mail" uuid:"7688a463-6a60-40cd-8f94-71b27ba94eba"]
+new [description:"Trouver un équivalent de spamassassin moins gourmand en ressources" entry:"1517284911" modified:"1581353612" priority:"M" status:"pending" tags:"admin,mail" uuid:"7688a463-6a60-40cd-8f94-71b27ba94eba"]
+---
+time 1581353612
+old [description:"Trouver un équivalent de spamassassin moins gourmand en ressources" entry:"1517284911" modified:"1581353612" priority:"M" status:"pending" tags:"admin,mail" uuid:"7688a463-6a60-40cd-8f94-71b27ba94eba"]
+new [description:"Trouver un équivalent de spamassassin moins gourmand en ressources" end:"1581353612" entry:"1517284911" modified:"1581353612" priority:"M" status:"completed" tags:"admin,mail" uuid:"7688a463-6a60-40cd-8f94-71b27ba94eba"]
+---
+time 1581353657
+old [description:"Harmoniser les configurations Openbox" end:"1563626808" entry:"1517116263" modified:"1563626808" status:"completed" tags:"desktop" uuid:"1fc0efb3-b06a-421f-9ce3-d78ca0e8cb21"]
+new [description:"Harmoniser les configurations Openbox" end:"1563626808" entry:"1517116263" modified:"1581353657" priority:"M" status:"completed" tags:"desktop" uuid:"1fc0efb3-b06a-421f-9ce3-d78ca0e8cb21"]
+---
+time 1581358401
+new [description:"Mettre à jour pour signaler les erreurs" entry:"1581358401" modified:"1581358401" status:"pending" tags:"bash,desktop,starship" uuid:"819fbd42-95e3-4c35-8c00-f0706dd7342a"]
+---
+time 1581358818
+new [description:"Rechercher comment rendre les sessions persistentes" entry:"1581358818" modified:"1581358818" status:"pending" tags:"desktop,tmux" uuid:"d2e8cb3b-b4e1-4fb0-b8af-8e245a3dba88"]
+---
+time 1581360239
+new [description:"Basculer les sauvegardes de relica (paiement demandé) vers restic" entry:"1581360239" modified:"1581360239" status:"pending" tags:"backup,restic" uuid:"e441dbb3-2d17-4f04-9c0a-44cb39a022fa"]
+---
+time 1581618285
+new [description:"S'inspirer de `checkupdates` pour écrire `checkallupdates`" entry:"1581618285" modified:"1581618285" status:"pending" tags:"desktop" uuid:"66fb256b-53d3-4bf1-aa85-cf8903025fe4"]
+---
+time 1598704777
+old [description:"S'inspirer de `checkupdates` pour écrire `checkallupdates`" entry:"1581618285" modified:"1581618285" status:"pending" tags:"desktop" uuid:"66fb256b-53d3-4bf1-aa85-cf8903025fe4"]
+new [description:"S'inspirer de `checkupdates` pour écrire `checkallupdates`" end:"1598704777" entry:"1581618285" modified:"1598704777" status:"completed" tags:"desktop" uuid:"66fb256b-53d3-4bf1-aa85-cf8903025fe4"]
+---

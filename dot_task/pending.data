@@ -1,0 +1,5 @@
+[description:"Utiliser des chemins relatifs à la racine dans la base de données" entry:"1563629411" modified:"1563629411" priority:"L" project:"dlna" status:"pending" tags:"python" uuid:"2748e1f7-1b29-4411-a402-85822bc20f3d"]
+[annotation_1564328722:"\/home\/canalguada\/PycharmProjects\/cglibrary\/cglibrary\/media\/media.py" description:"Finir d'implémenter la classe 'Media'" entry:"1564328560" modified:"1564328722" project:"cglibrary" status:"pending" tags:"python" uuid:"dd1acda5-8ec2-486b-8277-4b8c393d9968"]
+[description:"Mettre à jour pour signaler les erreurs" entry:"1581358401" modified:"1581358401" status:"pending" tags:"bash,desktop,starship" uuid:"819fbd42-95e3-4c35-8c00-f0706dd7342a"]
+[description:"Rechercher comment rendre les sessions persistentes" entry:"1581358818" modified:"1581358818" status:"pending" tags:"desktop,tmux" uuid:"d2e8cb3b-b4e1-4fb0-b8af-8e245a3dba88"]
+[description:"Basculer les sauvegardes de relica (paiement demandé) vers restic" entry:"1581360239" modified:"1581360239" status:"pending" tags:"backup,restic" uuid:"e441dbb3-2d17-4f04-9c0a-44cb39a022fa"]
