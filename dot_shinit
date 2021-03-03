@@ -1,0 +1,8 @@
+# vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 noet:
+
+# Shell common exports, aliases and functions
+for item in "aliases" "exports" "functions"; do
+	#for item in "aliases" "exports"; do
+	file="$HOME/.local/lib/sh/${item}.lib.sh"
+	[ -f "$file" ] && . "$file"
+done

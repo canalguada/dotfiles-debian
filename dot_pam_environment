@@ -1,0 +1,12 @@
+# vim: ft=sh
+XDG_DATA_HOME   DEFAULT=/home/canalguada/.local/share
+XDG_CONFIG_HOME DEFAULT=/home/canalguada/.config
+XDG_DATA_DIRS   DEFAULT=/usr/local/share:/usr/share
+XDG_CONFIG_DIRS DEFAULT=/etc/xdg
+XDG_CACHE_HOME  DEFAULT=/home/canalguada/.cache
+XDG_STATE_HOME  DEFAULT=/home/canalguada/.xdg/state
+
+#GTK3_MODULES	DEFAULT=/usr/lib/libplotinus.so
+
+SSH_AGENT_PID	DEFAULT=
+SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"

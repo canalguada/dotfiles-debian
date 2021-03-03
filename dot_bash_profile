@@ -1,0 +1,49 @@
+#
+# ~/.bash_profile
+#
+
+[ -n "$INIT" ] &&
+	eval INIT="${INIT}:~/.bash_profile" ||
+	eval INIT="~/.bash_profile"
+export INIT
+
+do_init () {
+	if [ -z "$1" ] || [ ! -f "$1" ]; then
+		return
+	fi
+	case ":${INIT}:" in
+		*:$1:*)  ;;
+		*)
+			. "$1"
+			INIT="${INIT}:$1"
+			export INIT
+			;;
+	esac
+}
+
+export BASH_ENV=~/.shinit
+## shellcheck disable=SC1090
+#[ -f "$BASH_ENV" ] && . "$BASH_ENV"
+do_init $BASH_ENV
+
+## shellcheck disable=SC1090
+#[ -f ~/.bashrc ] && . ~/.bashrc
+do_init ~/.bashrc
+
+eval "$(gh completion -s bash)"
+
+# From ~/.profile
+#systemctl --user import-environment DBUS_SESSION_BUS_ADDRESS
+
+# User specific environment and startup programs
+#if [ -n "$DESKTOP_SESSION" ];then
+	#if command -v gnome-keyring-daemon >/dev/null 2>&1; then
+		## shellcheck disable=SC2046
+		#eval $(gnome-keyring-daemon --start)
+	#fi
+	##export SSH_AUTH_SOCK
+#fi
+#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+systemctl --user import-environment >/dev/null 2>&1
+

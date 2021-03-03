@@ -1,0 +1,15 @@
+[user]
+	email = canalguada.spambox@free.fr
+	name = CanalGuada
+[url "ssh://aur@aur.archlinux.org/"]
+	insteadOf = git://aur.archlinux.org/
+[push]
+	default = simple
+[credential]
+	helper = cache --timeout=7200
+[alias]
+	hub = repo hub
+[core]
+	excludesfile = /home/canalguada/.gitignore_global
+[hub]
+	protocol = https

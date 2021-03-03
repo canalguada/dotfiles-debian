@@ -1,0 +1,143 @@
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# canalguada.spambox@free.fr
+IMAPStore spambox-remote
+Host imap.free.fr
+Port 993
+User canalguada.spambox
+PassCmd "pass mutt-wizard-spambox"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore spambox-local
+Subfolders Verbatim
+Path /home/canalguada/.local/share/mail/spambox/
+Inbox /home/canalguada/.local/share/mail/spambox/INBOX
+Flatten .
+
+Channel spambox
+Expunge Both
+Master :spambox-remote:
+Slave :spambox-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# antonia.guadalupe@free.fr
+IMAPStore maman-remote
+Host imap.free.fr
+Port 993
+User antonia.guadalupe 
+PassCmd "pass mutt-wizard-maman"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore maman-local
+Subfolders Verbatim
+Path /home/canalguada/.local/share/mail/maman/
+Inbox /home/canalguada/.local/share/mail/maman/INBOX
+Flatten .
+
+Channel maman
+Expunge Both
+Master :maman-remote:
+Slave :maman-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# guadalupe.david@gmail.com
+IMAPStore gmail-remote
+Host imap.gmail.com
+Port 993
+User guadalupe.david@gmail.com 
+PassCmd "pass mutt-wizard-gmail"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore gmail-local
+Subfolders Verbatim
+Path /home/canalguada/.local/share/mail/gmail/
+Inbox /home/canalguada/.local/share/mail/gmail/INBOX
+Flatten .
+
+Channel gmail
+Expunge Both
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# dguadal@free.fr
+IMAPStore dguadal-remote
+Host imap.free.fr
+Port 993
+User dguadal
+PassCmd "pass mutt-wizard-dguadal"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore dguadal-local
+Subfolders Verbatim
+Path /home/canalguada/.local/share/mail/dguadal/
+Inbox /home/canalguada/.local/share/mail/dguadal/INBOX
+Flatten .
+
+Channel dguadal
+Expunge Both
+Master :dguadal-remote:
+Slave :dguadal-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# david.celerity@free.fr
+IMAPStore celerity-remote
+Host imap.free.fr
+Port 993
+User david.celerity 
+PassCmd "pass mutt-wizard-celerity"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore celerity-local
+Subfolders Verbatim
+Path /home/canalguada/.local/share/mail/celerity/
+Inbox /home/canalguada/.local/share/mail/celerity/INBOX
+Flatten .
+
+Channel celerity
+Expunge Both
+Master :celerity-remote:
+Slave :celerity-local:
+Patterns * !"[Gmail]/All Mail"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+
+
+# End profile
+

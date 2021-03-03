@@ -1,0 +1,12 @@
+# vim: set ft=sh fdm=indent ts=4 sw=4 tw=79 noet:
+
+# Enable zapping (C-A-<Bksp> kills X)
+setxkbmap -option terminate:ctrl_alt_bksp
+
+if [ -r ~/.profile ]; then . ~/.profile; fi
+
+xset s blank
+xset s 300 240
+xset +dpms dpms 600 720 900
+xset b 100
+

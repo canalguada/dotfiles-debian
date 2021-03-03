@@ -1,0 +1,8 @@
+setopt no_global_rcs
+export DEFAULT_USER="canalguada"
+export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+export ZDOTDIR="$HOME/.zsh"
+export GPG_TTY=$(tty)
+
+[[ -r "$HOME/.shinit" ]] && source "$HOME/.shinit"
+
