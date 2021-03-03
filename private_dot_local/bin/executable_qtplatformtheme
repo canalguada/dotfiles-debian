@@ -1,0 +1,11 @@
+#!/bin/sh
+# vim: set ai ts=4 sw=4 tw=79:
+
+PLATFORMTHEME="gtk2"
+CMD="$@"
+if [ $XDG_SESSION_DESKTOP != "KDE" ]
+then
+	exec env XDG_CURRENT_DESKTOP=GNOME $CMD --platformtheme $PLATFORMTHEME
+else
+	exec $CMD
+fi

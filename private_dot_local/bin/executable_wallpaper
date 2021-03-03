@@ -1,0 +1,369 @@
+#!/bin/bash
+# vim: set ai ts=4 sw=4 tw=79:
+
+#set -o nounset                              # Treat unset variables as an error
+
+CONFDIR="$XDG_CONFIG_HOME/$(basename $0)"
+DIRECTORIES="$CONFDIR/directories.txt"
+
+FAVORITES="$HOME/Images/Backgrounds/Favorites"
+TRASHED="$HOME/Images/Backgrounds/Trashed"
+
+KEEP=100
+WP=""
+WRAP=0
+
+
+mkdir -p "$CONFDIR"
+if [ ! -f "$DIRECTORIES" ]; then
+	echo "$FAVORITES" > "$DIRECTORIES"
+fi
+
+usage () {
+	cat <<EOF
+Usage :
+	$(basename $0) set FILE
+	$(basename $0) (random|previous|next|favorite|unfavorite)
+	$(basename $0) rotate [DELAY[SUFFIX]]
+	$(basename $0) (-h|--help)
+Manage wallpaper.
+
+	set FILE
+		set wallpaper from FILE
+	get
+		get last wallpaper used
+	random
+		choose a random wallpaper from known directories
+	previous
+		choose previous wallpaper in history
+	next
+		choose next wallpaper in history
+	trash
+		send current wallpaper to trash
+	favorite
+		move current wallpaper to FAVORITES folder
+	unfavorite
+		remove current wallpaper to FAVORITES folder
+
+	rotate [DELAY[SUFFIX]]
+		rotate wallpaper on regular DELAY. SUFFIX may be
+		's' for seconds (the default), 'm' for minutes,
+		'h' for hours or 'd' for days (default DELAY : 15m)
+
+	-h, --help
+		show this message
+
+Environment variables:
+	KEEP=N
+		History will track the N recent wallpapers (default to 30)
+
+EOF
+}
+
+# Provides _set_wallpaper function
+source "${BASH_LIB_DIR:-/home/$USER/.local/lib/bash}/wallpaper.lib.bash"
+echo "Detected desktop is $DESKTOP."
+
+_current () {
+	if [ -f "$CONFDIR/current" ]; then
+		#echo $(< "$CONFDIR/current")
+		cat "$CONFDIR/current"
+	elif [ -f "$CONFDIR/history" ]; then
+		tail -n 1 "$CONFDIR/history"
+	fi
+}
+
+_update_history() {
+	file=${1:-`_current`}
+	buf=`mktemp -p "$CONFDIR"`
+	[ -e "$CONFDIR/history" ] && cat "$CONFDIR/history" > "$buf"
+	echo "$file" >> "$buf"
+	tail -n $KEEP "$buf" > "$CONFDIR/history"
+	rm -f "$buf"
+}
+
+_elapsed_time () {
+	now=$(date +%s)
+	last_change=$(stat -c '%Y' "$CONFDIR/current")
+	echo $(( now - last_change ))
+}
+
+_tooltip () {
+	file=${1:-`_current`}
+	exiftool -common -lang "fr" "$file" > "$CONFDIR/exif-info"
+	cat "$CONFDIR/exif-info"
+}
+
+_current_pos () {
+	grep -n -o -e "$(_current)" "$CONFDIR/history" | cut -d: -f1
+}
+_from_history_pos () { head -n $1 "$CONFDIR/history" | tail -n 1 ; }
+
+_next () {
+	pos=${1:-`_current_pos`}
+	count=$(cat "$CONFDIR/history" | wc -l)
+	#echo "Before: pos: $pos wp: $(_current)"
+
+	if [ "$pos" -lt "$count" ]; then
+		# Set next wallpaper from history
+		pos=$(( pos + 1 ))
+		WP=$(_from_history_pos $pos)
+		#echo "After: pos: $pos wp: $WP"
+		_set "$WP"
+	else
+		[ "$WRAP" -eq 1 ] && _next 0 || false
+	fi
+}
+
+_previous () {
+	pos=${1:-`_current_pos`}
+	count=$(cat "$CONFDIR/history" | wc -l)
+	#echo "Before: pos: $pos wp: $(_current)"
+
+	if [ "$pos" -eq "1" ]; then
+		[ "$WRAP" -eq 1 ] && _previous $(( count + 1 )) || false
+	else
+		# Set previous wallpaper from history
+		pos=$(( pos - 1 ))
+		WP=$(_from_history_pos $pos)
+		#echo "After: pos: $pos wp: $WP"
+		_set "$WP"
+	fi
+}
+
+_sed_escaped () {
+	file="$1"
+	file=${file//\\/\\\\}
+	file=${file//\//\\/}
+	file=${file//&/\\&}
+	file=${file//$'\n'/\\$'\n'}
+	echo $file
+	#eval echo $(printf '%q' ${1//\//\\/})
+}
+
+_send_to_trash () {
+	file=${1:-`_current`}
+	_previous
+
+	gio trash "$file"
+	sed -i -e "/$(_sed_escaped "$file")/d" "$CONFDIR/history"
+	_notify "$(basename "$file")" "Déplacé vers la corbeille"
+}
+
+_add_to_favorites () {
+	file=${1:-`_current`}
+	[ -f "$file" ] || return 1
+
+	name=$(basename "$file")
+	favorite="$FAVORITES/$name"
+
+	if [ "$file" = "$favorite" ]; then
+		_notify "$name" "Déjà dans les favoris"
+	else
+		sed_script="s/$(_sed_escaped "$file")/$(_sed_escaped "$favorite")/g"
+		sed -i -e "$sed_script" "$CONFDIR/history"
+		echo "$favorite" > "$CONFDIR/current"
+		if [ -e "$favorite" ]; then
+			#rm -f "$file"
+			_notify "$name" "Déjà dans les favoris"
+			false
+		else
+			ln -f -t "$FAVORITES" "$file"
+			_notify "$name" "Placé dans les favoris"
+		fi
+	fi
+}
+
+_remove_from_favorites () {
+	file=${1:-`_current`}
+	name=$(basename "$file")
+	favorite="$FAVORITES/$name"
+	[ ! -e "$favorite" ] \
+		&& _notify "$name" "Pas dans les favoris" \
+		&& return 1
+
+	if [ "$file" != "$favorite" ]; then
+		rm -f "$favorite"
+		_notify "$name" "Sorti des favoris"
+		return
+	fi
+
+	# Trouver une référence
+	mountpoint="$(stat -c %m -- "$favorite")"
+	file=""
+	while IFS=$'\n' read -r line; do
+		# No hard link outside mountpoint
+		[ "$(stat -c %m -- "$line")" != "$mountpoint" ] && continue
+
+		while IFS= read -rd '' found <&3; do
+			[[ ! $found =~ ${FAVORITES}.* ]] && file="$found"
+			true 3<&-
+			[ -n "$file" ] && break 2
+		done 3< <(find "$line/" -samefile "$favorite" -print0 2>/dev/null)
+	done < "$DIRECTORIES"
+
+	# Si aucune déplacé dans le répertoire des fichiers en attente
+	if [ -z "$file" ]; then
+		file="$TRASHED/$name"
+		mv -f "$favorite" "$file"
+	else
+		rm -f "$favorite"
+	fi
+	sed_script="s/$(_sed_escaped "$favorite")/$(_sed_escaped "$file")/g"
+	sed -i -e "$sed_script" "$CONFDIR/history"
+	echo "$file" > "$CONFDIR/current"
+
+	_notify "$name" "Sorti des favoris"
+}
+
+_notify () {
+	msg="$1"
+	default="Nouveau fond d\'ecran"
+	app="${2:-$default}"
+	delay="${3:-5000}"
+	! ps -C "gnome-panel budgie-panel" >/dev/null && \
+		NOTIFY_OPTS="-a" || NOTIFY_OPTS=""
+	#notify-send -t $delay --hint=int:transient:1 -i "livewallpaper" \
+		#$NOTIFY_OPTS "$app" "$msg"
+	python <<-EOF
+	import gi
+	gi.require_version('Notify', '0.7')
+	from gi.repository import Notify
+	Notify.init("wallpaper")
+	msg = """
+	$msg
+	"""
+	n = Notify.Notification.new("$app", msg, "livewallpaper")
+	n.set_timeout($delay)
+	n.show()
+	EOF
+}
+
+_set () {
+	WP=$1
+	#WP=$(printf '%q' "$1")
+	if test -f "$WP"; then
+		_set_wallpaper "$WP"
+		echo "$WP" > "$CONFDIR/current"
+		[ $notify -ne 0 ] && _notify "$(_tooltip)"
+
+		grep -q -e "$WP" "$CONFDIR/history" || _update_history "$WP"
+	else
+		usage
+		false
+	fi
+}
+
+_random () {
+	mkdir -p /tmp/$USER
+	buf=`mktemp -p /tmp/$USER`
+	dirlist=$(<"$DIRECTORIES")
+
+	while IFS='\n' read -r line; do
+		find "$line/" -maxdepth 1 \
+			"(" -iname "*.png" -o -iname "*.jpg" ")"
+	done < <(sort -su <<< $dirlist) > "$buf"
+
+	until [ -n "$WP" ] && $(! grep -q "$(basename "$WP")" "$CONFDIR/history"); do
+		WP=$(shuf -n 1 "$buf")
+	done
+	rm "$buf"
+
+	_set "$WP"
+}
+
+_rotate () {
+	while true; do
+		sleep ${1:-"15m"}
+		_random
+	done
+}
+
+OPTS=$(getopt -o 'h' --long 'help,notify' -n "$(basename $0)" -- "$@")
+
+#if [ $? -ne 0 ]; then
+#echo 'Terminating...' >&2
+#exit 1
+#fi
+
+eval set -- "$OPTS"
+unset OPTS
+
+notify=0
+
+while true; do
+	case "$1" in
+		'-h'|'--help')
+			usage
+			exit 0
+			;;
+		'--')
+			shift
+			break
+			;;
+		'--notify')
+			shift
+			notify=1
+			;;
+		*)
+			echo 'Internal error!' >&2
+			exit 1
+			;;
+	esac
+done
+
+#echo 'Remaining arguments:'
+#for arg; do
+#echo "--> '$arg'"
+#done
+
+[ ${#@} -eq 0 ] && usage && exit 0
+
+_status () {
+	#cat "$CONFDIR/history"
+	#echo
+	[ -n "$WP" ] && echo "$WP"
+}
+
+_wrap () {
+	func=$1
+	shift
+	$func "$@"
+	ret=$?
+	_status
+	exit $ret
+}
+
+case "$1" in
+	'set')
+		[ -f "$2" ] && _wrap _set "$2"
+		;;
+
+	'get')
+		_current ;;
+	'random')
+		_wrap _random ;;
+	'next')
+		_wrap _next ;;
+	'previous')
+		_wrap _previous ;;
+	'trash')
+		_wrap _send_to_trash ;;
+	'favorite')
+		_wrap _add_to_favorites ;;
+	'unfavorite')
+		_wrap _remove_from_favorites ;;
+
+	'rotate')
+		if [[ "$2" =~ ^[[:digit:]]+[smhd]?$ ]]; then
+			_rotate "$2"
+		else
+			_rotate
+		fi
+		;;
+	*)
+		usage
+		exit 1
+		;;
+esac
+

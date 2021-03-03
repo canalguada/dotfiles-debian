@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec python3 -m local.i3_cycle_focus "$@"
+
+#  vim: set ft=sh fdm=indent ts=4 sw=4 tw=79:
