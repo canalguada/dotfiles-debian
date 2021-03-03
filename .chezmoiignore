@@ -1,2 +1,3 @@
 .local/lib/sh/*.lib.sh.orig
+**/__pycache__/*.pyc
 
