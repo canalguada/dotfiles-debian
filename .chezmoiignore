@@ -1,4 +1,5 @@
 .local/lib/sh/*.lib.sh.orig
 **/__pycache__/*.pyc
 .task/*.tar.gz
-
+.mpv/bak/**
+.mpv/bak
