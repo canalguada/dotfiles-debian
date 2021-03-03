@@ -1,0 +1,39 @@
+! vim: set ft=xdefaults:
+
+! Dracula Xresources palette
+*.foreground: #F8F8F2
+!*.background: #282A36
+*.background: #1E1F29
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #BD93F9
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
+
+*.current_line:	#44475a
+*.selection:	#44475a
+*.comment:	#6272a4
+*.cyan:		#8be9fd
+*.green:	#50fa7b
+*.orange:	#ffb86c
+*.pink:		#ff79c6
+*.purple:	#bd93f9
+*.red:		#ff5555
+*.yellow:	#f1fa8c
+
+*.lightbg:	#282a36
+*.lightfg: 	#f8f8f2
+
+*.primary:	#6d5890
+*.secondary:	#ff5555

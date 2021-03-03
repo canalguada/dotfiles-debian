@@ -1,0 +1,33 @@
+! vim: set ft=xdefaults ts=4 sw=4 tw=79 noet:
+! ----------------------------------------------------------------------------
+! XTerm
+xterm*termName: xterm-256color
+xterm*locale: true
+xterm*saveLines: 8192
+!xterm*VT100.geometry: 117x32
+xterm*VT100.geometry: 80x32
+xterm*reverseVideo: off
+xterm*bellIsUrgent: true
+
+!!xterm*faceName: Consolas Regular
+!xterm*faceName: Iosevka Term
+!xterm*faceName: Monospace
+!xterm*faceName: DejaVu Sans Mono
+!xterm*faceName: Hasklig Regular
+!xterm*faceName: Hack
+xterm*faceName: SF Mono
+xterm*faceSize:  9.0
+xterm*faceSize1: 8.0
+xterm*faceSize2: 9.0
+xterm*faceSize3: 10.0
+xterm*faceSize4: 11.0
+xterm*faceSize5: 12.0
+xterm*faceSize6: 13.0
+
+xterm*utf8: 2
+xterm*utf8Title: on
+xterm*scrollBar: on
+xterm*rightScrollBar: on
+xterm*cursorBlink: on
+xterm*cursorUnderLine: on
+
