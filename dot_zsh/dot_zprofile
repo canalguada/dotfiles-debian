@@ -1,0 +1,4 @@
+typeset -U path
+path=($HOME/.local/bin $HOME/bin $HOME/Scripts $path[@])
+
+# vim:filetype=zsh: set ai ts=4 sw=4 tw=79:

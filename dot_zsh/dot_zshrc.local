@@ -1,0 +1,85 @@
+# Filename:      $ZDOTDIR/zshrc.local
+# Purpose:       config file for zsh (z shell)
+################################################################################
+# This file is sourced only for interactive shells. It
+# should contain commands to set up aliases, functions,
+# options, key bindings, etc.
+#
+# Global Order: zshenv, zprofile, zshrc.pre zshrc zshrc.local, zlogin
+################################################################################
+# vim: set filetype=zsh foldmethod=indent ai ts=4 sw=4 tw=79:
+
+## log out? set timeout in seconds...
+## ...and do not log out in some specific terminals:
+#if [[ "${TERM}" == ([Exa]term*|rxvt|dtterm|screen*) ]] ; then
+#    unset TMOUT
+#else
+#    TMOUT=1800
+#fi
+
+## ctrl-s will no longer freeze the terminal.
+#stty erase "^?"
+ttyctl -f
+
+# you want to automatically use a bigger font on big terminals?
+if [[ "$TERM" == "xterm" ]] && [[ "$LINES" -ge 50 ]] \
+	&& [[ "$COLUMNS" -ge 100 ]] && [[ -z "$SSH_CONNECTION" ]] ; then
+	large
+fi
+
+# Remembering recent directories
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-file \
+	"${ZSH_CACHE_DIR:-$HOME/.cache/zsh}/chpwd-recent-dirs"
+
+# Fish-like syntax highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# "Command not found" handler
+#source /usr/share/doc/pkgfile/command-not-found.zsh
+
+################################################################################
+# Shell common exports, aliases and functions
+for item in "aliases" "exports" "functions" "others-functions"
+do
+	file="$HOME/.local/lib/sh/${item}.lib.sh"
+	[ -f "$file" ] && source "$file"
+done
+[ -f "$ZDOTDIR/.zaliases" ] && source $ZDOTDIR/.zaliases
+[ -f "$ZDOTDIR/.zfunctions" ] && source $ZDOTDIR/.zfunctions
+
+## Expand all systemctl in order to get completion
+#alias | grep -E -e '^(sc-|scu-)' \
+	#| tr '=' ',' \
+	#| while IFS=, read -r subscript cmd; do \
+	#eval "abk+=('$subscript' $cmd)"; \
+#done
+# }}}
+
+disable_proxy
+
+# Completion for manx script
+compdef _man manx
+
+#[[ $- = *i* ]] && wq qotd 2>/dev/null
+
+# Starship
+#eval "$(starship init zsh)"
+
+# Fasd
+eval "$(fasd --init auto)"
+
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish

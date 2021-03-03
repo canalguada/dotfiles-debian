@@ -1,0 +1,15 @@
+# Purpose:       config file for zsh (z shell)
+#
+# vim:filetype=zsh: set foldmethod=indent ai ts=4 sw=4 tw=79:
+
+export HISTFILE="${ZDOTDIR:-${HOME}}/.zsh_history"
+export ZSH_CACHE_DIR="$HOME/.cache/zsh"
+export COMP_CACHING="yes"
+export COMP_CACHE_DIR="$ZSH_CACHE_DIR"
+
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir -p $ZSH_CACHE_DIR
+fi
+
+GRML_COMP_CACHING=$COMP_CACHING
+GRML_COMP_CACHE_DIR=$COMP_CACHE_DIR
