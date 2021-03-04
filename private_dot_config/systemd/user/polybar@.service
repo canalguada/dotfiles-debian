@@ -1,0 +1,8 @@
+[Unit]
+Description=Polybar
+Documentation=man:polybar(1) man:polybar(5)
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=polybar %i
+

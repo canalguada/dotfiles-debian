@@ -1,0 +1,7 @@
+[Unit]
+Description=X settings daemon
+Documentation=man:xsettingsd(1)
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/xsettingsd

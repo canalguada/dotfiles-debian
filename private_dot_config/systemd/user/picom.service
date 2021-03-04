@@ -1,0 +1,8 @@
+[Unit]
+Description=Picom
+Documentation=man:picom(1)
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=picom
+

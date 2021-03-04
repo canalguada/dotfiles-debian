@@ -1,0 +1,10 @@
+[Unit]
+Description=User systemd services for i3 graphical session
+Wants=i3-session.service
+Wants=xsettingsd.service
+Wants=urxvtd.service
+Wants=polybar@top.service
+Wants=polybar@bottom.service
+Wants=picom.service
+Wants=i3-cycle-focus.service
+BindsTo=graphical-session.target

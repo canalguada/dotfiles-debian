@@ -1,0 +1,7 @@
+[Unit]
+Description=Update tvguide service
+
+[Service]
+Type=oneshot
+Slice=cpu16.slice
+ExecStart=/usr/bin/sh %h/bin/update-guidetv

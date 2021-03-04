@@ -1,0 +1,7 @@
+[Unit]
+Description=Mailbox synchronization service
+
+[Service]
+Type=oneshot
+Slice=cpu16.slice
+ExecStart=/usr/bin/mbsync -c %E/mutt/mbsyncrc -qa

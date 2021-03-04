@@ -1,0 +1,7 @@
+[Unit]
+Description=i3 cycle focus
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/local/bin/i3-cycle-focus --history 16
+

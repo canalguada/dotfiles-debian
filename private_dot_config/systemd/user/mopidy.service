@@ -1,0 +1,24 @@
+[Unit]
+Description=Mopidy music server
+Documentation=man:mopidy(1)
+After=dbus.service
+After=pulseaudio.service
+
+[Service]
+ExecStart=/usr/bin/mopidy -q
+
+# disallow writing to /usr, /bin, /sbin, ...
+ProtectSystem=yes
+
+# more paranoid security settings
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+# systemd failed with status=218/CAPABILITIES
+#ProtectKernelModules=yes
+ProtectControlGroups=yes
+# AF_NETLINK is required by libsmbclient, or it will exit() .. *sigh*
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+RestrictNamespaces=yes
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,7 @@
+[Unit]
+Description=Check for package updates service
+
+[Service]
+Type=oneshot
+Slice=cpu16.slice
+ExecStart=/usr/local/bin/pkgs check

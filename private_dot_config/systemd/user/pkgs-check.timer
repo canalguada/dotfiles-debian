@@ -1,0 +1,11 @@
+[Unit]
+Description=Check for package updates timer
+
+[Timer]
+OnStartupSec=2h
+OnUnitInactiveSec=6h
+;OnCalendar=*:30:00
+;Persistent=true
+
+[Install]
+WantedBy=timers.target

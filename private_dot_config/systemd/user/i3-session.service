@@ -1,0 +1,11 @@
+[Unit]
+Description=Main service for i3 graphical session
+PartOf=graphical-session.target
+
+[Service]
+Type=oneshot
+;ExecStart=/usr/bin/sh %h/bin/update-guidetv
+ExecStart=/usr/bin/lxqt-policykit-agent
+ExecStart=/usr/local/bin/make-xrandr-cache
+;ExecStart=/usr/local/bin/i3-cycle-focus --history 16
+;ExecStart=/usr/bin/nitrogen --random --set-zoom-fill
