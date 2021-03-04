@@ -1,0 +1,51 @@
+#!/bin/sh
+
+PROG=$(basename "$0")
+BGDIR="${MYBACKGROUNDS:-$HOME/Images}"
+
+if [ ! -d "$BGDIR" ]; then
+	echo "'$BGDIR' not a valid directory" >&2
+	exit 1
+fi
+
+if ! command -v feh >/dev/null 2>&1; then
+	echo "feh not found" >&2
+	exit 1
+fi
+
+if ! command -v Cpu16 >/dev/null 2>&1; then
+	echo "Cpu16 not found" >&2
+	exit 1
+fi
+
+feh_cmd="feh -z -F --on-last-slide resume -Y -N --zoom fill $BGDIR"
+
+usage()  { echo "Usage: $PROG (start|stop)" >&2;  }
+
+if [ $# -eq 0 ]; then
+  set -- "start"
+elif [ $# -gt 1 ] || [ "$1" != "start" ] && [ "$1" != "stop" ]; then
+  usage
+  exit 1
+fi
+
+case "$1" in
+  start)
+    if pgrep -fx "$feh_cmd" >/dev/null 2>&1; then
+      echo "$PROG yet running" >&2
+      exit 2
+    fi
+    exec `command -v Cpu16` --slice -- $feh_cmd
+    ;;
+  stop)
+    pid=$(pgrep -fx "$feh_cmd")
+    if [ -n "$pid" ]; then
+      /usr/bin/kill $pid
+    else
+      echo "$PROG not running" >&2
+      exit 2
+    fi
+    ;;
+esac
+
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:

@@ -1,0 +1,337 @@
+#!/bin/sh
+
+#Constants
+# Cache folder
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/i3lock/img"
+if ! [ -e $CACHE_DIR ]; then
+  mkdir -p $CACHE_DIR
+fi
+#CONF_DIR=$(i3-msg -t get_version | jq -r '.loaded_config_file_name')
+#CONF_DIR=$(dirname "$CONF_DIR") # Current config folder
+#CONF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/i3"
+
+# Parameters
+USE_PIXELATE=n
+PIXELATE_SCALEFACTOR=4
+USE_DPMS=n
+DPMS_TIMEOUT=5
+DPMS_OLD=
+BACKGROUND=
+GRAYSCALE=
+USE_BLUR=n
+BLUR_FACTOR=4
+USE_IMAGE_FILL=n
+USE_IMAGE_MAXIMIZE=n
+USE_LOCK_ICON=n
+
+LOCK_ICON="${XDG_CONFIG_HOME:-$HOME/.config}/i3/img/lock-icon.png"
+
+PARAMS=
+IMAGE=
+
+## Default in config folder
+#IMAGE="${XDG_CONFIG_HOME:-$HOME/.config}/i3/img/background.png"
+
+## or random background from favorite folder
+#IMAGE=$(find $HOME/Images/Wallpapers/Préférés/ \
+#-maxdepth 1 "(" -iname "*.png" -o -iname "*.jpg" ")" -print | shuf -n 1)
+
+## or current background set by feh
+#IMAGE=$(grep -E -o -e "$HOME/[^']*" "$HOME/.fehbg")
+
+screenarea=
+screens=
+layout_hash=
+
+check_cached_values() {
+  cd "${XDG_CACHE_HOME:-$HOME/.cache}/xrandr/" ||
+    exit 2
+  if [ ! -r "screenarea" ] || [ ! -r "screens" ] || [ ! -r "hash" ]; then
+    exit 2
+  fi
+  screenarea=$(head -n1 "screenarea")
+  screens=$(cat "screens" | xargs echo)
+  layout_hash=$(head -n1 "hash")
+  cd - >/dev/null 2>&1
+}
+check_cached_values
+
+usage() {
+  cat <<-EOF
+	Extension for the screenlocker "i3lock" adding some high-level features:
+	  --pixelate [scalefactor]
+	    Pixelate the background of the lockscreen.
+	  --blur [scalefactor]
+	    Blur the background of the lockscreen.
+	  --image-fill path
+	    Fill each screen with the image in <path>.
+	  --image-maximize path
+	    Maximize the image in <path> over all screens.
+	  --lock-icon [path]
+	    Add a centered overlay to each screen.
+	  --grayscale
+	    Convert the background into grayscale.
+	  --dpms timeout
+	    Uses DPMS to turn the screen off after "timeout" seconds of inactivity.
+
+	All other arguments are passed to i3lock.
+	Read the man page for more information.
+	EOF
+}
+
+get_background_file() {
+  if [ -z "$BACKGROUND" ]; then
+    BACKGROUND=$(mktemp /tmp/i3lock-background.XXXXX)
+  fi
+  PARAMS="$PARAMS $(shell-quote -- -i "$BACKGROUND")"
+}
+
+make_screenshot() {
+  if [ -z "$BACKGROUND" ]; then
+    get_background_file
+    import -window root jpeg:"$BACKGROUND"
+  fi
+}
+
+check_file_exists() {
+  if [ ! -f "$1" ]; then
+    echo "File \"$1\" does not exist!"
+    return 1
+  fi
+  return 0
+}
+
+build_lockscreen() {
+  if [ "$USE_IMAGE_FILL" = y ]; then
+    get_background_file
+    convert -size $screenarea xc:black $GRAYSCALE -quality 11 png24:"$BACKGROUND"
+    if check_file_exists "$IMAGE"; then
+      for screen in $screens; do
+        convert "$BACKGROUND" \
+          \( "$IMAGE" -gravity Center -resize ${screen%%+*}^ -extent ${screen%%+*} \) \
+          -gravity NorthWest -geometry +${screen#*+} -composite \
+          $GRAYSCALE -quality 11 png24:"$BACKGROUND"
+      done
+    fi
+  fi
+
+  if [ "$USE_IMAGE_MAXIMIZE" = y ]; then
+    get_background_file
+    if check_file_exists "$IMAGE"; then
+      convert "$IMAGE" -gravity Center -resize $screenarea^ -extent $screenarea \
+        $GRAYSCALE -quality 11 png24:"$BACKGROUND"
+    else
+      convert -size $screenarea xc:black $GRAYSCALE -quality 11 png24:"$BACKGROUND"
+    fi
+  fi
+
+  if [ "$USE_BLUR" = y ]; then
+    make_screenshot
+    size=$(identify -format "%[fx:w]x%[fx:h]" "$BACKGROUND")
+    convert "$BACKGROUND" \
+      -scale $BLUR_FACTOR% \
+      $GRAYSCALE -resize $size\! -quality 11 png24:"$BACKGROUND"
+  fi
+
+  if [ "$USE_PIXELATE" = y ]; then
+    make_screenshot
+    size=$(identify -format "%[fx:w]x%[fx:h]" "$BACKGROUND")
+    convert "$BACKGROUND" \
+      -scale $PIXELATE_SCALEFACTOR% \
+      $GRAYSCALE -sample $size\! -quality 11 png24:"$BACKGROUND"
+  fi
+
+  if [ "$USE_LOCK_ICON" = y ]; then
+    make_screenshot
+    value="60" #brightness value to compare to
+    color=$(convert "$BACKGROUND" \
+      -gravity center -crop 100x100+0+0 +repage \
+      -colorspace hsb -resize 1x1 txt:- |
+      awk -F '[%$]' 'NR==2{gsub(",",""); printf "%.0f\n", $(NF-1)}')
+    if [ $color -gt $value ]; then #white background image and black text
+      #bw="black"
+      icon=$(find $(dirname $LOCK_ICON)/ -iwholename "${LOCK_ICON%.png}*dark*.png" -print)
+      if [ -z "$icon" ]; then
+        icon=$LOCK_ICON
+      fi
+    else #black
+      #bw="white"
+      icon=$LOCK_ICON
+    fi
+    if check_file_exists "$icon"; then
+      for screen in $screens; do
+        convert "$BACKGROUND" \
+          \( "$icon" -gravity Center -background none -extent ${screen%%+*} \) \
+          -gravity NorthWest -geometry +${screen#*+} -composite \
+          $GRAYSCALE -quality 11 png24:"$BACKGROUND"
+
+        #convert "$BACKGROUND" \
+        #\( "$icon" -gravity Center -background none -extent ${screen%%+*} \) \
+        #-gravity NorthWest -geometry +${screen#*+} -composite \
+        #-font "SF-Pro-Display-Medium" -pointsize 26 -fill "$bw" \
+        #-gravity center -draw "text +0+160 'Entrez votre mot de passe'" \
+        #$GRAYSCALE -quality 11 png24:"$BACKGROUND"
+        # Alternative:
+        # Replace -draw parameter with '-annotate +0+160 "Text message"'
+      done
+    fi
+  fi
+}
+
+is_float()  {
+  if [ $# -ne 1 ]; then
+    return 1
+  fi
+  echo "$1" | grep -q -P -e '^[-+]?[0-9]*[\.]?[0-9]*$'
+}
+
+is_option()  {
+  if [ $# -ne 1 ]; then
+    return 1
+  fi
+  echo "$1" | grep -q -P -e '^[^-].*$'
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h | --help)
+      usage
+      exit
+      ;;
+
+    --pixelate)
+      USE_PIXELATE=y
+      if [ -n "$2" ] && is_float "$2"; then
+        PIXELATE_SCALEFACTOR="$2"
+        shift
+      fi
+      ;;
+
+    --blur)
+      USE_BLUR=y
+      if [ -n "$2" ] && is_float "$2"; then
+        BLUR_FACTOR="$2"
+        shift
+      fi
+      ;;
+
+    --image-fill)
+      if [ -n "$2" ]; then
+        case "$2" in
+          -*) ;;
+          *)
+            USE_IMAGE_FILL=y
+            USE_IMAGE_MAXIMIZE=n
+            IMAGE="$2"
+            shift
+            ;;
+        esac
+      else
+        echo "Usage: --image-fill path"
+        exit 1
+      fi
+      ;;
+
+    --image-maximize)
+      if [ -n "$2" ]; then
+        case "$2" in
+          -*) ;;
+          *)
+            USE_IMAGE_MAXIMIZE=y
+            USE_IMAGE_FILL=n
+            IMAGE="$2"
+            shift
+            ;;
+        esac
+      else
+        echo "Usage: --image-maximize path"
+        exit 1
+      fi
+      ;;
+
+    --lock-icon)
+      USE_LOCK_ICON=y
+      if [ -n "$2" ]; then
+        case "$2" in
+          -*) ;;
+          *)
+            LOCK_ICON="$2"
+            shift
+            ;;
+        esac
+      fi
+      ;;
+
+    --grayscale)
+      GRAYSCALE="-colorspace gray"
+      ;;
+
+    --dpms)
+      if [ -n "$2" ]; then
+        if echo "$2" | grep -q -P -e '^[[:digit:]]*$'; then
+          USE_DPMS=y
+          DPMS_TIMEOUT="$2"
+          shift
+          PARAMS="$PARAMS -n"
+        fi
+      else
+        echo "Usage: --dpms timeout"
+        exit 1
+      fi
+      ;;
+
+    *)
+      # Pass argument to i3lock
+      PARAMS="$PARAMS $1"
+      ;;
+  esac
+
+  # Consume argument
+  shift
+done
+
+finish() {
+  case "$BACKGROUND" in
+    /tmp/i3lock-background.*) rm -f "$BACKGROUND" ;;
+  esac
+  if [ "$USE_DPMS" = "y" ]; then
+    xset dpms $DPMS_OLD
+  fi
+}
+trap finish EXIT
+
+#Image paths
+if [ -n "$IMAGE" ] && check_file_exists "$IMAGE"; then
+  # Hash of background image
+  MD5_IMAGE=$(md5sum $IMAGE | cut -c 1-10)
+  # Path of final image
+  BACKGROUND="${CACHE_DIR}/${layout_hash}.${MD5_IMAGE}.png"
+fi
+
+#if [ ! -f "$IMAGE" ]; then
+#echo "No background image! Exiting..."
+#exit 2
+#fi
+
+if [ -n "$BACKGROUND" ] && check_file_exists "$BACKGROUND"; then
+  PARAMS="$PARAMS -i $BACKGROUND"
+else
+  build_lockscreen
+fi
+
+if ! check_file_exists "$BACKGROUND"; then
+  exit 1
+fi
+
+if [ "$USE_DPMS" = "y" ]; then
+  DPMS_OLD=$( xset q | \
+		grep Standby |sed -e 's/[^[:digit:][:blank:]]*//g' | \
+		awk '{ print $1, $2, $3}' )
+  xset dpms 0 0 $DPMS_TIMEOUT
+fi
+
+#Lock the screen:
+i3lock $PARAMS
+exit 0
+
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:
