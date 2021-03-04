@@ -205,7 +205,6 @@ export TASKDPORT=53859
 
 #export CHROOT=$HOME/builds/chroot
 
-# export GITHUB_TOKEN=b3058b356eded6b1c640ea067968c3e298aaa965
-export GITHUB_USER=canalguada
-export GITHUB_PASSWORD="WDBMek]_Mp>-)$>=Y@6bT=hQ>"
+export GITHUB_USER=$USER
+export GITHUB_PASSWORD=$(pass show "web/github.com/$USER"|head -n1)
 
