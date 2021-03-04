@@ -1,0 +1,73 @@
+/* vim: set ft=css fdm=indent ai ts=2 sw=2 noet: */
+
+@theme "common"
+
+* {
+ font: "SF Pro Display Light 18";
+}
+
+window {
+ width: 46px;
+ location: east;
+ anchor: east;
+ x-offset: -3px;
+ y-offset: 0%;
+}
+
+listview {
+ layout: vertical;
+ spacing: 3px;
+ lines: 6;
+}
+
+mainbox {
+ children: [ listview ];
+}
+
+element {
+ background-color: @lightbg;
+ border: 1px;
+ border-radius: 2px;
+ /*border-color: @lightfg;*/
+ padding: 2px 2px 2px 0px;
+}
+
+element alternate {
+ background-color: @lightbg;
+}
+
+element-text {
+ horizontal-align: 0.5;
+ vertical-align: 0.5;
+}
+
+element-icon {
+ enable: false;
+}
+
+element normal.active,
+element alternate.active {
+ background-color: @on;
+}
+
+element normal.urgent,
+element alternate.urgent {
+ background-color: @off;
+}
+
+element selected {
+ text-color: @selected-normal-foreground;
+}
+
+element selected.urgent {
+ background-color: @on;
+ border-color: @lightfg;
+ /*border-color: @theme-unfocused-fg-color;*/
+}
+
+element selected.active {
+ background-color: @off;
+ border-color: @lightfg;
+ /*border-color: @theme-unfocused-fg-color;*/
+}
+

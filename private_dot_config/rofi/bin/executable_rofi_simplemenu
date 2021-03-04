@@ -1,0 +1,14 @@
+#!/bin/sh
+
+span="weight='ultra-light' size='small'"
+# drun_format="{name} [<span $span><i>({generic})</i></span>]"
+drun_format="{name}"
+
+options="-show-icons -lines 6"
+
+rofi -no-lazy-grab -modi drun -show drun \
+	$options \
+	-drun-display-format "$drun_format" \
+	-theme themes/simplemenu.rasi "$@"
+
+# vim: set foldmethod=indent ai ts=4 sw=4 tw=79:

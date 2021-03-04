@@ -1,0 +1,106 @@
+/* vim: set ft=css fdm=indent ai ts=2 sw=2 noet: */
+
+@import "colors"
+
+* {
+	/* General */
+	font: "SF Pro Display Light 12";
+}
+
+#window {
+	transparency: "real";
+	border: 1px;
+	border-radius: 4px;
+	width: 40%;
+	padding: 0px 0px;
+	location: north;
+	anchor: north;
+	x-offset: 0;
+	y-offset: 0;
+}
+#prompt {
+	enabled:	true;
+	padding: 0px 8px 0px 4px;
+	background-color: @basebg;
+}
+#inputbar {
+	background-color: @basebg;
+	expand: false;
+	border:	1px;
+	border-radius: 2px;
+	margin: 0px 0px 0px 0px;
+	padding: 5px 5px 5px 5px;
+	position: center;
+	font: "SF Pro Display Regular 14";
+}
+#entry {
+	background-color: @basebg;
+	placeholder-color: @foreground;
+	expand: true;
+	horizontal-align: 0;
+	/*placeholder: "";*/
+	blink: true;
+}
+#case-indicator {
+	background-color: @basebg;
+	spacing: 0;
+}
+#listview {
+	columns: 1;
+	spacing: 3px;
+	cycle: true;
+	fixed-height: false;
+	dynamic: true;
+	layout: vertical;
+}
+#mainbox {
+	children: [ inputbar, listview ];
+	spacing: 2px;
+	padding: 2px 2px 2px 2px;
+}
+#element {
+	background-color: @normal-background;
+	text-color: @normal-foreground;
+	orientation: horizontal;
+	border-radius: 2px;
+	padding: 4px 4px 4px 4px;
+}
+#element alternate {
+	background-color:	@alternate-normal-background;
+}
+#element-icon {
+	size: 16px;
+	border: 0px;
+}
+#element-text {
+	highlight: bold italic underline red;
+	expand: true;
+	horizontal-align: 0;
+	vertical-align: 0;
+	margin: 2px 0px 2px 2px;
+}
+#element normal.urgent,
+element alternate.urgent {
+	background-color: @urgent-background;
+}
+#element normal.active,
+element alternate.active {
+	background-color: @active-background;
+}
+#element selected {
+	background-color: @selected-normal-background;
+	text-color:	@selected-normal-foreground;
+	border: 1px;
+	border-color:	@selected-borders;
+}
+#element selected.active {
+	background-color: @selected-active-background;
+	text-color:	@selected-active-foreground;
+	/*border-color: @selected-active-foreground;*/
+}
+#element selected.urgent {
+	background-color: @selected-urgent-background;
+	text-color:	@selected-urgent-foreground;
+	/*border-color: @selected-urgent-foreground;*/
+}
+

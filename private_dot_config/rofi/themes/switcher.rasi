@@ -1,0 +1,35 @@
+/* vim: set ft=css fdm=indent ai ts=2 sw=2 noet: */
+
+@theme "common"
+
+window {
+	width: 50%;
+	location: center;
+	anchor: center;
+}
+
+listview {
+	dynamic: true;
+	fixed-height: false;
+	columns: 1;
+}
+
+/*mainbox {*/
+	/*children: [ listview ];*/
+/*}*/
+
+element {
+	orientation: horizontal;
+}
+
+element-icon {
+	size: 16px;
+}
+
+element-text {
+	horizontal-align: 0;
+	vertical-align: 0.5;
+	font: "SF Pro Display Light 12";
+	/*font: "SF Mono Light 11";*/
+}
+

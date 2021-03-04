@@ -1,0 +1,1 @@
+/home/canalguada/.config/rofi/launchers/i3_launcher.sh

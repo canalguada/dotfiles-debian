@@ -1,0 +1,41 @@
+# vim: set ts=2 sw=2 ft=sh noet:
+
+# Open YouTube videos in Celluloid:
+celluloid --enqueue %U
+  ^https?://(www.)?youtube.com/watch\?.*v=
+
+/home/canalguada/bin/Browser %U
+  ^https?://
+	^file:///usr/share/doc/python/html
+
+audacious -1 -E -q %F
+	\.mp3$
+	\.flac$
+	\.m4a$
+	\.ogg$
+	\.opus$
+
+/home/canalguada/bin/qnvim %F
+	\.p[ly]$
+	\.txt$
+	\.desktop$
+	\.sh$
+	\.json$
+
+
+##Associate HTTP and HTTPS URIs with Firefox:
+#/usr/bin/firefox %U
+  #^https?://
+
+##Associate Perl (*.pl),  Python (*.py) and text (*.txt) files with gVim:
+#/usr/bin/gvim %F
+  #\.p[ly]$
+  #\.txt$
+
+##Enqueue various media files in a running instance of VLC:
+#/usr/bin/vlc --one-instance --playlist-enqueue %F
+  #\.mp3$
+  #\.flac$
+  #\.avi$
+  #\.mpg$
+  #\.flv$

@@ -5,4 +5,6 @@
 .mpv/bak
 .gnupg/*.pep.bkp
 .gnupg/log
-
+.config/mutt/.mailsynclastrun
+.config/rofi/cache
+.config/rofi/old

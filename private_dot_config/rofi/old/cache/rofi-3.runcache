@@ -1,0 +1,22 @@
+19 htop
+5 echo toto
+3 qnv
+3 nm-applet
+3 gtk3-widget-factory
+2 xfce4-notifyd-config
+2 xfce4-terminal -x htop
+2 /usr/bin/htop
+2 xfce4-terminal
+2 TT -- htop
+1 alacritty -e htop
+1 pcmanfm-qt
+1 lxqt-config
+1 xfce4-settings-manager
+1 Thunar
+1 cmus
+1 Cpu66 epiphany
+1 xsettingsd
+1 wallpaper random
+1 xman bash
+1 qnvim
+0 gnome-tweaks

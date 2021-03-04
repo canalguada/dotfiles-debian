@@ -1,0 +1,52 @@
+#!/usr/bin/sh
+# vim: set ft=sh ai ts=2 sw=2 tw=79 noet:
+
+rofi_command="rofi -theme themes/six.rasi"
+
+lock() {
+  case "$XDG_SESSION_DESKTOP" in
+    i3) ${I3LOCKER:-lockmore --lock-icon --dpms 5 --nofork -e -f} ;;
+    i3-gnome)
+      dbus-send --type=method_call \
+        --dest=org.gnome.ScreenSaver \
+        /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
+      ;;
+    XFCE) xfce4-screensaver-command --lock ;;
+  esac
+}
+
+quit() {
+  case "$XDG_SESSION_DESKTOP" in
+    i3*) i3-msg exit ;;
+    XFCE) xfce4-session-logout --fast --logout ;;
+  esac
+}
+
+# Options
+shutdown=
+reboot=
+lock=
+suspend=
+logout=
+
+choice=$( \
+	cat <<-EOF | $rofi_command -dmenu -selected-row 2
+	$shutdown
+	$reboot
+	$lock
+	$logout
+	EOF
+)
+case $choice in
+  $shutdown) systemctl poweroff ;;
+  $reboot) systemctl reboot ;;
+  $lock) lock ;;
+  $logout) quit ;;
+  $suspend)
+    mpc -q pause
+    pactl set-sink-mute @DEFAULT_SINK@ 1
+    lock
+    systemctl suspend
+    ;;
+esac
+

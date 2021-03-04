@@ -1,0 +1,42 @@
+#!/usr/bin/sh
+# vim: set ft=sh ai ts=2 sw=2 tw=79 noet:
+
+rofi_command="rofi -theme themes/six.rasi"
+image_viewer="eog"
+dest_dir="~/Images/Screenshots"
+
+# Options
+screen=
+area=
+window=
+
+choice="$(echo "$screen\n$area\n$window" | $rofi_command -p '' -dmenu -selected-row 1)"
+if [ -z "$choice" ]; then
+	exit 0
+fi
+args=
+sleep 1
+if [ "$XDG_SESSION_DESKTOP" = "i3" ]; then
+	scrot_dest='Screenshot_%Y-%m-%d-%S_$wx$h.png'
+	scrot_post_cmd='mv $f '"$dest_dir"' ; '"$image_viewer"' '"$dest_dir"'/$f'
+	case $choice in
+		$area) args="-s" ;;
+		$window) args="-u" ;;
+	esac
+	( cd; scrot "$scrot_dest" -e "$scrot_post_cmd" $args; ) >/dev/null 2>&1
+elif [ "$XDG_SESSION_DESKTOP" = "i3-gnome" ]; then
+	case $choice in
+		$area) args="-a" ;;
+		$window) args="-w -B" ;;
+	esac
+	output="Screenshot_$(date +"%Y-%m-%d-%H-%M-%S").png"
+	gnome-screenshot -f "$output" $args >/dev/null 2>&1
+elif [ "$XDG_SESSION_DESKTOP" = "XFCE" ]; then
+	case $choice in
+		$screen) args="-f" ;;
+		$area) args="-r" ;;
+		$window) args="-w" ;;
+	esac
+	xfce4-screenshooter -o "$image_viewer" -s "$dest_dir/" $args >/dev/null 2>&1
+fi
+

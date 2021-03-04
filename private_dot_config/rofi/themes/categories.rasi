@@ -1,0 +1,21 @@
+/* vim: set ft=css fdm=indent ai ts=2 sw=2 noet: */
+
+@theme "common"
+
+window {
+ width: 40%;
+ location: center;
+ anchor: center;
+ y-offset: 0;
+}
+
+listview {
+ background-color: @background;
+ columns: 1;
+ /*lines: 5;*/
+}
+
+mainbox {
+ children: [ listview ];
+}
+

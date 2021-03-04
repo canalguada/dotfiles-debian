@@ -1,0 +1,73 @@
+#!/usr/bin/sh
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
+
+rofi_command="rofi -theme themes/six.rasi"
+
+# Gets the current status of mpd (for us to parse it later on)
+status="$(mpc status)"
+# Defines the Play / Pause option content
+case "$status" in
+  *"[playing]"*) play_pause= ;;
+  *) play_pause= ;;
+esac
+
+active=""
+urgent=""
+
+# Display if repeat mode is on / off
+tog_repeat=
+case "$status" in
+  *"repeat: on"*) active="-a 4" ;;
+  *"repeat: off"*) urgent="-u 4" ;;
+  *) tog_repeat=" Parsing error" ;;
+esac
+
+# Display if random mode is on / off
+tog_random=
+case "$status" in
+  *"random: on"*) [ -n "$active" ] && active+=",5" || active="-a 5" ;;
+  *"random: off"*) [ -n "$urgent" ] && urgent+=",5" || urgent="-u 5" ;;
+  *) tog_random=" Parsing error" ;;
+esac
+stop=
+next=
+previous=
+
+# Get the current playing song
+get_current()  {
+  mpc -f "[[%artist% - ]%title%]|[%file%]" current
+}
+current=$(get_current)
+# If mpd isn't running it will return an empty string, we don't want to display that
+if [ -z "$current" ]; then
+  current="-"
+fi
+
+# Spawn the mpd menu with the "Play / Pause" entry selected by default
+choice=$(
+  cat <<-EOF | $rofi_command -p "  $current" -dmenu $active $urgent -selected-row 1
+	$previous
+	$play_pause
+	$stop
+	$next
+	$tog_repeat
+	$tog_random
+	EOF
+)
+case $choice in
+  $previous)
+    mpc -q prev &&
+      notify-send -u low -t 1800 " $(get_current)"
+	 ;;
+	$play_pause)
+	 mpc -q toggle &&
+		notify-send -u low -t 1800 " $(get_current)"
+	 ;;
+	$next)
+	 mpc -q next &&
+		notify-send -u low -t 1800 " $(get_current)"
+	 ;;
+	$stop) mpc -q stop ;;
+	$tog_repeat) mpc -q repeat ;;
+	$tog_random) mpc -q random ;;
+esac

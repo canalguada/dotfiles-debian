@@ -1,0 +1,11 @@
+/* vim: set ft=css fdm=indent ai ts=2 sw=2 noet: */
+
+@theme "common"
+
+window {
+	width: 40%;
+	location: north;
+	anchor: north;
+	y-offset: 18;
+}
+

@@ -1,0 +1,88 @@
+@import "~/.config/rofi/common.rasi"
+
+* {
+	/* General */
+	/*text-font:                    "Comfortaa 16";*/
+	/*text-font:                    "feather 20";*/
+	/*icon-font:                    "feather 16";*/
+	icon-font:                      "SF Pro Display Light 16";
+
+	element-border:                 1px;
+	element-border-selected:        1px;
+	element-border-radius:          2px;
+
+	element-padding:                4px 0px 4px -22px;
+
+	font:							@icon-font;
+}
+
+window {
+	width:							50px;
+	location:						east;
+	anchor:							east;
+	x-offset:						-3px;
+	y-offset:						0%;
+	padding:						@window-padding;
+	spacing:						0px;
+}
+
+listview {
+	layout:							vertical;
+	spacing:						@listview-spacing;
+	lines:							6;
+}
+
+mainbox {
+	children:						[ listview ];
+}
+
+element {
+	background-color:				@background-light;
+	font:							@icon-font;
+	border:							@element-border;
+	border-radius:					@element-border-radius;
+	border-color:					@unfocused-borders;
+	padding:						@element-padding;
+}
+
+element alternate {
+	background-color:				@background-light;
+}
+
+element-text {
+	horizontal-align:               0;
+	vertical-align:                 0.5;
+}
+
+element-icon {
+	enable:							false;
+}
+
+element normal.active,
+element alternate.active {
+	background-color:				@on;
+}
+
+element normal.urgent,
+element alternate.urgent {
+	background-color:				@off;
+}
+
+element selected {
+	/*border-color:					@theme-selected-fg-color;*/
+	text-color:						@theme-selected-fg-color;
+}
+
+element selected.urgent {
+	background-color:				@on;
+	/*border-color:					@accent;*/
+	border-color:                   @theme-unfocused-fg-color;
+}
+
+element selected.active {
+	background-color:				@off;
+	/*border-color:					@accent;*/
+	border-color:                   @theme-unfocused-fg-color;
+}
+
+/* vim: set ft=css ai ts=4 sw=4: */

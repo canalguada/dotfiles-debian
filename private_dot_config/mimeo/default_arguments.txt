@@ -1,0 +1,2 @@
+--user --full-path --term "/home/canalguada/bin/Terminal -e '%s'"
+

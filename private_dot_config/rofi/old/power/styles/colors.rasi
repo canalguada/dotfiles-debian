@@ -1,0 +1,21 @@
+/*
+ * Change the colorscheme for every menu simply by editing this file...
+ *
+ * Available Color Schemes
+ *
+ * bluish    berry    nordic    nightly    gotham    mask    faded    cocoa
+ *
+ */
+
+/* -- Yaru Dark-- */
+* {
+    background:                     #3e3e3eff;
+    background-alt:                 #3e3e3eff;
+    foreground:                     #f7f7f7b3;
+    border:               			#2c2c2cff;
+    border-alt:               		#45E3FFff;
+    selected:               		#df4a16ff;
+    urgent:                         #DA4453FF;
+}
+
+/*@import "nightly.rasi"*/

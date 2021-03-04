@@ -1,0 +1,14 @@
+* {
+	background:                     #3e3e3eff;
+	background-alt:                 #2c2c2cff;
+	background-light:               #484848ff;
+	foreground:                     #f7f7f7b3;
+	border:               			#222222ff;
+	accent:                         #df4a16ff;
+	on:                             #773f72ff;
+	off:                            #ef5350ff;
+	selected:               		#df4a16ff;
+	urgent:                         #713fc6ff;
+}
+
+/* vim: set ft=css ai ts=4 sw=4: */

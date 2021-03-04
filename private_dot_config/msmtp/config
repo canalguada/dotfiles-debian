@@ -1,0 +1,51 @@
+defaults
+auth	on
+tls	on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile	~/.config/msmtp/msmtp.log
+
+account spambox
+host smtp.free.fr
+port 587
+from canalguada.spambox@free.fr
+user canalguada.spambox
+passwordeval "pass mutt-wizard-spambox"
+
+
+account maman
+host smtp.free.fr
+port 587
+from antonia.guadalupe@free.fr
+user antonia.guadalupe
+passwordeval "pass mutt-wizard-maman"
+
+
+
+
+account gmail
+host smtp.gmail.com
+port 587
+from guadalupe.david@gmail.com
+user guadalupe.david@gmail.com
+passwordeval "pass mutt-wizard-gmail"
+
+
+
+
+account dguadal
+host smtp.free.fr
+port 587
+from dguadal@free.fr
+user dguadal
+passwordeval "pass mutt-wizard-dguadal"
+
+
+account celerity
+host smtp.free.fr
+port 587
+from david.celerity@free.fr
+user david.celerity
+passwordeval "pass mutt-wizard-celerity"
+
+
+

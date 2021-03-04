@@ -1,0 +1,17 @@
+/home/canalguada/.*
+/home/canalguada/backup
+/home/canalguada/builds
+/home/canalguada/Bureau/Acer
+/home/canalguada/Bureau/pkg
+/home/canalguada/dotfiles
+/home/canalguada/git
+/home/canalguada/Images/Wallpapers
+/home/canalguada/Musique/CDRip
+/home/canalguada/Musique/Various
+/home/canalguada/node_modules
+/home/canalguada/public_html/diveintopython3/.git
+/home/canalguada/PycharmProjects/others
+/home/canalguada/smbnet
+/home/canalguada/Téléchargements/*.zip
+/home/canalguada/Téléchargements/*.torrent
+/home/canalguada/Téléchargements/*.tar.*
