@@ -3,3 +3,6 @@
 .task/*.tar.gz
 .mpv/bak/**
 .mpv/bak
+.gnupg/*.pep.bkp
+.gnupg/log
+

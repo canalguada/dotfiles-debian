@@ -1,0 +1,10 @@
+sourceDir = "/home/canalguada/.dotfiles/debian"
+
+[gpg]
+	recipient = "<canalguada.spambox@free.fr>"
+
+[sourceVCS]
+	autoCommit = true
+	# autoPush = true
+
+#  vim: set ft=toml fdm=manual ts=2 sw=2 tw=79 noet:
