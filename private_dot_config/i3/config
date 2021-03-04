@@ -431,6 +431,8 @@ bindsym Mod1+F3 exec --no-startup-id exec gmrun
 bindsym --release Mod1+F5 exec --no-startup-id xkill
 bindsym --release Mod1+F6 exec --no-startup-id urxvtc -hold -name xprop -e xprop
 bindsym --release Print exec --no-startup-id rofi_screenshot
+bindsym $mod+p exec exec rofi-pass
+bindsym $mod+Shift+p exec exec rofi-pass --bmarks
 #bindsym $mod+p exec passmenu --type
 #bindsym $mod+p exec passmenu -window-title "pass" -no-show-icons
 #bindsym Mod1+Ctrl+v exec selpaste
