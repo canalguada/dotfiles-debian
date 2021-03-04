@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#exec Terminal --working-directory=$HOME/Bureau \
+	#--icon=neomutt --name=mail --title=mutt -- /usr/bin/neomutt "$@"
+
+urxvtc -cd $(xdg-user-dir DESKTOP) -name mail -title mutt -e /usr/bin/neomutt "$@"
+#/usr/bin/urxvtc -name mail -title mutt -e /usr/bin/neomutt "$@"
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:

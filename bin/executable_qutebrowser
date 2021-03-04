@@ -1,0 +1,29 @@
+#!/bin/sh
+
+QUTE_BIN="/usr/bin/qutebrowser"
+QUTE_ARGS="-R"
+QUTE_ENV="JSC_useJIT=0"
+
+export $QUTE_ENV
+exec Cpu66 --slice -- $QUTE_BIN $QUTE_ARGS "$@"
+
+# # Deprecated
+# # initial idea: Florian Bruhin (The-Compiler)
+# # author: Thore Bödecker (foxxx0)
+#
+# url="$1"
+# qute_bin="/usr/bin/qutebrowser"
+# qute_args="-R"
+# qb_version='1.0.4'
+# proto_version=1
+# ipc_socket="${XDG_RUNTIME_DIR}/qutebrowser/ipc-$(echo -n "$USER" | md5sum | cut -d' ' -f1)"
+# #_qute_args="-r main"
+#
+# printf '{"args": ["%s"], "target_arg": null, "version": "%s", "protocol_version": %d, "cwd": "%s"}\n' \
+#   "${url}" \
+#   "${qb_version}" \
+#   "${proto_version}" \
+#   "${PWD}" | socat - UNIX-CONNECT:"${ipc_socket}" 2>/dev/null ||
+#   exec Cpu66 --slice -- $qute_bin $qute_args "$@"
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

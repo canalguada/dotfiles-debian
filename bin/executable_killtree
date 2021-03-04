@@ -1,0 +1,20 @@
+#!/bin/sh
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
+
+_killtree() {
+	local pid=$1
+	local sig=${2:--TERM}
+	# needed to stop quickly forking parent from producing children between child killing and parent killing
+	kill -stop ${pid}
+	for child in $(ps -o pid --no-headers --ppid ${pid}); do
+		_killtree ${child} ${sig}
+	done
+	kill -${sig} ${pid}
+}
+
+if [ $# -eq 0 ] || [ $# -gt 2 ]; then
+	echo "Usage: $(basename $0) <pid> [signal]"
+	exit 1
+fi
+
+_killtree $@

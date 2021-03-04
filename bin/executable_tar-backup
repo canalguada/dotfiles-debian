@@ -1,0 +1,78 @@
+#!/bin/sh
+
+PROG=$(basename "$0")
+
+SUDO=""
+if [ $(id -ru) -ne 0 ]; then
+	SUDO="sudo"
+fi
+
+usage () {
+	cat <<-EOF
+	Usage: $PROG SRCDIR [DESTDIR]
+	Create an archive of SRCDIR into DESTDIR (default: /var/tmp/)
+	EOF
+}
+
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+	usage
+	exit 1
+fi
+
+checkdir () {
+	if [ ! -d "$1" ]; then
+		echo "$PROG: no such directory: '$1'" >&2
+		exit 2
+	elif [ ! -r "$1" ]; then
+		echo "$PROG: cannot open directory '$1': Permission denied" >&2
+		exit 4
+	fi
+	return 0
+}
+# Backup source
+checkdir "$1" &&
+	src=$(realpath "$1")
+
+# Backup destination
+[ -z "$2" ] &&
+	dest="/var/tmp" ||
+	{ checkdir "$2" && dest=$(realpath "$2") ; }
+
+# Labels for backup name
+distrib=$(lsb_release -si | tr "[:upper:]" "[:lower:]")
+mode=full
+label=$(systemd-escape -p "$src")
+
+# Exclude file location, if any
+exclude_dir="${XDG_CONFIG_HOME:-$HOME/.config}/tar-backup/exclude.d"
+exclude_file="${exclude_dir}/${label}.exclude"
+
+backupfile="$(hostname -s)_${distrib}_${mode}_${label}_$(date "+%F").tar.gz"
+
+# Prompt
+echo -n "Are you ready to backup? (y/N): "
+read executeback
+# Check if exclude file exists
+excluding="--exclude-from=$exclude_file"
+if [ ! -f "$exclude_file" ]; then
+	echo -n "No exclude file exists, continue? (Y/n): "
+	read response
+	if [ "$response" = "n" ]; then exit; fi
+	excluding=""
+fi
+
+if [ "$executeback" = "y" ]; then
+	# -p, --acls and --xattrs store all permissions, ACLs and extended attributes.
+	# Without both of these, many programs will stop working!
+	# It is safe to remove the verbose (-v) flag. If you are using a
+	# slow terminal, this can greatly speed up the backup process.
+	cd /var/tmp
+	$SUDO tar $excluding --one-file-system --acls --xattrs -cpvf $backupfile $src/
+	$SUDO chmod 700 $backupfile
+	$SUDO chown $(stat -c "%U:%G" -- $src) $backupfile
+	if [ "$dest" != "/var/tmp" ]; then
+		$SUDO mv "$backupfile" $dest/
+	fi
+fi
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

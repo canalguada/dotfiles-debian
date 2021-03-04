@@ -1,0 +1,124 @@
+#!/bin/sh
+# vim: set ft=sh ai ts=4 sw=4 tw=79:
+
+# Colors
+readonly reset="\e[0m"
+readonly colorR="\e[1;31m"
+readonly colorG="\e[1;32m"
+readonly colorY="\e[1;33m"
+readonly colorB="\e[1;34m"
+readonly colorM="\e[1;35m"
+readonly colorW="\e[1;39m"
+
+PROG="$(basename $0)"
+
+ICON_UP=${ICON_UP:-""}
+ICON_DOWN=${ICON_DOWN:-""}
+ICON_MUTED=${ICON_MUTED:-""}
+
+# Functions to show error and warning messages
+error_exit() {
+  echo "${colorR}$PROG: error: ${2:-'unknown error'}${reset}" 1>&2
+  exit "${1:-1}"
+}
+
+#warning() {
+#echo -e "${colorY}$PROG: warning: ${1:-'unknown error'}${reset}" 1>&2
+#}
+
+#is_running () {
+#pgrep -lx -u $UID -U $UID "$PROG" >/dev/null
+#}
+
+usage()  {
+  cat <<-EOF | column -t -s ';'
+	;;
+		;Manage volume.;;
+		;;
+		;usage :;
+		;  $PROG {-h --help};Show this message
+		;  $PROG {U u [U,u]p};Raise volume by 5%
+		;  $PROG {D d [D,d]own [D,d]o};Lower volume by 5%
+		;  $PROG {M m [M,m]u [M,m]ute};Toggle mute status
+		;  $PROG {status};Show status
+	EOF
+}
+
+if [ $# -eq 0 ]; then
+  usage
+  exit 0
+fi
+
+while getopts ":-:h" option; do
+  case $option in
+    -)
+      case "$OPTARG" in
+        help) usage exit 0 ;;
+        *) error_exit 1 "unknown option '$OPTARG'." ;;
+      esac
+      ;;
+    h) usage exit 0 ;;
+    \?) error_exit 1 "unknown option '$OPTARG'." ;;
+    :) error_exit 1 "missing argument for option '$OPTARG'." ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+SINK_STATUS=
+
+get_status()  {
+  pacmd list-sinks | grep -A 15 '* index'
+}
+
+is_muted()  {
+  [ -z "$SINK_STATUS" ] &&
+    SINK_STATUS=$(get_status)
+  echo "$SINK_STATUS" | awk '/muted:/{ print $2 }'
+}
+get_curvol()  {
+  [ -z "$SINK_STATUS" ] &&
+    SINK_STATUS=$(get_status)
+    echo "$SINK_STATUS" | awk '/volume: front/{ print $5 }' | sed 's/[%|,]//g'
+}
+
+case $1 in
+  U | u | [U,u]p)
+    if pactl set-sink-volume @DEFAULT_SINK@ +5% &&
+      pactl set-sink-mute @DEFAULT_SINK@ 0; then
+      CURVOL="$(get_curvol)"
+      notify-send -a "$PROG" -u low -t 1000 \
+        -i multimedia-volume-control \
+        --hint=int:transient:1 \
+        --hint=int:value:$CURVOL \
+        --hint=string:synchronous:volume \
+        "Volume up $ICON_UP $CURVOL %" ""
+    fi
+    ;;
+  D | d | [D,d]own | [D,d]o)
+    if pactl set-sink-volume @DEFAULT_SINK@ -5% &&
+      pactl set-sink-mute @DEFAULT_SINK@ 0; then
+      CURVOL="$(get_curvol)"
+      notify-send -a "$PROG" -u low -t 1000 \
+        -i multimedia-volume-control \
+        --hint=int:transient:1 \
+        --hint=int:value:$CURVOL \
+        --hint=string:synchronous:volume \
+        "Volume down $ICON_DOWN $CURVOL %" ""
+    fi
+    ;;
+  M | m | [M,m]u | [M,m]ute)
+    if pactl set-sink-mute @DEFAULT_SINK@ toggle; then
+      CURVOL="$(get_curvol)"
+      MUTED="$(is_muted)"
+      notify-send -a "$PROG" -u low -t 1000 \
+        --hint=int:transient:1 \
+        "Mute toggle" "Muted: $MUTED Volume $CURVOL %" \
+        --icon=audio-volume-muted
+    fi
+    ;;
+  status)
+    echo "$(is_muted) $(get_curvol)"
+    ;;
+esac
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

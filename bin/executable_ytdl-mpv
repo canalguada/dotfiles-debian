@@ -1,0 +1,66 @@
+#!/bin/bash
+# vim: set filetype=sh ai ts=4 sw=4 tw=79:
+
+usage() {
+	cat <<-EOF | column -t -s ';'
+		  ;Usage: $(basename $0) <url>
+		;;
+	EOF
+	return 0
+}
+
+if [ $# -lt 1 ]; then
+	usage
+	echo 'Terminating...' >&2
+	exit 1
+fi
+
+URL=$1
+
+#JSON="$HOME/Bureau/youtube-dl.json"
+JSON=$(mktemp -p /tmp "ytdl-mpv-XXXXXXX.json")
+JQ=$(mktemp -p /tmp "ytdl-mpv-XXXXXXX.jq")
+cat <<EOF >"$JQ"
+.formats[] |
+	{
+		"format_id": .format_id,
+		"tbr": .tbr,
+		"ext": .ext,
+		"format": ((.width|tostring) + "x" + (.height|tostring)),
+		"url": .url
+	} |
+		("FALSE " + .format_id + " " + (.tbr|tostring) + " " + .ext +
+		" " + .format + " " + .url )
+EOF
+
+clean() {
+	rm -f "$JSON"
+	rm -f "$JQ"
+}
+trap clean EXIT
+
+Cpu33 -- /usr/bin/youtube-dl -j "$URL" 2>/dev/null >|"$JSON"
+
+DATA=$(jq -f "$JQ" "$JSON" | xargs echo)
+#echo $DATA
+
+[ -z "$DATA" ] && exit 2
+
+yad_cmd=(yad --center --on-top --width=340 --height=256)
+yad_cmd+=(--grid-lines=hor --title="$0 $*")
+yad_cmd+=(--text="Choisissez le format à afficher")
+yad_cmd+=(--list --radiolist)
+yad_cmd+=(--print-column=6 --hide-column=6)
+yad_cmd+=(--separator="")
+yad_cmd+=(--column "play")
+yad_cmd+=(--column "format_id")
+yad_cmd+=(--column "tbr")
+yad_cmd+=(--column "ext")
+yad_cmd+=(--column "format")
+yad_cmd+=(--column "url")
+
+PLAYABLE=$("${yad_cmd[@]}" $DATA)
+
+[ -z "$PLAYABLE" ] && exit 1
+
+mpv "$PLAYABLE"

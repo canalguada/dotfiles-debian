@@ -1,0 +1,2 @@
+#!/bin/sh
+ffprobe -loglevel quiet -show_format -show_streams -print_format json "$1"

@@ -1,0 +1,23 @@
+#!/bin/sh
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
+
+DESTDIR="${DESTDIR:-$HOME/Bureau}"
+urlfile="./magnet.txt"
+
+aria_download()  {
+  $(command -v Cpu8) --slice -- aria2c --bt-max-peers=20 \
+    -d "$DESTDIR" --seed-time=0 "$1"
+}
+
+if [ -z "$1" ]; then
+  if [ -r "$urlfile" ]; then
+    cat "$urlfile" | while read -r magnet; do
+      aria_download "$magnet"
+    done
+  fi
+else
+  while [ $# -gt 0 ]; do
+    aria_download "$1"
+    shift
+  done
+fi

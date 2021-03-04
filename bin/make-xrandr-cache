@@ -1,0 +1,26 @@
+#!/bin/sh
+# vim: set ft=sh ai ts=2 sw=2 tw=79 noet:
+
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/xrandr"
+mkdir -p "$CACHE_DIR"
+
+make_cache () {
+	cd "$CACHE_DIR"
+	if ! [ -e "current" ]; then
+		xrandr --current 2>/dev/null >"current"
+	fi
+
+	if ! [ -e "screenarea" ]; then
+		grep -oP '(?<=current )\d+ x \d+' "current" |sed 's/ //g' >"screenarea"
+	fi
+
+	if ! [ -e "screens" ]; then
+		grep -oP '\d+x\d+\+\d+\+\d+' "current" >"screens"
+	fi
+
+	if ! [ -e "hash" ]; then
+		md5sum "current" | cut -c 1-32 >"hash"
+	fi
+}
+
+( make_cache ; )

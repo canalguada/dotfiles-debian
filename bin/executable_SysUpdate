@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#exec Terminal --icon=system-software-update --name=pkgs \
+	#"--title=pkgs up" -- pkgs -tp up
+
+cmd="pkgs -t upgrade --all"
+urxvtc -name sysupdate -title "$cmd" -e $cmd 
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:

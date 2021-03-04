@@ -1,0 +1,42 @@
+#!/bin/sh
+
+PROG=$(basename "$0")
+PERCENT=${PERCENT:-66}
+PERIOD=10
+
+RUNNING=$(echo "scale=1; $PERIOD*${PERCENT}/100" | bc -l)
+STOPPED=$(echo "scale=1; $PERIOD-${RUNNING}" | bc -l)
+
+usage() {
+  if [ -t 1 ]; then
+    cat <<-EOF
+		Usage: $PROG command [args...]
+		EOF
+  fi
+}
+if [ $# -lt 1 ]; then
+  usage
+  exit 1
+fi
+
+cmd="$1"
+shift
+
+if ! command -v "$cmd" >/dev/null 2>&1; then
+	echo "$cmd not found" >&2
+  usage
+  exit 2
+fi
+"$cmd" "$@" &
+
+pid=$!
+
+exec >/dev/null 2>&1
+while ps -p $pid; do
+  sleep $RUNNING
+  ps -p $pid && kill -STOP $pid || break
+  sleep $STOPPED
+  ps -p $pid && kill -CONT $pid || break
+done
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+#systemd-run -G --user -t \
+#-p CPUQuota=8% \
+#-p IOSchedulingClass=idle \
+#-p Nice=19 \
+#/usr/bin/bleachbit "$@" &
+
+unset DO_THROTTLE
+for arg; do
+	case "$arg" in
+		-c|--clean|-p|--preview)
+			DO_THROTTLE=y
+			break ;;
+	esac
+done
+
+if ! command -v throttle >/dev/null 2>&1; then
+	echo "throttle: command not found" >&2
+	exit 1
+fi
+
+if ! command -v Cpu33 >/dev/null 2>&1; then
+	echo "Cpu33: command not found" >&2
+	exit 1
+fi
+
+cmd="`command -v Cpu33` --slice -- /usr/bin/bleachbit"
+if [ "$DO_THROTTLE" = "y" ]; then
+	cmd="`command -v throttle` $cmd"
+fi
+
+$cmd "$@"
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:

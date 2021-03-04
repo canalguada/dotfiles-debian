@@ -1,0 +1,187 @@
+#!/bin/sh -u
+# vim: set ft=sh fdm=marker ai ts=2 sw=2 tw=79:
+
+PROG=$(basename $0)
+
+# TODO: Remove this default value when reading from environment file
+CIFS_AUTOMOUNT_ROOT=${CIFS_AUTOMOUNT_ROOT:-/cifs}
+CIFS_AUTOMOUNT_OPTIONS=${CIFS_AUTOMOUNT_OPTIONS:-guest,noperm,iocharset=utf8,rw}
+CIFS_AUTOMOUNT_NETMASK=${CIFS_AUTOMOUNT_NETMASK:-$( \
+	ip -o -4 addr |grep -oP "inet [^[:blank:]]* brd"|cut -d' ' -f2)}
+# TODO: Remove this default value when reading from environment file
+CIFS_AUTOMOUNT_INSECURE=${CIFS_AUTOMOUNT_INSECURE:-192.168.1.254}
+
+usage () {
+	cat <<-EOF
+	Mount anonymously, or unmount, all the available shares in local network.
+	Usage: $PROG [--unmount]
+	EOF
+}
+
+is_absolute_path () {  # {{{
+	# Do not accept space in directory name
+	[ -n "$(echo "$1" |awk '/^\/([^ \/]+\/?)*$/ {print $0}')" ]
+}  # }}}
+
+create_tmpdir () {  # {{{
+	! is_absolute_path "$1" &&
+		exit 1
+	# TODO: Do not remove root dir if a config file exists for this path
+	echo "D $1 0755 root root 0 -" | \
+	systemd-tmpfiles --remove --create -
+}  # }}}
+
+[ ! -d "$CIFS_AUTOMOUNT_ROOT" ] &&
+	create_tmpdir "$CIFS_AUTOMOUNT_ROOT"
+
+debug () {  # {{{
+	logger -p user.debug --id=$$ -t "$PROG" "debug: $*"
+	echo "$PROG: debug: $*" >&2
+}  # }}}
+
+notice () {  # {{{
+	logger -p user.notice --id=$$ -t "$PROG" "$*"
+	echo "$PROG: $*" >&2
+}  # }}}
+
+str_lower () {  # {{{
+	[ -n "$1" ] &&
+		echo "$1" |tr "[:upper:]" "[:lower:]"
+}  # }}}
+
+find_servers () {  # {{{
+	if ! command -v nmblookup >/dev/null 2>&1; then
+		exit 16
+	fi
+	nmblookup '*' |cut -d\  -f1
+
+	# Alternatives
+
+	# nmap :
+	# DIGITS='(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+	# IP_REGEX=$DIGITS'\.'$DIGITS'\.'$DIGITS'\.'$DIGITS
+	# nmap -p 139 -sT "$CIFS_AUTOMOUNT_NETMASK" | \
+	#   grep -B4 -A1 "tcp open" | \
+	#   grep -oP $IP_REGEX
+
+	# nbtscan
+	# nbtscan -s : -q "$CIFS_AUTOMOUNT_NETMASK" | \
+	#   cut -d":" -f1
+}  # }}}
+
+has_shares () {  # {{{
+	echo "$buffer" |grep -q "^Disk"
+}  # }}}
+
+list_shares () {  # {{{
+	echo "$buffer" |grep "^Disk" |cut -d\| -f2
+}  # }}}
+
+get_share_properties () {  # {{{
+	eval $( \
+		echo "$buffer" |grep "^Workgroup" | \
+		awk -F '|' '{ print "workgroup="$2, ";", "netbios_name="$3 }')
+	eval $( \
+		echo "$buffer" |grep "^IPC" | \
+		sed 's/.*(\(.*\))$/server_name="\1"/g')
+}  # }}}
+
+get_mount_point () {  # {{{
+	echo "$CIFS_AUTOMOUNT_ROOT/"$(str_lower "${1:-$netbios_name}/${2:-$share}")
+}  # }}}
+
+stop_existing_units () {  # {{{
+	escaped=$(systemd-escape -p "${1:-$mount_point}")
+	for item in "mount" "automount"; do
+		[ "$(systemctl is-active "${escaped}.${item}")" = "active" ] &&
+			{
+				notice "Stopping active unit: ${escaped}.${item}"
+				systemctl stop "${escaped}.${item}"
+			}
+	done
+}  # }}}
+
+set_mount_options () {  # {{{
+	mount_options="$CIFS_AUTOMOUNT_OPTIONS"
+	case "$CIFS_AUTOMOUNT_INSECURE" in
+		*"$ip_addr"*) mount_options="vers=1.0,$mount_options" ;;
+	esac
+	[ -n "$workgroup" ] && mount_options="workgroup=${workgroup},$mount_options"
+}  # }}}
+
+if [ $# -gt 1 ]; then
+	usage
+	exit 1
+fi
+
+UNMOUNT=n
+
+DEBUG=${DEBUG:-n}
+DRYRUN=${DRYRUN:-n}
+
+if [ $# -eq 1 ]; then
+	case "$1" in
+		-u|--unmount)
+			UNMOUNT=y
+			;;
+		*)
+			usage
+			exit 1
+			;;
+	esac
+fi
+
+
+find_servers | while read -r ip_addr; do
+	buffer=$(smbclient -N -g -L "$ip_addr")
+	# if no share, proceed with the next server ip
+	has_shares || continue
+	# get workgroup, server and netbios name
+	get_share_properties
+	# prepare mount options
+	set_mount_options
+	# for each share
+	list_shares | while read -r share; do
+		mount_point=$(get_mount_point)
+
+		[ "$DEBUG" = "y" ] &&
+			debug "$server_name ($netbios_name) -> " \
+			"//$ip_addr/$share -> $mount_point:$mount_options"
+
+		[ "$DRYRUN" = "y" ] && continue
+
+		# Stop existing mount and automount units, if any
+		stop_existing_units
+
+		# If unmounting is required, proceed with next share
+		[ "$UNMOUNT" = "y" ] && continue
+		# Else create moint point directory, if not exists
+		mkdir -p "$mount_point"
+		# Then finally mount share
+		desc="$server_name CIFS share $share on $mount_point"
+		notice "Setting up $desc"
+		systemd-mount --no-block --collect \
+			--description="$desc" \
+			--automount=yes --timeout-idle-sec=5min \
+			-t cifs -o "$mount_options" \
+			"//$ip_addr/$share" "$mount_point"
+	done
+done
+
+# buffer=$(smbtree -N)
+#
+# find_netbios_names () {
+#   echo "$buffer" |grep -oP '\\\\[_[:alpha:]]*' |sort -u |sed 's/\\\\//g'
+# }
+#
+# find_shares_from_netbios_name () {
+#   pattern='\\\\'"$1"'\\'
+#   echo "$buffer" |grep -oP $pattern'[_[:alpha:]]*' \
+#       |sort -u |sed 's/'"$pattern"'//g' | grep -i -v "IPC"
+# }
+#
+# get_server_ip_from_netbios_name () {
+#   nmblookup "$1" |cut -f1 -d" "
+# }
+
+exit 0

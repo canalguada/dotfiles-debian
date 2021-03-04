@@ -1,0 +1,22 @@
+#!/bin/sh
+
+tmux_bin="/usr/bin/tmux"
+
+if [ $# -lt 1 ]; then
+	echo "Exécute la ligne de commande dans une nouvelle fenêtre de tmux.\n\tusage: t cmd [cmdargs…]"
+	exit 1
+fi
+
+if ! command -v "$1" >/dev/null 2>&1; then
+	echo "$1 not found"
+	exit 1
+fi
+
+if ! $tmux_bin list-sessions >/dev/null 2>&1; then
+	$tmux_bin new-session -s $USER -n "shell" -d
+else
+	$tmux_bin attach -t $USER
+fi
+$tmux_bin neww -n $(basename "$1") "$@"
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

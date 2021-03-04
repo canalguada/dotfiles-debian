@@ -1,0 +1,39 @@
+#!/bin/sh
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:
+
+args="$*"
+available=
+
+if [ -z "$*" ]; then
+	set -- $(ps -q $PPID aho comm)
+fi
+
+while [ -n "$*" ]; do
+	man -f "$1" >/dev/null 2>&1 && available="$available $1"
+	shift
+done
+
+if [ -z "$available" ]; then
+  echo "$args : rien d'adéquat"
+  exit 2
+fi
+
+cmd="man -a"
+tabbed=n
+
+if xset q >/dev/null 2>&1; then
+	tabbed=y
+elif [ $(LANG=C tty) = "not a tty" ]; then
+	echo "Session graphique ou terminal requis."
+	exit 1
+fi
+
+# shellcheck disable=SC2086
+for item in $available; do
+	if [ "$tabbed" = "y" ]; then
+		urxvtc -title "$cmd $item" -e $cmd $item
+	else
+		$cmd $item
+	fi
+done
+

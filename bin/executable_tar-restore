@@ -1,0 +1,90 @@
+#!/bin/sh
+
+PROG=$(basename "$0")
+
+SUDO=""
+if [ $(id -ru) -ne 0 ]; then
+	SUDO="sudo"
+fi
+
+usage () {
+	cat <<-EOF
+	Usage: $PROG ARCHIVE
+	Restore an archive created with 'tar-backup' script.
+	EOF
+}
+
+if [ $# -ne 1 ]; then
+	usage
+	exit 1
+fi
+
+if [ ! -f "$1" ]; then
+	echo "$PROG: no such file: '$1'" >&2
+	exit 2
+fi
+
+bkpath=$(realpath "$1")
+bkname=$(basename "$1")
+
+rhost='[0-9a-z_]*'
+rdistrib='[[:alpha:]]*'
+rmode='full'
+rpath='[^-_]+.*[^-_]+'
+rdate='[0-9]{4}-[0-9]{2}-[0-9]{2}'
+regex="${rhost}_${rdistrib}_${rmode}_${rpath}_${rdate}"
+if [ -z "$(echo "$bkname" |awk '/^'$regex'\.tar\.gz$/ {print $0}')" ]; then
+	echo "$PROG: bad archive name: '$bkname'" >&2
+	exit 3
+fi
+
+get_srcdir () {
+	escaped=${1%_*}
+	escaped=${escaped##*_}
+	systemd-escape -p -u $escaped
+}
+
+is_absolute_path () {
+	echo "$1" |awk '/^\/([^\/]+\/?)*$/ {print $0}'
+}
+
+srcdir=$(get_srcdir "$bkname")
+if [ -z "$(is_absolute_path "$srcdir")" ]; then
+	echo "$PROG: bad archive name: '$bkname'" >&2
+	exit 4
+fi
+
+my_host=$(hostname -s)
+if [ "${bkname%%_*}" != "$my_host" ]; then
+	echo -n "'${bkname%%_*}': doesn't match current hostname '$my_host'."
+	echo -n " Continue? (y/N): "; read response
+	if [ "$response" != "y" ]; then exit 1; fi
+fi
+
+my_distrib=$(lsb_release -si | tr "[:upper:]" "[:lower:]")
+distrib=${bkname#*_}
+distrib=${distrib%%_*}
+if [ "$distrib" != "$my_distrib" ]; then
+	echo -n "'$distrib': doesn't match '$my_distrib'."
+	echo -n " Continue? (y/N): "; read response
+	if [ "$response" != "y" ]; then exit 1; fi
+fi
+
+my_date=${bkname##*_}
+my_date=${my_date%.tar.gz}
+if ! date -d "$my_date" "+%F" >/dev/null 2>&1; then
+	echo -n "'$my_date': wrong date format."
+	echo -n " Continue? (y/N): "; read response
+	if [ "$response" != "y" ]; then exit 1; fi
+fi
+
+# Prompt
+echo -n "Ready to restore '$bkname' backup ? (y/N): "
+read response
+if [ "$response" != "y" ]; then exit 1; fi
+
+( cd /; sudo tar --acls --xattrs -xpf "$bkpath"; )
+
+exit 0
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

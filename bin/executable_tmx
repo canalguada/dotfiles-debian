@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if ! systemctl --user is-active tmux.service >/dev/null 2>&1; then
+  systemctl --user start tmux.service
+fi
+
+if systemctl --user is-failed tmux.service >/dev/null 2>&1; then
+  echo "No '$USER' tmux session available"
+  exit 1
+fi
+
+prepend=
+if xset q >/dev/null 2>&1; then
+  prepend="urxvtc -name tmux -e "
+elif ! tty -s; then
+  exit 1
+fi
+
+exec $prepend /usr/bin/tmux attach -d -t $USER \; source $HOME/.tmux.conf
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

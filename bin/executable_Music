@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#exec Terminal --icon=audio-player \
+#	--name=music --title=ncmpcpp -- ncmpcpp "$@"
+
+#PLAYER=vlc
+#urxvtc -name music -title pyradio -e pyradio -u $PLAYER
+
+urxvtc -name music -title ncmpcpp -e ncmpcpp
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:

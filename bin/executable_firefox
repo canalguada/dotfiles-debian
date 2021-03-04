@@ -1,0 +1,19 @@
+#!/bin/sh
+
+firefox_bin="/usr/bin/firefox"
+
+unset prepend
+newtab="--new-tab"
+profile="-P default"
+if wmctrl -lpGx | grep -v grep | grep -q "Navigator.Firefox"; then
+	unset profile
+else
+	if command -v Cpu66 >/dev/null 2>&1; then
+		prepend="$(command -v Cpu66) --slice -- "
+	fi
+	unset newtab
+fi
+
+exec $prepend "$firefox_bin" $profile $newtab "$@"
+
+# vim: set ft=sh foldmethod=indent ai ts=4 sw=4 tw=79:

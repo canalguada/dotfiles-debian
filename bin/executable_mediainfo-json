@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ ! -f "$1" ]; then
+	exit 1
+fi
+
+python3 <<EOF
+from pymediainfo import MediaInfo
+import json
+mi = MediaInfo.parse("$1")
+buf = json.loads(mi.to_json())
+print(json.dumps(buf, indent="  "))
+EOF
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:

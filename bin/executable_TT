@@ -1,0 +1,22 @@
+#!/bin/sh
+
+usage () {
+	cat <<-EOF
+	Exécute la ligne de commande dans un nouvel onglet du terminal.
+	Usage: TT cmd [cmdargs…]
+	EOF
+}
+
+if [[ $# -lt 1 ]]; then
+	usage
+	exit 1
+fi
+
+if ! command -v "$1"; then
+	echo "$1: command not found" >&2
+	exit 2
+fi
+
+exec urxvtc -title $(basename "$1") -e "$@"
+
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79:

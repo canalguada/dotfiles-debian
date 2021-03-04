@@ -1,0 +1,58 @@
+#!/bin/bash
+# vim: set ft=sh ai ts=2 sw=2 tw=79:
+
+to_lower () { [ -n "$1" ] && echo "$1" |tr "[:upper:]" "[:lower:]" ; }
+
+files=() ; clean() { rm -f "${files[@]}" ; } ; trap clean EXIT
+
+bufgio=$(mktemp -p /tmp "gio-mount-XXXXXX") ; files+=("$bufgio")
+gio mount -l | grep -E -o -e "smb://[^/]+/[^/]+/" > "$bufgio"
+
+bufsmbtree=$(mktemp -p /tmp "smbtree-XXXXXX") ; files+=("$bufsmbtree")
+smbtree -N > "$bufsmbtree"
+
+servers=( $(cat "$bufsmbtree" \
+	|grep -oP '\\\\[_[:alpha:]]*' |sort -u |sed 's/\\\\//g') )
+
+gvfs_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -ru)}/gvfs"
+home_dir="$HOME/smbnet"
+
+for server in "${servers[@]}"; do
+	# Find shares
+	pattern='\\\\'"$server"'\\'
+	shares=( $(cat "$bufsmbtree" \
+		|grep -oP $pattern'[_[:alpha:]]*' \
+		|sort -u |sed 's/'"$pattern"'//g' | grep -i -v "IPC") )
+	for share in "${shares[@]}"; do
+		smb_share=$(to_lower "smb://$server/$share")
+		# Mount smb share, if required
+		if ! grep -q "$smb_share" "$bufgio"; then
+			gio mount -a "$smb_share"
+		fi
+		gvfs_mount=$(to_lower "$gvfs_dir/smb-share:server=$server,share=$share")
+		home_link_name="$home_dir/$(to_lower "$server/$share")"
+		# Link to the mount point
+		if [ -d "$gvfs_mount" ]; then
+			if [ ! -d $(dirname "$home_link_name") ]; then
+				mkdir -p $(dirname "$home_link_name")
+			fi
+			echo "$gvfs_mount --> $home_link_name"
+			ln -sf -T "$gvfs_mount" "$home_link_name" 
+		# Suppress link when unavailable
+		elif [ -h "$home_link_name" ]; then
+			rm -f "$home_link_name"
+		fi
+	done
+done
+
+#find ${gvfsdir}/ -maxdepth 1 -type d -iname "smb-share*" -print 2>&1 \
+	#| while read -r line; do
+			#server="${line##*server=}"
+			#server="${server%%,share=*}"
+			#share="${line##*,share=}"
+			#echo "${line} --> $HOME/smbnet/${server}/${share}"
+			#[ ! -d "$HOME/smbnet/${server}" ] && mkdir -p "$HOME/smbnet/${server}"
+			#ln -sf -T "$line" "$HOME/smbnet/${server}/${share}"
+	#done
+
+exit 0

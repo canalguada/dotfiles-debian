@@ -1,0 +1,10 @@
+#!/bin/sh
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
+
+if [ -z "$1" ]; then
+	exit 1
+fi
+
+Cpu8 --slice -- aria2c --bt-max-peers=20 -d "$(pwd)" \
+	--seed-time=0 --follow-torrent=false \
+	--bt-metadata-only=true --bt-save-metadata=true"$1"

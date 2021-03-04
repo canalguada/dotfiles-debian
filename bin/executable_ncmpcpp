@@ -1,0 +1,27 @@
+#!/bin/sh
+# vim: set ft=sh ai ts=4 sw=4 tw=79:
+
+if [ $(systemctl --user is-active mpd.service) = "active" ]; then
+	backend=mpd
+else
+	backend=mopidy
+fi
+
+more_args=""
+case "$backend" in
+mopidy)
+	if [ $(systemctl --user is-active mopidy.service) != "active" ]; then
+		systemctl --user start mopidy.service
+	fi
+	more_args="-h localhost -p 6600"
+	;;
+mpd)
+	if [ $(systemctl --user is-active mpd.socket) != "active" ]; then
+		systemctl --user start mpd.socket
+	fi
+	more_args="-h /run/user/$(id -ru)/mpd/socket"
+	;;
+esac
+
+shell-quote -- /usr/bin/ncmpcpp $more_args "$@"
+exec /usr/bin/ncmpcpp $more_args "$@"
