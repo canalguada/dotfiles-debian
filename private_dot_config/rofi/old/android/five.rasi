@@ -1,7 +1,0 @@
-@import "android/six"
-
-#listview {
-  lines: 5;
-}
-
-/* vim: set ft=css ai ts=4 sw=4: */
