@@ -2,8 +2,8 @@
 Description=Check for package updates timer
 
 [Timer]
-OnStartupSec=2h
-OnUnitInactiveSec=6h
+OnStartupSec=15min
+OnUnitInactiveSec=30min
 ;OnCalendar=*:30:00
 ;Persistent=true
 
