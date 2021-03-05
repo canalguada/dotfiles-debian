@@ -17,11 +17,7 @@ Gtk/KeynavUseCaret 0
 Gtk/ShellShowsAppMenu 0
 Gtk/CanChangeAccels 0
 Gtk/FontName "SF Pro Display Light 10"
-#Net/ThemeName "Yaru-dark"
-#Net/ThemeName "Ant-Dracula"
-Net/ThemeName "Drakula-dark"
-#Net/ThemeName "Dracula"
-#Net/ThemeName "Breeze-Dark"
+Net/ThemeName "Ant-Dracula"
 Net/DoubleClickTime 400
 Gtk/DialogsUseHeader 1
 Gdk/WindowScalingFactor 1
