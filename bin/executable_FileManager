@@ -3,6 +3,7 @@
 case "$XDG_SESSION_DESKTOP" in
 	i3) exec Cpu66 --slice -- pcmanfm-qt "$@" ;;
 	i3-gnome) exec Cpu66 --slice -- nautilus "$@" ;;
+	*) exec Cpu66 --slice -- pcmanfm-qt "$@" ;;
 esac
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:
