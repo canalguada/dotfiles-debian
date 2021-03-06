@@ -23,7 +23,10 @@ case "$XDG_SESSION_DESKTOP" in
 		msg="xss-lock --transfer-sleep-lock -n $I3SLIDESHOW -- $I3LOCKER"
 		# i3-msg "exec --no-startup-id exec $msg"
 		;;
-	i3-gnome)
+	*)
+		i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-wm.target'
+		;;
+	# i3-gnome)
 		# i3-msg 'exec dunst'
 		# i3-msg 'exec --no-startup-id gnome-flashback'
 		# i3-msg 'exec --no-startup-id gnome-power-manager'
@@ -31,6 +34,6 @@ case "$XDG_SESSION_DESKTOP" in
 		# I3LOCKER="dbus-send --type=method_call --dest=org.gnome.ScreenSaver "
 		# I3LOCKER+="/org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock"
 		# export I3LOCKER
-		;;
+		# ;;
 esac
 
