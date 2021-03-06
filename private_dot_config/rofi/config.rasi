@@ -3,7 +3,7 @@ configuration {
 	modi:							"window,drun,run";
 	font:                           "SF Pro Display Light 14";
 	/*show-icons:                     true;*/
-	icon-theme: 					"Yaru++-Dark";
+	icon-theme: 					"McMojave-circle-purple-dark";
 	display-window:					" :";
 	display-windowcd:				" :";
 	display-run:					" :";
