@@ -23,7 +23,8 @@ URxvt*secondaryScroll: 0
 ! Hack:pixelsize=12:antialias=false
 ! URxvt*font: xft:Droid Sans Mono Dotted for Powerline:style=Regular:pixelsize=11
 ! URxvt*letterSpace: -1
-URxvt*font: xft:Cascadia Mono PL:style=Regular:pixelsize=11
+! URxvt*font: xft:Cascadia Mono PL:style=Regular:pixelsize=11
+URxvt*font: xft:Input Mono Narrow:style=Regular:pixelsize=10
 URxvt*letterSpace: 0
 
 ! Slow performance when drawing glyphs
@@ -49,7 +50,7 @@ URxvt*clipboard.autocopy: false
 !URxvt*keysym.M-c: perl:clipboard:copy
 !URxvt*keysym.M-v: perl:clipboard:paste
 
-URxvt*url-select.launcher: /usr/bin/xdg-open 
+URxvt*url-select.launcher: /usr/bin/xdg-open
 URxvt*url-select.underline: true
 URxvt*keysym.M-u:           perl:url-select:select_next
 URxvt*keysym.M-Escape:      perl:keyboard-select:activate

@@ -375,6 +375,7 @@ bindsym $mod+F10 exec --no-startup-id urxvtc -name tmux -title tmux -e tmux new 
 # Correct handling of floating dialogs {{{
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+for_window [class="(?i)lxqt-panel"] floating enable
 for_window [class="(?i)yad"] floating enable
 for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)vlc"] floating enable
