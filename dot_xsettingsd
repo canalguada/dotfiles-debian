@@ -39,7 +39,7 @@ Net/FallbackIconTheme "Yaru"
 Gtk/ColorPalette "black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90"
 Gtk/OverlayScrolling 1
 Net/EnableEventSounds 1
-Net/IconThemeName "Yaru++-Dark"
+Net/IconThemeName "McMojave-circle-purple-dark"
 Gtk/ShowUnicodeMenu 0
 Gtk/CursorBlinkTimeout 10
 Gtk/ButtonImages 1
