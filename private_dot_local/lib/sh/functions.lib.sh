@@ -196,7 +196,7 @@ fi
 
 if ! fn_exists myip; then
 	myip() {
-		for url in "http://myip.dnsomatic.com/" "http://checkip.dyndns.com/" \
+		for url in "https://ipinfo.io/ip" "http://checkip.dyndns.com/" \
 			"http://checkip.dyndns.org/"; do
 			res=$(curl -s "${url}")
 			if [ -n "$res" ]; then
