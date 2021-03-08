@@ -1,6 +1,10 @@
 #!/bin/sh
-# vim: set filetype=sh foldmethod=indent ai ts=4 sw=4 tw=79:
+# vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 noet:
 
+unset fn_exists >/dev/null 2>&1
+fn_exists() {
+        LC_ALL=C type "$1" 2>&1 | grep -q 'function'
+}
 ## Extract
 if ! fn_exists extract; then
 	function extract() {
