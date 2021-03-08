@@ -42,7 +42,7 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 ################################################################################
 # Shell common exports, aliases and functions
-for item in "aliases" "exports" "functions" "others-functions"
+for item in "aliases" "exports" "functions" "more-functions"
 do
 	file="$HOME/.local/lib/sh/${item}.lib.sh"
 	[ -f "$file" ] && source "$file"
