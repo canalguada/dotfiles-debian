@@ -7,6 +7,11 @@
 #   fi
 # fi
 
+mkdir -p /tmp/$USER/i3/cache
+
+grep -oP "set [$]ws[[:digit:]]+.*" ${XDG_CONFIG_HOME:-$HOME/.config}/i3/config \
+	|sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g' > /tmp/$USER/i3/cache/workspaces
+
 case "$XDG_SESSION_DESKTOP" in
 	i3)
 		i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-session.target'
