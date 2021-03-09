@@ -3,16 +3,18 @@
 
 #grep -oP "set [$]ws[[:digit:]]+.*" ~/.config/i3/config \
 #|sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g'
-ws1=1:
-ws2=2:
-ws3=3:
-ws4=4:
-ws5=5:
-ws6=6:
-ws7=7:
-ws8=8:
-ws9=9:
-ws10=10:
+# ws1=1:
+# ws2=2:
+# ws3=3:
+# ws4=4:
+# ws5=5:
+# ws6=6:
+# ws7=7:
+# ws8=8:
+# ws9=9:
+# ws10=10:
+
+eval $(cat /tmp/$USER/i3/cache/workspaces)
 
 rofi_command="rofi -theme themes/six.rasi"
 
