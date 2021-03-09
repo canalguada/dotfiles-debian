@@ -19,10 +19,9 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
-Plug 'jlanzarotta/bufexplorer', { 'on': 'BufExplorer' }
+Plug 'jlanzarotta/bufexplorer'
 Plug 'vim-airline/vim-airline', { 'commit': 'a6dd1c3' }
 Plug 'vim-airline/vim-airline-themes'
 " Plug 'bling/vim-bufferline'
@@ -36,6 +35,8 @@ Plug 'WolfgangMehner/bash-support'
 " Plug 'maksimr/vim-jsbeautify'
 " }}}
 " Colorschemes {{{
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'dracula/vim'
 " Plug 'morhetz/gruvbox'
 " Plug 'ayu-theme/ayu-vim'
@@ -138,8 +139,11 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ 
 "}}}
 " => Colors and Fonts {{{
 set background=dark
+let g:material_theme_style = 'palenight'
+let g:material_terminal_italics = 1
+let g:palenight_terminal_italics=1
 " Alternatives: Tomorrow-Night-Eighties, gruvbox, jellybeans, onehalfdark
-colorscheme dracula
+colorscheme material
 
 " }}}
 " => Airline {{{
