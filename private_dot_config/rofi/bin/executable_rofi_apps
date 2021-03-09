@@ -14,27 +14,6 @@ ws8=8:
 ws9=9:
 ws10=10:
 
-jq_filter=".[] | { name: .name, focused: .focused } | select(.focused == true) | .name"
-#focused_ws=$(i3-msg -t get_workspaces | jq -r "$jq_filter")
-focused="$XDG_CONFIG_HOME/rofi/cache/focused"
-
-[ ! -d "$(dirname "$focused")" ] &&
-  mkdir -p "$(dirname "$focused")"
-
-( i3-msg -t get_workspaces | jq -r "$jq_filter" >"$focused" ) &
-pid=$!
-ws_launch() {
-  ws=$1
-  shift
-  msg=
-  wait $pid
-  [ "$ws" != "$(head -n1 $focused)" ] &&
-    msg='workspace "'$ws'"; '
-  #msg="${msg}exec $(shell-quote -- "$@")"
-  i3-msg "${msg}exec $(shell-quote -- "$@")" >/dev/null 2>&1
-  #head -n1 $focused
-}
-
 rofi_command="rofi -theme themes/six.rasi"
 
 # Links
@@ -67,21 +46,21 @@ choice=$(
 )
 
 case $choice in
-  $browser)   		ws_launch "$ws2" exec Browser ;;
-  $files)    			ws_launch "$ws3" exec FileManager ;;
-  $editor)    		ws_launch "$ws4" exec Editor ;;
-  $music)    			ws_launch "$ws9" Music ;;
-  $mail)     			ws_launch "$ws5" Mail ;;
-  $htop)     			ws_launch "$ws1" SysMon ;;
-  $elinks)    		ws_launch "$ws2" urxvtc -name web -title elinks -e elinks ;;
-  $pcmanfm)   		ws_launch "$ws3" exec pcmanfm-qt ;;
-  # $terminal) 		ws_launch "$ws1" urxvtc -name zsh ;;
-  $terminal)   		ws_launch "$ws1" exec qterminal ;;
-  $pikaur)    		ws_launch "$ws1" SysUpdate ;;
+  $browser)   		i3-ws-run "$ws2" exec Browser ;;
+  $files)    			i3-ws-run "$ws3" exec FileManager ;;
+  $editor)    		i3-ws-run "$ws4" exec Editor ;;
+  $music)    			i3-ws-run "$ws9" Music ;;
+  $mail)     			i3-ws-run "$ws5" Mail ;;
+  $htop)     			i3-ws-run "$ws1" SysMon ;;
+  $elinks)    		i3-ws-run "$ws2" urxvtc -name web -title elinks -e elinks ;;
+  $pcmanfm)   		i3-ws-run "$ws3" exec pcmanfm-qt ;;
+  # $terminal) 		i3-ws-run "$ws1" urxvtc -name zsh ;;
+  $terminal)   		i3-ws-run "$ws1" exec qterminal ;;
+  $pikaur)    		i3-ws-run "$ws1" SysUpdate ;;
   $settings)
     case "$XDG_SESSION_DESKTOP" in
-      i3) 				ws_launch "$ws4" Editor -- -p ~/.config/i3/config ;;
-      i3-gnome) 	ws_launch "$ws6" exec gnome-control-center ;;
+      i3) 				i3-ws-run "$ws4" Editor -- -p ~/.config/i3/config ;;
+      i3-gnome) 	i3-ws-run "$ws6" exec gnome-control-center ;;
       *) ;;
     esac
     ;;
