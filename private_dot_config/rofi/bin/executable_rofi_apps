@@ -1,8 +1,8 @@
 #!/usr/bin/sh
-# vim: set ft=sh ai ts=2 sw=2 tw=79 noet:
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:
 
-#grep -oP "set [$]ws[[:digit:]]+.*" ~/.config/i3/config \
-#|sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g'
+##grep -oP "set [$]ws[[:digit:]]+.*" ~/.config/i3/config \
+##  |sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g'
 # ws1=1:
 # ws2=2:
 # ws3=3:
@@ -19,51 +19,50 @@ eval $(cat /tmp/$USER/i3/cache/workspaces)
 rofi_command="rofi -theme themes/six.rasi"
 
 # Links
-terminal=
-files=
+alt_terminal=
+filemanager=
 editor=
 browser=
-elinks=
+text_browser=
 music=
 settings=
 mail=
-htop=
-pikaur=
-pcmanfm=
+sysmon=
+sysupdate=
+alt_filemanager=
 
 choice=$(
-  cat <<-EOF | $rofi_command -p "Most Used" -dmenu -selected-row 0
+	cat <<-EOF | $rofi_command -p "Most Used" -dmenu -selected-row 0
 	$browser
-	$files
+	$filemanager
 	$editor
 	$music
 	$mail
-	$htop
-	$elinks
-	$pcmanfm
-	$terminal
-	$pikaur
+	$sysmon
+	$text_browser
+	$alt_filemanager
+	$alt_terminal
+	$sysupdate
 	$settings
 	EOF
 )
 
 case $choice in
-  $browser)   		i3-ws-run "$ws2" exec Browser ;;
-  $files)    			i3-ws-run "$ws3" exec FileManager ;;
-  $editor)    		i3-ws-run "$ws4" exec Editor ;;
-  $music)    			i3-ws-run "$ws9" Music ;;
-  $mail)     			i3-ws-run "$ws5" Mail ;;
-  $htop)     			i3-ws-run "$ws1" SysMon ;;
-  $elinks)    		i3-ws-run "$ws2" urxvtc -name web -title elinks -e elinks ;;
-  $pcmanfm)   		i3-ws-run "$ws3" exec pcmanfm-qt ;;
-  # $terminal) 		i3-ws-run "$ws1" urxvtc -name zsh ;;
-  $terminal)   		i3-ws-run "$ws1" exec qterminal ;;
-  $pikaur)    		i3-ws-run "$ws1" SysUpdate ;;
-  $settings)
-    case "$XDG_SESSION_DESKTOP" in
-      i3) 				i3-ws-run "$ws4" Editor -- -p ~/.config/i3/config ;;
-      i3-gnome) 	i3-ws-run "$ws6" exec gnome-control-center ;;
-      *) ;;
-    esac
-    ;;
+	$browser) i3-ws-run "$ws2" exec Browser ;;
+	$filemanager) i3-ws-run "$ws3" exec FileManager ;;
+	$editor) i3-ws-run "$ws4" exec Editor ;;
+	$music) i3-ws-run "$ws9" Music ;;
+	$mail) i3-ws-run "$ws5" Mail ;;
+	$sysmon) i3-ws-run "$ws1" SysMon ;;
+	$text_browser) i3-ws-run "$ws2" urxvtc -name web -title elinks -e elinks ;;
+	$alt_filemanager) i3-ws-run "$ws3" exec pcmanfm-qt ;;
+	$alt_terminal) i3-ws-run "$ws1" exec qterminal ;;
+	$sysupdate) i3-ws-run "$ws1" SysUpdate ;;
+	$settings)
+		case "$XDG_SESSION_DESKTOP" in
+			i3) i3-ws-run "$ws4" Editor -- -p ~/.config/i3/config ;;
+			i3-gnome) i3-ws-run "$ws6" exec gnome-control-center ;;
+			*) ;;
+		esac
+		;;
 esac
