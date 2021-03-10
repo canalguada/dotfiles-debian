@@ -7,7 +7,7 @@ usage () {
 	EOF
 }
 
-if [[ $# -lt 1 ]]; then
+if [ $# -lt 1 ]; then
 	usage
 	exit 1
 fi
@@ -17,7 +17,7 @@ if ! command -v "$1"; then
 	exit 2
 fi
 
-# exec urxvtc -title $(basename "$1") -e "$@"
-exec Terminal -t $(shell-quote -- "$@") -- "$@"
+exec urxvtc -title $(basename "$1") -e "$@"
+# exec Terminal -t $(shell-quote -- "$@") -- "$@"
 
 # vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79:
