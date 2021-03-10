@@ -372,6 +372,7 @@ bindsym $mod+F7 exec --no-startup-id urxvtc -name web -title elinks -e elinks
 bindsym $mod+F8 exec --no-startup-id SysUpdate
 bindsym $mod+F9 exec --no-startup-id Music
 bindsym $mod+F10 exec --no-startup-id urxvtc -name tmux -title tmux -e tmux new -AD -s canalguada -n shell
+bindsym $mod+Shift+F12 exec --no-startup-id /usr/bin/nitrogen --random --set-zoom-fill
 # }}}
 # Correct handling of floating dialogs {{{
 for_window [window_role="pop-up"] floating enable
