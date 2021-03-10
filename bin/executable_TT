@@ -17,6 +17,7 @@ if ! command -v "$1"; then
 	exit 2
 fi
 
-exec urxvtc -title $(basename "$1") -e "$@"
+# exec urxvtc -title $(basename "$1") -e "$@"
+exec Terminal -t $(shell-quote -- "$@") -- "$@"
 
 # vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79:
