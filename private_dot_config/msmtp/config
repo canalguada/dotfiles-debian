@@ -48,4 +48,5 @@ user david.celerity
 passwordeval "pass mutt-wizard-celerity"
 
 
-
+# Set a default account
+account default : spambox
