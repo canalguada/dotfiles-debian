@@ -8,8 +8,7 @@
 --prefer-ffmpeg
 ##--proxy 127.0.0.1:8123
 
-#--output ~/Vidéos/Youtube/%(title)s.%(ext)s
---output /media/Public/Youtube/%(title)s.%(ext)s
+--output ~/Vidéos/Youtube/%(title)s.%(ext)s
 
 # Format
 --format 'best[ext=mp4][height<=?1080]/best[ext=mp4][height<=?720]/best[height<=?720]'
