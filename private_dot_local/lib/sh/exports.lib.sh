@@ -19,6 +19,7 @@ export TEMPDIR=$TMPDIR
 #export URXVT_PERL_LIB=
 export RXVT_SOCKET=/run/user/$(id -ru)/urxvtd-$(hostname)
 
+export NVIM_PATH=/usr/bin/nvim
 export NVIM_LISTEN_ADDRESS=127.0.0.1:$(($(id -ru) + 7777))
 
 I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
@@ -108,6 +109,7 @@ export PYTHONDOCS=/usr/share/doc/python/html/
 # Use a default width of 80 for manpages for more convenient reading
 export MANWIDTH=${MANWIDTH:-80}
 
+export LESS="-s -M +Gg"
 export PAGER="/usr/bin/less"
 # shellcheck disable=SC2139
 alias zless="$PAGER"
@@ -172,6 +174,8 @@ if [ $(id -ru) -ge 1000 ]; then
 
 	prependpath "${HOME}/bin"
 	prependpath "${HOME}/.local/bin"
+
+	[ -d "${HOME}/bin/nicy" ] && prependpath "${HOME}/bin/nicy"
 fi
 export PATH
 unset appendpath
@@ -206,5 +210,5 @@ export TASKDPORT=53859
 #export CHROOT=$HOME/builds/chroot
 
 export GITHUB_USER=$USER
-export GITHUB_PASSWORD=$(pass show "web/github.com/$USER"|head -n1)
+#export GITHUB_PASSWORD=$(pass show "web/github.com/$USER"|head -n1)
 
