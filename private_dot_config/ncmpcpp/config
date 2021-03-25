@@ -22,16 +22,16 @@ ncmpcpp_directory = ~/.config/ncmpcpp
 #
 ##### connection settings #####
 #
-mpd_host = /run/user/1001/mpd/socket
+#mpd_host = /run/user/1001/mpd/socket
+mpd_host = localhost
 #
-#mpd_port = 6600
+mpd_port = 6600
 #
 mpd_connection_timeout = 30
 #
 ## Needed for tag editor and file operations to work.
 ##
-#mpd_music_dir = /media/Freebox/NTFS/Musique
-mpd_music_dir = ~/smbnet/freebox_server/ntfs/Musique
+mpd_music_dir = ~/Musique
 #
 #mpd_crossfade_time = 5
 #
@@ -50,7 +50,7 @@ mpd_music_dir = ~/smbnet/freebox_server/ntfs/Musique
 ## }
 ##
 #
-visualizer_fifo_path = ~/.config/mpd/visualizer.fifo
+#visualizer_fifo_path = ~/.config/mpd/visualizer.fifo
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp to determine which output
