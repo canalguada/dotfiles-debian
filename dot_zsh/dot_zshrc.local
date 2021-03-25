@@ -37,18 +37,13 @@ zstyle ':chpwd:*' recent-dirs-file \
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# "Command not found" handler
-#source /usr/share/doc/pkgfile/command-not-found.zsh
-
 ################################################################################
 # Shell common exports, aliases and functions
-for item in "aliases" "exports" "functions" "more-functions"
+# See ~/.zshenv for 'aliases', 'exports' and 'functions' in $HOME/.local/lib/sh/
+for file in "$ZDOTDIR/.zaliases" "$ZDOTDIR/.zfunctions"
 do
-	file="$HOME/.local/lib/sh/${item}.lib.sh"
 	[ -f "$file" ] && source "$file"
 done
-[ -f "$ZDOTDIR/.zaliases" ] && source $ZDOTDIR/.zaliases
-[ -f "$ZDOTDIR/.zfunctions" ] && source $ZDOTDIR/.zfunctions
 
 ## Expand all systemctl in order to get completion
 #alias | grep -E -e '^(sc-|scu-)' \
@@ -58,7 +53,8 @@ done
 #done
 # }}}
 
-disable_proxy
+# autoload -Uz disable_proxy
+# disable_proxy
 
 # Completion for manx script
 compdef _man manx
