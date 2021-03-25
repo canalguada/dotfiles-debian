@@ -8,9 +8,9 @@ profile="-P default"
 if wmctrl -lpGx | grep -v grep | grep -q "Navigator.Firefox"; then
 	unset profile
 else
-	if command -v Cpu66 >/dev/null 2>&1; then
-		prepend="$(command -v Cpu66) --slice -- "
-	fi
+	#if command -v Cpu66 >/dev/null 2>&1; then
+	#	prepend="$(command -v Cpu66) --slice -- "
+	#fi
 	unset newtab
 fi
 
