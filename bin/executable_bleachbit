@@ -20,12 +20,13 @@ if ! command -v throttle >/dev/null 2>&1; then
 	exit 1
 fi
 
-if ! command -v Cpu33 >/dev/null 2>&1; then
-	echo "Cpu33: command not found" >&2
-	exit 1
-fi
+# if ! command -v Cpu33 >/dev/null 2>&1; then
+#     echo "Cpu33: command not found" >&2
+#     exit 1
+# fi
 
-cmd="`command -v Cpu33` --slice -- /usr/bin/bleachbit"
+# cmd="`command -v Cpu33` --slice -- /usr/bin/bleachbit"
+cmd="/usr/bin/bleachbit"
 if [ "$DO_THROTTLE" = "y" ]; then
 	cmd="`command -v throttle` $cmd"
 fi
