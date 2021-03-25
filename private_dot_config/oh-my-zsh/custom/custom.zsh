@@ -118,27 +118,32 @@ setopt unset
 # Allow comments even in interactive shells
 setopt interactivecomments
 
+# Colors on GNU
+
 typeset -ga ls_options
 typeset -ga grep_options
 
-# Colors on GNU ls(1)
-if ls --color=auto / >/dev/null 2>&1; then
-	ls_options+=( --color=auto )
-	# Colors on FreeBSD and OSX ls(1)
-elif ls -G / >/dev/null 2>&1; then
-	ls_options+=( -G )
-fi
+ls_options+=( --color=auto -v )
+grep_options+=( --color=auto )
 
-# Natural sorting order on GNU ls(1)
-# OSX and IllumOS have a -v option that is not natural sorting
-if ls --version |& grep -q 'GNU' >/dev/null 2>&1 && ls -v / >/dev/null 2>&1; then
-	ls_options+=( -v )
-fi
-
-# Color on GNU and FreeBSD grep(1)
-if grep --color=auto -q "a" <<< "a" >/dev/null 2>&1; then
-	grep_options+=( --color=auto )
-fi
+# # Colors on GNU ls(1)
+# if ls --color=auto / >/dev/null 2>&1; then
+#     ls_options+=( --color=auto )
+#     # Colors on FreeBSD and OSX ls(1)
+# elif ls -G / >/dev/null 2>&1; then
+#     ls_options+=( -G )
+# fi
+#
+# # Natural sorting order on GNU ls(1)
+# # OSX and IllumOS have a -v option that is not natural sorting
+# if ls --version |& grep -q 'GNU' >/dev/null 2>&1 && ls -v / >/dev/null 2>&1; then
+#     ls_options+=( -v )
+# fi
+#
+# # Color on GNU and FreeBSD grep(1)
+# if grep --color=auto -q "a" <<< "a" >/dev/null 2>&1; then
+#     grep_options+=( --color=auto )
+# fi
 
 # support colors in less
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -182,29 +187,30 @@ function zrcautoload () {
 	ffile=$1
 	(( ffound = 0 ))
 	for fdir in ${fpath} ; do
-		[[ -e ${fdir}/${ffile} ]] && (( ffound = 1 ))
+		[[ -e ${fdir}/${ffile} ]] && (( ffound = 1 )) && break
 	done
 
 	(( ffound == 0 )) && return 1
-	if [[ $ZSH_VERSION == 3.1.<6-> || $ZSH_VERSION == <4->* ]] ; then
-		autoload -U ${ffile} || return 1
-	else
-		autoload ${ffile} || return 1
-	fi
+	# if [[ $ZSH_VERSION == 3.1.<6-> || $ZSH_VERSION == <4->* ]] ; then
+	#     autoload -U ${ffile} || return 1
+	# else
+	#     autoload ${ffile} || return 1
+	# fi
+	autoload -U ${ffile} || return 1
 	return 0
 }
 
 # completion system
-COMPDUMPFILE=${COMPDUMPFILE:-${ZDOTDIR:-${HOME}}/.zcompdump}
-if zrcautoload compinit ; then
-	typeset -a tmp
-	zstyle -a ':grml:completion:compinit' arguments tmp
-	compinit -d ${COMPDUMPFILE} "${tmp[@]}" || print 'Notice: no compinit available :('
-	unset tmp
-else
-	print 'Notice: no compinit available :('
-	function compdef { }
-fi
+# COMPDUMPFILE=${COMPDUMPFILE:-${ZDOTDIR:-${HOME}}/.zcompdump}
+# if zrcautoload compinit ; then
+#     typeset -a tmp
+#     zstyle -a ':grml:completion:compinit' arguments tmp
+#     compinit -d ${COMPDUMPFILE} "${tmp[@]}" || print 'Notice: no compinit available :('
+#     unset tmp
+# else
+#     print 'Notice: no compinit available :('
+#     function compdef { }
+# fi
 
 if (( ${+_comps} )) ; then
 	# TODO: This could use some additional information
@@ -230,7 +236,7 @@ if (( ${+_comps} )) ; then
 	zstyle ':completion:*:descriptions'    format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
 
 	# automatically complete 'cd -<tab>' and 'cd -<ctrl-d>' with menu
-	# zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+	zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 
 	# insert all expansions for expand completer
 	zstyle ':completion:*:expand:*'        tag-order all-expansions
@@ -335,7 +341,7 @@ if (( ${+_comps} )) ; then
 			else
 				reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
 			fi
-			fi'
+		fi'
 	fi
 
 	# command for process lists, the local web server details and host completion
@@ -698,18 +704,18 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 		emulate -L zsh
 		printf '%s' ${terminfo[smkx]}
 	}
-function zle-rmkx () {
-	emulate -L zsh
-	printf '%s' ${terminfo[rmkx]}
-}
-function zle-line-init () {
-	zle-smkx
-}
-function zle-line-finish () {
-	zle-rmkx
-}
-zle -N zle-line-init
-zle -N zle-line-finish
+	function zle-rmkx () {
+		emulate -L zsh
+		printf '%s' ${terminfo[rmkx]}
+	}
+	function zle-line-init () {
+		zle-smkx
+	}
+	function zle-line-finish () {
+		zle-rmkx
+	}
+	zle -N zle-line-init
+	zle -N zle-line-finish
 else
 	for i in {s,r}mkx; do
 		(( ${+terminfo[$i]} )) || grml_missing_features+=($i)
@@ -720,16 +726,16 @@ fi
 typeset -A key
 key=(
 	Home     "${terminfo[khome]}"
-End      "${terminfo[kend]}"
-Insert   "${terminfo[kich1]}"
-Delete   "${terminfo[kdch1]}"
-Up       "${terminfo[kcuu1]}"
-Down     "${terminfo[kcud1]}"
-Left     "${terminfo[kcub1]}"
-Right    "${terminfo[kcuf1]}"
-PageUp   "${terminfo[kpp]}"
-PageDown "${terminfo[knp]}"
-BackTab  "${terminfo[kcbt]}"
+	End      "${terminfo[kend]}"
+	Insert   "${terminfo[kich1]}"
+	Delete   "${terminfo[kdch1]}"
+	Up       "${terminfo[kcuu1]}"
+	Down     "${terminfo[kcud1]}"
+	Left     "${terminfo[kcub1]}"
+	Right    "${terminfo[kcuf1]}"
+	PageUp   "${terminfo[kpp]}"
+	PageDown "${terminfo[knp]}"
+	BackTab  "${terminfo[kcbt]}"
 )
 
 # Guidelines for adding key bindings:
@@ -815,20 +821,20 @@ bind2maps emacs viins       -- -s '^xd' insert-datestamp
 
 # press esc-m for inserting last typed word again (thanks to caphuso!)
 function insert-last-typed-word () { zle insert-last-word -- 0 -1 };
-	zle -N insert-last-typed-word;
-	#k# Insert last typed word
-	bind2maps emacs viins       -- -s "\em" insert-last-typed-word
+zle -N insert-last-typed-word;
+#k# Insert last typed word
+bind2maps emacs viins       -- -s "\em" insert-last-typed-word
 
-	function grml-zsh-fg () {
-		if (( ${#jobstates} )); then
-			zle .push-input
-			[[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
-			BUFFER="${BUFFER}fg"
-			zle .accept-line
-		else
-			zle -M 'No background jobs. Doing nothing.'
-		fi
-	}
+function grml-zsh-fg () {
+	if (( ${#jobstates} )); then
+		zle .push-input
+		[[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
+		BUFFER="${BUFFER}fg"
+		zle .accept-line
+	else
+		zle -M 'No background jobs. Doing nothing.'
+	fi
+}
 zle -N grml-zsh-fg
 #k# A smart shortcut for \kbd{fg<enter>}
 bind2maps emacs viins       -- -s '^z' grml-zsh-fg
@@ -845,6 +851,18 @@ zle -N sudo-command-line
 #k# prepend the current command with "sudo"
 #bind2maps emacs viins       -- -s '^os' sudo-command-line
 bind2maps emacs viins       -- -s '\es' sudo-command-line
+
+# run nocorrect command line
+function nocorrect-command-line () {
+	[[ -z $BUFFER ]] && return
+	if [[ $BUFFER != nocorrect\ * ]]; then
+		BUFFER="nocorrect $BUFFER"
+		CURSOR=$(( CURSOR+10 ))
+	fi
+}
+zle -N nocorrect-command-line
+#k# prepend the current command with "nocorrect"
+bind2maps emacs viins       -- -s '\en' nocorrect-command-line
 
 ### jump behind the first word on the cmdline.
 ### useful to add options.
