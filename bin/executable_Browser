@@ -1,6 +1,6 @@
 #!/bin/sh
 
- exec ~/bin/qutebrowser --target tab "$@"
-# exec ~/bin/firefox "$@"
+ exec qutebrowser --target tab "$@"
+# exec firefox "$@"
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:
