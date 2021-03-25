@@ -5,7 +5,7 @@ After=dbus.service
 After=pulseaudio.service
 
 [Service]
-ExecStart=/usr/bin/mopidy -q
+ExecStart=mopidy -q
 
 # disallow writing to /usr, /bin, /sbin, ...
 ProtectSystem=yes
