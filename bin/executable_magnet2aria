@@ -5,7 +5,7 @@ DESTDIR="${DESTDIR:-$HOME/Bureau}"
 urlfile="./magnet.txt"
 
 aria_download()  {
-  $(command -v Cpu8) --slice -- aria2c --bt-max-peers=20 \
+  aria2c --bt-max-peers=20 \
     -d "$DESTDIR" --seed-time=0 "$1"
 }
 
