@@ -16,6 +16,8 @@
 # and ~/.zshrc.local for your own customisations. The former file is read
 # before ~/.zshrc, the latter is read after it.
 
+# zmodload zsh/zprof
+
 # Check if we can read given files and source those we can.
 function xsource () {
     if (( ${#argv} < 1 )) ; then
@@ -37,7 +39,11 @@ xsource ${ZDOTDIR:-${HOME}}/.zshrc.pre
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # do it before 'compinit' in ~/.zshrc
-fpath=($fpath $HOME/.local/share/zsh/vendor-completions)
+fpath=(
+	${ZDOTDIR:-${HOME}}/autoloaded
+	$HOME/.local/share/zsh/vendor-completions
+	$fpath)
+
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/canalguada/git/ohmyzsh"
@@ -132,7 +138,7 @@ plugins=(
 	urltools
 	#vi-mode
 	web-search
-	zsh-navigation-tools
+	# zsh-navigation-tools
 	zsh_reload
 )
 
@@ -147,7 +153,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
  if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
+   export EDITOR='nvim'
  #else
    #export EDITOR='mvim'
  fi
@@ -164,7 +170,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
 # this allows us to put own modifications in ~/.zshrc.local
 xsource "${ZDOTDIR:-${HOME}}/.zshrc.local"
 
@@ -172,5 +177,7 @@ systemctl --user import-environment PATH
 #systemctl --user import-environment
 
 # Only load liquidprompt in interactive shells, not from a script or from scp
-echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
+# echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
+[[ -o interactive ]] && . /usr/share/liquidprompt/liquidprompt
 
+# zprof
