@@ -39,7 +39,7 @@ clean() {
 }
 trap clean EXIT
 
-Cpu33 -- /usr/bin/youtube-dl -j "$URL" 2>/dev/null >|"$JSON"
+youtube-dl -j "$URL" 2>/dev/null >|"$JSON"
 
 DATA=$(jq -f "$JQ" "$JSON" | xargs echo)
 #echo $DATA
