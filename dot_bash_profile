@@ -23,8 +23,8 @@ do_init () {
 
 export BASH_ENV=~/.shinit
 ## shellcheck disable=SC1090
-#[ -f "$BASH_ENV" ] && . "$BASH_ENV"
-do_init $BASH_ENV
+[ -f "$BASH_ENV" ] && . "$BASH_ENV"
+# do_init $BASH_ENV
 
 ## shellcheck disable=SC1090
 #[ -f ~/.bashrc ] && . ~/.bashrc
