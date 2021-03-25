@@ -1,8 +1,8 @@
-# vim: set filetype=sh foldmethod=indent ai ts=4 sw=4 tw=79:
+# vim: set filetype=sh foldmethod=marker ai ts=4 sw=4 tw=79:
 
 # shellcheck disable=SC2139
 
-# Python
+# Python {{{
 alias py='python'
 alias ipy='ipython'
 
@@ -10,8 +10,7 @@ alias pip-list="pip list --user --outdated"
 alias pip-install="pip install --user"
 alias pip-uninstall="pip uninstall"
 # }}}
-
-# Clipboard
+# Clipboard {{{
 case $OSTYPE in
 linux*)
 	XCLIP=$(command -v xclip)
@@ -20,8 +19,8 @@ linux*)
 		alias pbpaste="$XCLIP -selection clipboard -o"
 	;;
 esac
-
-## Make shell error tolerant ## {{{
+# }}}
+## Make shell error tolerant # {{{
 alias :q=' exit'
 alias :Q=' exit'
 alias :x=' exit'
@@ -31,60 +30,46 @@ alias ...='cd ../..'     # Go up two directories
 alias ....='cd ../../..' # Go up three directories
 #alias -- -='cd -'        # Go back
 # }}}
-
-## Various
+## Various {{{
 alias ping='ping -c 5'
 alias openports='ss --all --numeric --processes --ipv4 --ipv6'
 alias diff='colordiff' # requires colordiff package
 
 alias pgg='ps -Af | grep' # requires an argument
+alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 alias cls=' echo -ne "\033c"' # clear screen for real
-
-# Tree
+# }}}
+# Tree {{{
 if [ ! -x "$(command -v tree 2>/dev/null)" ]; then
 	alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 fi
-
-# Directory
+# }}}
+# Directory {{{
 alias md='mkdir -p'
 alias rd='rmdir'
 
 # }}}
-
-# Systemctl
+# Systemd {{{
+alias cgls="systemd-cgls"
+alias cgtop="systemd-cgtop"
+alias sdr="systemd-run -G -d --quiet --user"
 
 for c in "list-units" "is-active" "show" "help" "list-unit-files" \
 	"is-enabled" "list-jobs" "show-environment" "cat" "list-timers"; do
 	alias sc-$c="systemctl $c"
 	alias scu-$c="systemctl --user $c"
 done
-for c in ""; do
+for c in "start" "stop" "reload" "restart" "try-restart" "isolate" "kill" \
+	"reset-failed" "enable" "disable" "reenable" "preset" "mask" "unmask" \
+	"link" "load" "cancel" "set-environment" "unset-environment" \
+	"edit" "daemon-reload"; do
 	alias sc-$c="sudo systemctl $c"
 	alias scu-$c="systemctl --user $c"
 done
-
-#user_commands=(
-	#"list-units" "is-active" "show" "help" "list-unit-files"
-	#"is-enabled" "list-jobs" "show-environment" "cat" "list-timers")
-
-#sudo_commands=(
-	#"start" "stop" "reload" "restart" "try-restart" "isolate" "kill"
-	#"reset-failed" "enable" "disable" "reenable" "preset" "mask" "unmask"
-	#"link" "load" "cancel" "set-environment" "unset-environment"
-	#"edit" "daemon-reload")
-
-## shellcheck disable=SC2086
-#for c in "${user_commands[@]}"; do alias sc-$c="systemctl $c"; done
-## shellcheck disable=SC2086
-#for c in "${sudo_commands[@]}"; do alias sc-$c="sudo systemctl $c"; done
-## shellcheck disable=SC2086
-#for c in "${user_commands[@]}"; do alias scu-$c="systemctl --user $c"; done
-## shellcheck disable=SC2086
-#for c in "${sudo_commands[@]}"; do alias scu-$c="systemctl --user $c"; done
 
 alias sc-status="systemctl status -l --no-pager"
 alias sc-enable-now="sudo systemctl enable --now"
@@ -99,14 +84,12 @@ alias scu-mask-now="systemctl --user mask --now"
 alias sc='sudo systemctl '
 alias scu='systemctl --user '
 # }}}
-
-# History
+# History {{{
 alias h='fc -l -16 -1'
 alias hs='fc -l 1 -1 | grep '
 alias hsi='fc -l 1 -1 | grep -i '
 # }}}
-
-# Python
+# Python {{{
 # Find python file
 alias pyfind='find . -name "*.py"'
 
@@ -122,8 +105,7 @@ pyclean() {
 # Grep among .py files
 alias pygrep='grep --include="*.py"'
 # }}}
-
-### Pacman aliases ## {{{
+### Pacman aliases # {{{
 ##if necessary, replace 'pacman' with your favorite AUR helper and adapt the commands accordingly
 ## default action    - install one or more packages
 #alias pac="/usr/bin/pacman -S"
@@ -148,32 +130,27 @@ alias pygrep='grep --include="*.py"'
 ## '[r]emove [o]rphans' - recursively remove ALL orphaned packages
 #alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rs \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;\$!ba;s/\n/ /g')"
 ## }}}
-
-# Fasd
+# Pikaur {{{
+#alias pikaur="nice ionice -c 3 -t /usr/bin/pikaur"
+#alias pikaur="systemd-run -G --user --scope -p CPUQuota=33% /usr/bin/pikaur"
+#alias pikaur="systemd-run -G --user -t -p CPUQuota=33% -p IOSchedulingClass=idle -p Nice=19  /usr/bin/pikaur"
+# }}}
+# Fasd {{{
 alias v='sf -i -e nv'          # quick opening files with nvim
 alias xv='sf -i -e qnv'        # quick opening files with nvim-qt
 alias m='sf -i -e mpv'         # quick opening files with mpv
 alias o='sf -i -e mimeo'       # quick opening files with xdg-open
 alias e='sd -i -e FileManager' # quick opening directories with myexplorer
 # }}}
-
-# Restic
+# Restic {{{
 alias resticprofile='python3 -m resticprofile -c $XDG_CONFIG_HOME/resticprofile/profiles.conf'
 # }}}
-
-# Pikaur
-#alias pikaur="nice ionice -c 3 -t /usr/bin/pikaur"
-#alias pikaur="systemd-run -G --user --scope -p CPUQuota=33% /usr/bin/pikaur"
-#alias pikaur="systemd-run -G --user -t -p CPUQuota=33% -p IOSchedulingClass=idle -p Nice=19  /usr/bin/pikaur"
-# }}}
-
-# Tilix
+# Tilix {{{
 #alias tilix-add-right='tilix -a session-add-right'
 #alias tilix-add-down='tilix -a session-add-down'
 # }}}
-
-# Others
-alias qnv='/usr/bin/nvim-qt -- -u NONE'
+# Others {{{
+alias qnv='nvim-qt -- -u NONE'
 alias nv='nvim -u NONE'
 #alias vit_tmux='tmux new-window -n vit vit \; split-window -h -p 25 column -t -s\; -c 40 -N CMD,DESC -T DESC -d ~/Bureau/vit_help.txt'
 alias Less='/usr/bin/less'
@@ -181,14 +158,15 @@ alias Less='/usr/bin/less'
 alias cpr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 '
 alias mvr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files '
 
-alias nicy="systemd-run -G --user -t -p CPUQuota=33% -p IOSchedulingClass=idle -p Nice=19  "
+# alias nicy="systemd-run -G --user -t -p CPUQuota=33% -p IOSchedulingClass=idle -p Nice=19  "
 alias web='/usr/bin/elinks'
 alias mutt='cd ~/Bureau && neomutt '
 alias cm='chezmoi'
 alias whatismyip='curl -s https://ipinfo.io/ip'
 # alias tds='nocorrect urxvtc -name tmux -title tmux:debian@server -e ssh -t debian@server.gbroshome.info tmux attach'
 # alias tcs='nocorrect urxvtc -name tmux -title tmux:canalguada@server -e ssh -t canalguada@server.gbroshome.info tmux attach'
-alias xnvim='urxvtc -name nvim -title nvim -e Cpu66 --slice -- /usr/bin/nvim '
-alias xelinks='urxvtc -name web -title elinks -e Cpu66 --slice -- /usr/bin/elinks '
+# alias xnvim='urxvtc -name nvim -title nvim -e Cpu66 --slice -- /usr/bin/nvim '
+alias xnvim='urxvtc -name nvim -title nvim -e nvim '
+alias xelinks='urxvtc -name web -title elinks -e elinks '
 alias urxvt-chfont="printf '\e]710;%s\007' "
 # }}}
