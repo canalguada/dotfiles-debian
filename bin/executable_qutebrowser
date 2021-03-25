@@ -5,7 +5,8 @@ QUTE_ARGS="-R"
 QUTE_ENV="JSC_useJIT=0"
 
 export $QUTE_ENV
-exec Cpu66 --slice -- $QUTE_BIN $QUTE_ARGS "$@"
+#exec Cpu66 --slice -- $QUTE_BIN $QUTE_ARGS "$@"
+exec $QUTE_BIN $QUTE_ARGS "$@"
 
 # # Deprecated
 # # initial idea: Florian Bruhin (The-Compiler)
