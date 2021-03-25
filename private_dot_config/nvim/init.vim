@@ -234,7 +234,7 @@ map <leader>ev :split ~/.config/nvim/basic_init.vim<cr>
 cno $h  ~/
 cno $s  ~/Scripts/
 cno $f  ~/.config/
-cno $g  ~/.config/session-scripts/
+cno $g  ~/git/canalguada/
 cno $l  ~/.local/
 cno $p  ~/Projects/
 cno $y  ~/PycharmProjects/
@@ -338,9 +338,7 @@ map <leader>tm :tabmove
 map <leader>tt :tabnext<CR>
 map <leader>tp :tabprevious<CR>
 " }}}
-" Being able to open up multiple files in tabs. {{{
-" To do this you type :tabnew to open up a file in a new tab and than :tabn and :tabp to move around the tabs.
-" Be able to move between the tabs with ALT+LeftArrow and ALT+RightArrow
+" Be able to move between the tabs with ALT+LeftArrow and ALT+RightArrow {{{
 map <silent><A-Right> :tabnext<CR>
 map <silent><A-Left> :tabprevious<CR>
 " }}}
