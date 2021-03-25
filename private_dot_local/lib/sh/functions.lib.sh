@@ -2,7 +2,11 @@
 
 unset fn_exists >/dev/null 2>&1
 fn_exists() {
-	LC_ALL=C type "$1" 2>&1 | grep -q 'function'
+	case "$(LC_ALL=C type "$1" 2>&1)" in
+		*"shell function"*) return 0 ;;
+		*) return 1 ;;
+	esac
+	# LC_ALL=C type "$1" 2>&1 | grep -q 'function'
 }
 
 ## Proxy
@@ -20,11 +24,11 @@ if ! fn_exists disable-proxy; then
 		unset NO_PROXY
 		#echo "Disabled proxy environment variables"
 
-		if command -v npm >/dev/null 2>&1; then
-			npm config delete proxy
-			npm config delete https-proxy
-			#echo "Disabled npm proxy settings"
-		fi
+		# if command -v npm >/dev/null 2>&1; then
+		#     npm config delete proxy
+		#     npm config delete https-proxy
+		#     #echo "Disabled npm proxy settings"
+		# fi
 		if command -v git >/dev/null 2>&1; then
 			git config --global --unset-all http.proxy
 			git config --global --unset-all https.proxy
@@ -43,11 +47,11 @@ if ! fn_exists enable-proxy; then
 		export NO_PROXY=$no_proxy
 		#echo "Enabled proxy environment variables"
 
-		if command -v npm >/dev/null 2>&1; then
-			npm config set proxy $MY_HTTP_PROXY
-			npm config set https-proxy $MY_HTTPS_PROXY
-			#echo "Enabled npm proxy settings"
-		fi
+		# if command -v npm >/dev/null 2>&1; then
+		#     npm config set proxy $MY_HTTP_PROXY
+		#     npm config set https-proxy $MY_HTTPS_PROXY
+		#     #echo "Enabled npm proxy settings"
+		# fi
 		if command -v git >/dev/null 2>&1; then
 			git-global-disable-proxy
 
