@@ -4,11 +4,12 @@
 set -o nounset # Treat unset variables as an error
 
 PROG=$(basename "$0")
-NVIM_PATH=${NVIM_PATH:-$(command -v nvim)}
-QT_PATH=$(command -v nvim-qt)
+#NVIM_PATH=${NVIM_PATH:-$(command -v nvim)}
+NVIM_PATH=${NVIM_PATH:-/usr/bin/nvim}
+QT_PATH="/usr/bin/nvim-qt"
 NVR_PATH=$(command -v nvr)
-TRANSIENT=${TRANSIENT:-y}
-TRANSIENT_PREFIX=("$(command -v Cpu66)" --slice -q --)
+# TRANSIENT=${TRANSIENT:-y}
+# TRANSIENT_PREFIX=("$(command -v Cpu66)" --slice -q --)
 
 # unset SERVER_ADDR
 # PORT=$((7777 + $(id -ru)))
@@ -79,8 +80,7 @@ is_any_listening() {
 }
 
 launch_headless() {
-	systemd-run -G --user -q --slice=cpu66.slice $NVIM_PATH \
-		--listen $NVIM_LISTEN_ADDRESS --headless
+	$NVIM_PATH --listen $NVIM_LISTEN_ADDRESS --headless
 }
 
 is_gui_running() {
@@ -113,8 +113,9 @@ while getopts ":-:hv" option; do
 		-)
 			case "$OPTARG" in
 				help) usage; exit 0 ;;
-				nvim=* | timeout=* | geometry=* | stylesheet=* | qmljsdebugger=*)
+				timeout=* | geometry=* | stylesheet=* | qmljsdebugger=*)
 					check_option; append_long_option ;;
+				nvim=*) check_option; NVIM_PATH="${OPTARG#*=}" ;;
 				server=*) check_option; SERVER_ADDR="${OPTARG#*=}" ;;
 				maximized | no-ext-tab-line | fullscreen | embed | spawn | nofork)
 					append_long_option ;;
@@ -165,9 +166,9 @@ mode=embed
 gui_cmd=()
 
 build_gui_cmd() {
-	gui_cmd=("$QT_PATH" "${OPTS[@]}")
-	[ "$TRANSIENT" = "y" ] && \
-		gui_cmd=("${TRANSIENT_PREFIX[@]}" "${gui_cmd[@]}")
+	gui_cmd=("$(command -v nvim-qt)" "${OPTS[@]}")
+	# [ "$TRANSIENT" = "y" ] && \
+	#   gui_cmd=("${TRANSIENT_PREFIX[@]}" "${gui_cmd[@]}")
 	case "$1" in
 		embed) gui_cmd+=(-- --listen "$NVIM_LISTEN_ADDRESS" --cmd "let has_gui = 1") ;;
 		remote) gui_cmd+=(--server "$NVIM_LISTEN_ADDRESS") ;;
@@ -191,7 +192,8 @@ if [ "${#gui_cmd[@]}" -gt 0 ]; then
 	[ $VERBOSITY -ge 1 ] &&
 		shell-quote -- "${gui_cmd[@]}" | info
 	## shellcheck disable=SC2086
-	"${gui_cmd[@]}"
+	# "${gui_cmd[@]}"
+	nohup "${gui_cmd[@]}" </dev/null >/dev/null 2>&1 &
 fi
 
 # Switch to nvim-qt desktop, raise, and  give focus.
