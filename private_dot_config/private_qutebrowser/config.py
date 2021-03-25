@@ -247,4 +247,7 @@ config.bind('<z><u><l>', 'spawn --userscript qute-pass --username-only')
 config.bind('<z><p><l>', 'spawn --userscript qute-pass --password-only')
 config.bind('<z><o><l>', 'spawn --userscript qute-pass --otp-only')
 
+c.content.user_stylesheets = ['~/.config/qutebrowser/css/darculized-all-sites.css']
+config.bind('<Ctrl-R>', 'config-cycle content.user_stylesheets "~/.config/qutebrowser/css/apprentice-all-sites.css" "~/.config/qutebrowser/css/gruvbox-all-sites.css" "~/.config/qutebrowser/css/solarized-dark-all-sites.css" "~/.config/qutebrowser/css/solarized-light-all-sites.css" "" "~/.config/qutebrowser/css/darculized-all-sites.css"')
+
 # End of default configuration
