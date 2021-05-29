@@ -2,6 +2,10 @@
 #
 # vim:filetype=zsh: set foldmethod=indent ai ts=4 sw=4 tw=79:
 
+if [[ -n "$FBTERM" ]]; then
+	export TERM=fbterm
+fi
+
 export HISTFILE="${ZDOTDIR:-${HOME}}/.zsh_history"
 export ZSH_CACHE_DIR="$HOME/.cache/zsh"
 export COMP_CACHING="yes"
