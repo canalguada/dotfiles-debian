@@ -6,7 +6,7 @@ auto_save_setup=true
 preallocate_space=false
 auto_menu=true
 use_internal_view=false
-use_internal_edit=true
+use_internal_edit=false
 clear_before_exec=true
 confirm_delete=true
 confirm_overwrite=true
@@ -78,7 +78,7 @@ select_flags=6
 editor_backup_extension=~
 mcview_eof=
 ignore_ftp_chattr_errors=true
-skin=julia256
+skin=xoria256
 
 editor_filesize_threshold=64M
 filepos_max_saved_entries=1024
