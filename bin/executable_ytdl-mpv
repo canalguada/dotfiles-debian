@@ -33,31 +33,22 @@ cat <<EOF >"$JQ"
 		" " + .format + " " + .url )
 EOF
 
-clean() {
-	rm -f "$JSON"
-	rm -f "$JQ"
-}
+clean() { rm -f "$JSON" "$JQ" ; }
 trap clean EXIT
 
 youtube-dl -j "$URL" 2>/dev/null >|"$JSON"
 
 DATA=$(jq -f "$JQ" "$JSON" | xargs echo)
-#echo $DATA
 
 [ -z "$DATA" ] && exit 2
 
-yad_cmd=(yad --center --on-top --width=340 --height=256)
-yad_cmd+=(--grid-lines=hor --title="$0 $*")
-yad_cmd+=(--text="Choisissez le format à afficher")
-yad_cmd+=(--list --radiolist)
-yad_cmd+=(--print-column=6 --hide-column=6)
-yad_cmd+=(--separator="")
-yad_cmd+=(--column "play")
-yad_cmd+=(--column "format_id")
-yad_cmd+=(--column "tbr")
-yad_cmd+=(--column "ext")
-yad_cmd+=(--column "format")
-yad_cmd+=(--column "url")
+yad_cmd=(
+	yad --center --on-top --width=340 --height=256
+	--grid-lines=hor --title="$0 $*"
+	--text="Choisissez le format à afficher"
+	--list --radiolist --print-column=6 --hide-column=6 --separator=""
+	--column "play" --column "format_id" --column "tbr"
+	--column "ext" --column "format" --column "url")
 
 PLAYABLE=$("${yad_cmd[@]}" $DATA)
 
