@@ -4,5 +4,7 @@ Documentation=man:polybar(1) man:polybar(5)
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=polybar %i
+Slice=session.slice
+LimitNICE=5
+ExecStart=nice -n 15 ionice -t -c 3 schedtool -D -e /usr/bin/polybar %i
 
