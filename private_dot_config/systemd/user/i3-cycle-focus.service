@@ -3,5 +3,6 @@ Description=i3 cycle focus
 PartOf=graphical-session.target
 
 [Service]
+Slice=session.slice
 ExecStart=/usr/local/bin/i3-cycle-focus --history 16
 
