@@ -46,7 +46,8 @@ bindsym $mod+t [class="(?i)urxvt"] focus
 # Font for window titles. {{{
 # Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Input Sans Condensed Light 7.5
+# font pango:Input Sans Condensed Light 7.5
+font pango:Input Mono Extra Light 7.5
 #font pango:Terminus Medium 8
 #font pango:DejaVu Sans Mono, Font Awesome 5 Free, Font Awesome 5 Brands 8
 #font pango:SF Compact Display Light 8
@@ -359,19 +360,21 @@ bindsym $mod+Shift+i mark --add "swapee"; mode "swap"
 # }
 # bindsym $mod+1o mode "$mode_launcher"
 bindsym $mod+F1 exec --no-startup-id urxvtc -name zsh
-bindsym $mod+Shift+F1 exec --no-startup-id exec qterminal
-bindsym $mod+F2 exec --no-startup-id exec Browser
-bindsym $mod+Shift+F2 exec --no-startup-id exec firefox
-bindsym $mod+F3 exec --no-startup-id exec FileManager
-bindsym $mod+Shift+F3 exec --no-startup-id exec nautilus
-bindsym $mod+F4 exec --no-startup-id exec Editor
-bindsym $mod+Shift+F4 exec --no-startup-id exec Editor -- -p ~/.config/i3/config
-bindsym $mod+F5 exec --no-startup-id Mail
-bindsym $mod+F6 exec --no-startup-id SysMon
-bindsym $mod+F7 exec --no-startup-id urxvtc -name web -title elinks -e elinks
-bindsym $mod+F8 exec --no-startup-id SysUpdate
-bindsym $mod+F9 exec --no-startup-id Music
-bindsym $mod+F10 exec --no-startup-id urxvtc -name tmux -title tmux -e tmux new -AD -s canalguada -n shell
+bindsym $mod+Shift+F1 exec --no-startup-id exec uxterm
+bindsym $mod+F2 exec i3-ws-run $ws2 exec Browser
+bindsym $mod+Shift+F2 exec i3-ws-run $ws2 exec Browser -2
+bindsym $mod+F3 exec i3-ws-run $ws3 exec FileManager
+bindsym $mod+Shift+F3 exec i3-ws-run $ws3 exec FileManager -2
+bindsym $mod+F4 exec i3-ws-run $ws4 exec Editor
+bindsym $mod+Shift+F4 exec i3-ws-run $ws4 exec Editor -- -p ~/.config/i3/config
+bindsym $mod+F5 exec i3-ws-run $ws5 exec Mail
+bindsym $mod+F6 exec i3-ws-run $ws1 exec SysMon
+bindsym $mod+F7 exec i3-ws-run $ws2 exec TextWebBrowser
+bindsym $mod+Shift+F7 exec i3-ws-run $ws2 exec Browser -3 http://lite.duckduckgo.com
+bindsym $mod+F8 exec i3-ws-run $ws1 exec SysUpdate
+bindsym $mod+F9 exec i3-ws-run $ws9 exec Music
+bindsym $mod+Shift+F9 exec i3-ws-run $ws9 exec Music -2
+bindsym $mod+F10 exec i3-ws-run $ws10 exec urxvtc -name tmux -title tmux -e tmux new -AD -s canalguada -n shell
 bindsym $mod+Shift+F12 exec --no-startup-id /usr/bin/nitrogen --random --set-zoom-fill
 # }}}
 # Correct handling of floating dialogs {{{
