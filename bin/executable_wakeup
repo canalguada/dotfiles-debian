@@ -35,12 +35,12 @@ done
 
 [ -z "$SLEEP_VALUES" ] && { usage; exit 1; }
 
-$(command -v sleep) $SLEEP_VALUES
-
 if ! command -v $1 >/dev/null 2>&1; then
 	echo "$PROG: $(basename "$1") not found" >&2
 	exit 2
 fi
+
+$(command -v sleep) $SLEEP_VALUES
 
 exec "$@"
 
