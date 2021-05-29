@@ -1,5 +1,5 @@
 #!/bin/bash
-# vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 noet:
+# vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 et:
 
 set -o nounset # Treat unset variables as an error
 
@@ -8,12 +8,9 @@ PROG=$(basename "$0")
 NVIM_PATH=${NVIM_PATH:-/usr/bin/nvim}
 QT_PATH="/usr/bin/nvim-qt"
 NVR_PATH=$(command -v nvr)
-# TRANSIENT=${TRANSIENT:-y}
-# TRANSIENT_PREFIX=("$(command -v Cpu66)" --slice -q --)
 
-# unset SERVER_ADDR
-# PORT=$((7777 + $(id -ru)))
-# NVIM_LISTEN_ADDRESS=${NVIM_LISTEN_ADDRESS:-"127.0.0.1:$PORT"}
+PORT=$((7777 + $(id -ru)))
+NVIM_LISTEN_ADDRESS=${NVIM_LISTEN_ADDRESS:-"127.0.0.1:$PORT"}
 SERVER_ADDR=
 
 # Colors
@@ -29,128 +26,146 @@ VERBOSITY=${VERBOSITY:-0}
 DEBUG=${DEBUG:-n}
 
 [ "$DEBUG" = "y" ] &&
-	VERBOSITY=3
+  VERBOSITY=3
 
 error_exit() {
-	echo -e "${colorR}$PROG: error: ${2:-'unknown error'}${reset}" 1>&2
-	exit "${1:-1}"
+  echo -e "${colorR}$PROG: error: ${2:-'unknown error'}${reset}" 1>&2
+  exit "${1:-1}"
 }
 
 debug() {
-	[ $VERBOSITY -lt 3 ] && return
-	while read -r line; do
-		echo -e "${colorY}$PROG: debug: ${line}${reset}" >&2
-	done
+  [ $VERBOSITY -lt 3 ] && return
+  while read -r line; do
+    echo -e "${colorY}$PROG: debug: ${line}${reset}" >&2
+  done
 }
 warning() {
-	[ $VERBOSITY -lt 2 ] && return
-	while read -r line; do
-		echo -e "${colorG}$PROG: warning: ${line}${reset}" >&2
-	done
+  [ $VERBOSITY -lt 2 ] && return
+  while read -r line; do
+    echo -e "${colorG}$PROG: warning: ${line}${reset}" >&2
+  done
 }
 
 info() {
-	[ $VERBOSITY -lt 1 ] && return
-	while read -r line; do
-		echo -e "${colorW}$PROG: info: ${line}${reset}"
-	done
+  [ $VERBOSITY -lt 1 ] && return
+  while read -r line; do
+    echo -e "${colorW}$PROG: info: ${line}${reset}"
+  done
 }
 
 usage() {
-	# shellcheck disable=SC1003
-	"$QT_PATH" --help | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g" \
-		-e "s/Neovim/Neovim remote control/g"
+  # shellcheck disable=SC1003
+  "$QT_PATH" --help | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g" \
+    -e "s/Neovim/Neovim remote control/g"
 }
 
 version() {
-	"$QT_PATH" --version | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g"
+  "$QT_PATH" --version | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g"
 }
 
 help_all() {
-	"$QT_PATH" --help-all | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g" \
-		-e "s/Neovim/Neovim remote control/g"
+  "$QT_PATH" --help-all | sed -e "s/\/usr\/bin\/nvim-qt/$PROG/g" \
+    -e "s/Neovim/Neovim remote control/g"
 }
 
-upgrep() {
-	ps -U $(id -ru) ao cmd | grep -v grep | grep -Pq "$1"
-}
+upgrep() { ps -U $(id -ru) ao cmd | grep -v grep | grep -Pq "$1";  }
 
-is_any_listening() {
-	upgrep "^$NVIM_PATH .*--listen $NVIM_LISTEN_ADDRESS"
-}
+any_listening() { nvr --serverlist | grep -q "$NVIM_LISTEN_ADDRESS";  }
 
-launch_headless() {
-	$NVIM_PATH --listen $NVIM_LISTEN_ADDRESS --headless
-}
+launch_headless() { $NVIM_PATH --listen $NVIM_LISTEN_ADDRESS --headless;  }
 
-is_gui_running() {
-	upgrep "^$QT_PATH"
-}
+gui_running() { upgrep "^$QT_PATH";  }
 
-is_gui_listening_embed() {
-	upgrep "^$QT_PATH .*--listen ${NVIM_LISTEN_ADDRESS}"
-}
+gui_embed_nvim() { upgrep "^$QT_PATH .*--listen ${NVIM_LISTEN_ADDRESS}";  }
 
-is_gui_listening_remote() {
-	upgrep "^$QT_PATH .*--server ${NVIM_LISTEN_ADDRESS}"
-}
+gui_remote_nvim() { upgrep "^$QT_PATH .*--server ${NVIM_LISTEN_ADDRESS}";  }
 
 OPTS=()
 FILES=()
 
 check_option() {
-	case "${OPTARG#*=}" in
-		-*) error_exit 1 "missing argument for option '${OPTARG%%=*}'." ;;
-	esac
+  case "${OPTARG#*=}" in
+    -*) error_exit 1 "missing argument for option '${OPTARG%%=*}'." ;;
+  esac
 }
 
 append_long_option() {
-	OPTS+=("--${OPTARG}")
+  OPTS+=("--${OPTARG}")
 }
 
 while getopts ":-:hv" option; do
-	case $option in
-		-)
-			case "$OPTARG" in
-				help) usage; exit 0 ;;
-				timeout=* | geometry=* | stylesheet=* | qmljsdebugger=*)
-					check_option; append_long_option ;;
-				nvim=*) check_option; NVIM_PATH="${OPTARG#*=}" ;;
-				server=*) check_option; SERVER_ADDR="${OPTARG#*=}" ;;
-				maximized | no-ext-tab-line | fullscreen | embed | spawn | nofork)
-					append_long_option ;;
-				help-all) help_all; exit 0 ;;
-				version) version; exit 0 ;;
-				-) break ;;
-				*) error_exit 1 "unknown option '$OPTARG'." ;;
-			esac
-			;;
-		h) usage; exit 0 ;;
-		v) version; exit 0 ;;
-		\?) error_exit 1 "unknown option '$OPTARG'." ;;
-		:) error_exit 1 "missing argument for option '$OPTARG'." ;;
-	esac
+  case $option in
+    -)
+      case "$OPTARG" in
+        help)
+          usage
+          exit 0
+          ;;
+        timeout=* | geometry=* | stylesheet=* | qmljsdebugger=*)
+          check_option
+          append_long_option
+          ;;
+        nvim=*)
+          check_option
+          NVIM_PATH="${OPTARG#*=}"
+          ;;
+        server=*)
+          check_option
+          SERVER_ADDR="${OPTARG#*=}"
+          ;;
+        maximized | no-ext-tab-line | fullscreen | embed | spawn | nofork)
+          append_long_option
+          ;;
+        help-all)
+          help_all
+          exit 0
+          ;;
+        version)
+          version
+          exit 0
+          ;;
+        -) break ;;
+        *) error_exit 1 "unknown option '$OPTARG'." ;;
+      esac
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    v)
+      version
+      exit 0
+      ;;
+    \?) error_exit 1 "unknown option '$OPTARG'." ;;
+    :) error_exit 1 "missing argument for option '$OPTARG'." ;;
+  esac
 done
 shift $((OPTIND - 1))
 
 [ "$DEBUG" = "y" ] &&
-	shell-quote -- "remaining:" "$@" | debug
+  shell-quote -- "remaining:" "$@" | debug
 
 append_file() {
-	FILES+=("$1")
+  FILES+=("$1")
 }
 
 # Extract files if any from remaining positional parameters
 while [ $# -gt 0 ]; do
-	case "$1" in
-		--) shift; break ;;
-		-*) break ;;
-		*) [ -f "$1" ] && append_file "$1"; shift ;;
-	esac
+  case "$1" in
+    --)
+      shift
+      break
+      ;;
+    -*) break ;;
+    *)
+      [ -f "$1" ] && append_file "$1"
+      shift
+      ;;
+  esac
 done
 
 [ "$DEBUG" = "y" ] &&
-	cat<<-EOF |debug
+  cat <<-EOF | debug
 	$(shell-quote -- "options:" "${OPTS[@]}")
 	$(shell-quote -- "files:" "${FILES[@]}")
 	$(shell-quote -- "remaining:" "$@")
@@ -158,113 +173,121 @@ done
 
 # Do not launch another nvim instance listening to the same address
 if [ -n "$SERVER_ADDR" ] &&
-	[ "$SERVER_ADDR" != "$NVIM_LISTEN_ADDRESS" ]; then
-	export NVIM_LISTEN_ADDRESS="$SERVER_ADDR"
+  [ "$SERVER_ADDR" != "$NVIM_LISTEN_ADDRESS" ]; then
+  export NVIM_LISTEN_ADDRESS="$SERVER_ADDR"
 fi
 
-mode=embed
-gui_cmd=()
+preferred_mode="embed"
+declare -ga gui_cmd=()
 
-build_gui_cmd() {
-	gui_cmd=("$(command -v nvim-qt)" "${OPTS[@]}")
-	# [ "$TRANSIENT" = "y" ] && \
-	#   gui_cmd=("${TRANSIENT_PREFIX[@]}" "${gui_cmd[@]}")
-	case "$1" in
-		embed) gui_cmd+=(-- --listen "$NVIM_LISTEN_ADDRESS" --cmd "let has_gui = 1") ;;
-		remote) gui_cmd+=(--server "$NVIM_LISTEN_ADDRESS") ;;
-	esac
-}
-
+mode="none"
+case "$preferred_mode" in
+  embed)
+    if ! gui_embed_nvim; then
+      any_listening &&
+        mode="remote" ||
+        mode="embed"
+    fi
+    ;;
+  remote)
+    if ! any_listening; then
+      launch_headless
+      while ! any_listening; do sleep 1; done
+    elif ! gui_remote_nvim; then
+      mode="remote"
+    fi
+    ;;
+esac
 case "$mode" in
-	embed)
-		! is_gui_listening_embed &&
-			{ ! is_any_listening && build_gui_cmd "embed" || build_gui_cmd "remote" ; }
-		;;
-	remote)
-		! is_any_listening &&
-			{ launch_headless; while ! is_any_listening; do sleep 1; done ; }
-		! is_gui_listening_remote &&
-			build_gui_cmd "remote"
-		;;
+  embed | remote)
+    gui_cmd=("$(command -v nvim-qt)" "${OPTS[@]}")
+    ;;&
+  embed) gui_cmd+=(-- --listen "$NVIM_LISTEN_ADDRESS" --cmd "let has_gui = 1") ;;
+  remote) gui_cmd+=(--server "$NVIM_LISTEN_ADDRESS") ;;
 esac
 
 if [ "${#gui_cmd[@]}" -gt 0 ]; then
-	[ $VERBOSITY -ge 1 ] &&
-		shell-quote -- "${gui_cmd[@]}" | info
-	## shellcheck disable=SC2086
-	# "${gui_cmd[@]}"
-	nohup "${gui_cmd[@]}" </dev/null >/dev/null 2>&1 &
+  [ $VERBOSITY -ge 1 ] &&
+    shell-quote -- "${gui_cmd[@]}" | info
+  ## shellcheck disable=SC2086
+  # "${gui_cmd[@]}"
+  nohup "${gui_cmd[@]}" </dev/null >/dev/null 2>&1 &
 fi
 
 # Switch to nvim-qt desktop, raise, and  give focus.
 if i3-msg -t get_version >/dev/null 2>&1; then
-	sleep 2
-	i3-msg '[class="nvim-qt"] focus' >/dev/null 2>&1
+  sleep 2
+  i3-msg '[class="nvim-qt"] focus' >/dev/null 2>&1
 fi
 
-null_or_option () {
-	case "x$1" in
-		x | x-*) return 0 ;;
-		*) return 1 ;;
-	esac
+null_or_option()  {
+  case "x$1" in
+    x | x-*) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 # Now we can open files, if any
 if [ -n "$*" ] || [ "${#FILES[@]}" -gt 0 ]; then
-	# shellcheck disable=SC2206
-	nvr_cmd=("$NVR_PATH" -s --nostart --servername "$NVIM_LISTEN_ADDRESS")
+  # shellcheck disable=SC2206
+  nvr_cmd=("$NVR_PATH" -s --nostart --servername "$NVIM_LISTEN_ADDRESS")
 
-	set -- "${FILES[@]}" "$@"
+  set -- "${FILES[@]}" "$@"
 
-	[ "$DEBUG" = "y" ] &&
-		shell-quote -- "nvr_options:" "$@" | debug
+  [ "$DEBUG" = "y" ] &&
+    shell-quote -- "nvr_options:" "$@" | debug
 
-	# Do not create another tab if the current buffer name is empty
-	curbufname=$("${nvr_cmd[@]}" --remote-expr 'bufname("")')
-	if [ -z "$curbufname" ]; then
-		set +o nounset
-		while [ $# -gt 0 ]; do
-			case "$1" in
-				-o | -O | --remote | --remote-silent | \
-					--remote-wait | --remote-wait-silent)
-					null_or_option "$2" &&
-						error_exit 2 "$1:expected at least one argument"
-					nvr_cmd+=("$@")
-					shift $# ;;
-				-p | --remote-tab | --remote-tab-silent | \
-					--remote-tab-wait | --remote-tab-wait-silent)
-					null_or_option "$2" &&
-						error_exit 2 "$1:expected at least one argument"
-					[ "$1" = "-p" ] &&
-						nvr_cmd+=("--remote-silent") ||
-						nvr_cmd+=("${1//-tab/}")
-					nvr_cmd+=("$2")
-					! null_or_option "$3" &&
-						{
-							nvr_cmd+=("$1")
-							until null_or_option "$3"; do nvr_cmd+=("$3"); shift; done
-						}
-					shift 2 ;;
-				*)
-					nvr_cmd+=("$1")
-					shift ;;
-			esac
-		done
-	else
-		nvr_cmd+=("$@")
-		shift $#
-	fi
+  # Do not create another tab if the current buffer name is empty
+  curbufname=$("${nvr_cmd[@]}" --remote-expr 'bufname("")')
+  if [ -z "$curbufname" ]; then
+    set +o nounset
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        -o | -O | --remote | --remote-silent | \
+          --remote-wait | --remote-wait-silent)
+          null_or_option "$2" &&
+            error_exit 2 "$1:expected at least one argument"
+          nvr_cmd+=("$@")
+          shift $#
+              ;;
+        -p | --remote-tab | --remote-tab-silent | \
+          --remote-tab-wait | --remote-tab-wait-silent)
+          null_or_option "$2" &&
+            error_exit 2 "$1:expected at least one argument"
+          [ "$1" = "-p" ] &&
+            nvr_cmd+=("--remote-silent") ||
+            nvr_cmd+=("${1//-tab/}")
+          nvr_cmd+=("$2")
+          ! null_or_option "$3" &&
+            {
+              nvr_cmd+=("$1")
+              until null_or_option "$3"; do
+                nvr_cmd+=("$3")
+                shift
+              done
+            }
+          shift 2
+             ;;
+        *)
+          nvr_cmd+=("$1")
+          shift
+           ;;
+      esac
+    done
+  else
+    nvr_cmd+=("$@")
+    shift $#
+  fi
 
-	"${nvr_cmd[@]}" &
-	pid=$!
+  "${nvr_cmd[@]}" &
+  pid=$!
 
-	[ $VERBOSITY -ge 1 ] &&
-		shell-quote -- "${nvr_cmd[@]}" |
-		sed -e 's/--remote/\n\t--remote/g' \
-			-e 's/-o/\n\t-o/g' \
-			-e 's/-O/\n\t-O/g' \
-			-e 's/-p/\n\t-p/g' - | info
+  [ $VERBOSITY -ge 1 ] &&
+    shell-quote -- "${nvr_cmd[@]}" |
+    sed -e 's/--remote/\n\t--remote/g' \
+      -e 's/-o/\n\t-o/g' \
+      -e 's/-O/\n\t-O/g' \
+      -e 's/-p/\n\t-p/g' - | info
 
-	wait $pid
+  wait $pid
 fi
-
