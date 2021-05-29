@@ -20,8 +20,10 @@ settings:
       normal:
         ',E': hint links userscript qute_elinks
         ',M': hint links userscript qute_ytdl_mpv
+        ',S': hint links userscript qute_surf
         ',e': spawn --userscript qute_elinks
         ',m': spawn --userscript qute_ytdl_mpv
+        ',s': spawn --userscript qute_surf
         ',t': spawn --userscript qute_mobile_twitter
         <: tab-prev
         <Alt+Left>: back
@@ -38,6 +40,8 @@ settings:
   content.blocking.hosts.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+  content.blocking.method:
+    global: auto
   content.blocking.whitelist:
     global: null
   content.headers.referer:
@@ -51,7 +55,7 @@ settings:
     '*://mobile.twitter.com/*': true
     global: false
   content.user_stylesheets:
-    global: ~/.config/qutebrowser/css/darculized-all-sites.css
+    global: ~/.config/qutebrowser/css/apprentice-all-sites.css
   content.webgl:
     global: false
   fonts.default_family:
