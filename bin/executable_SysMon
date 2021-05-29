@@ -1,7 +1,9 @@
 #!/bin/sh
 
-#exec Terminal --icon=htop --name=sysmon --title=htop -- htop
+exec Terminal --icon=htop --name=sysmon \
+	"--title=Visualiseur de processus - Htop" \
+	-- htop
 
-urxvtc -name sysmon -title htop -e htop "$@"
+# urxvtc -name sysmon -title htop -e htop "$@"
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:
