@@ -5,7 +5,8 @@ After=dbus.service
 After=pulseaudio.service
 
 [Service]
-ExecStart=mopidy -q
+LimitNICE=23
+ExecStart=nice -n -3 /usr/bin/mopidy -q
 
 # disallow writing to /usr, /bin, /sbin, ...
 ProtectSystem=yes
