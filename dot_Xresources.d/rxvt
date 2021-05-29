@@ -44,13 +44,15 @@ URxvt*visualBell: true
 URxvt*perl-ext:
 !URxvt*perl-ext-common:  default,clipboard,url-select,keyboard-select,tabbed
 URxvt*perl-ext-common:  default,clipboard,url-select,keyboard-select,resize-font
+
 ! Copy into PRIMARY selection and also ensure that your CLIPBOARD selection
 ! is updated with the same contents
 URxvt*clipboard.autocopy: false
 !URxvt*keysym.M-c: perl:clipboard:copy
 !URxvt*keysym.M-v: perl:clipboard:paste
 
-URxvt*url-select.launcher: /usr/bin/xdg-open
+!URxvt*url-select.launcher: /usr/bin/xdg-open
+URxvt*url-select.launcher: TextWebBrowser
 URxvt*url-select.underline: true
 URxvt*keysym.M-u:           perl:url-select:select_next
 URxvt*keysym.M-Escape:      perl:keyboard-select:activate
