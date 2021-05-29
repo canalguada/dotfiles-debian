@@ -53,7 +53,7 @@ export ZSH="/home/canalguada/git/ohmyzsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-#ZSH_THEME="liquidprompt"
+ZSH_THEME="liquidprompt"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,7 +69,7 @@ export ZSH="/home/canalguada/git/ohmyzsh"
  HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+ DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
  DISABLE_UPDATE_PROMPT="true"
@@ -106,7 +106,7 @@ export ZSH="/home/canalguada/git/ohmyzsh"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$XDG_CONFIG_HOME/oh-my-zsh/custom
+ZSH_CUSTOM=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh/custom
 
 # ZSH_TMUX_AUTOSTART=true
 
@@ -116,16 +116,19 @@ ZSH_CUSTOM=$XDG_CONFIG_HOME/oh-my-zsh/custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git
 	command-not-found
 	common-aliases
 	cp
+	debian
 	extract
+	# fbterm
+	fzf
+	git
 	globalias
 	jsontools
 	man
 	perms
-	pylint
+	# pylint
 	python
 	rsync
 	safe-paste
@@ -169,6 +172,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias -g B='| batcat'
 
 # this allows us to put own modifications in ~/.zshrc.local
 xsource "${ZDOTDIR:-${HOME}}/.zshrc.local"
@@ -176,8 +180,7 @@ xsource "${ZDOTDIR:-${HOME}}/.zshrc.local"
 systemctl --user import-environment PATH
 #systemctl --user import-environment
 
-# Only load liquidprompt in interactive shells, not from a script or from scp
-# echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
-[[ -o interactive ]] && . /usr/share/liquidprompt/liquidprompt
+# # Only load liquidprompt in interactive shells, not from a script or from scp
+# [[ -o interactive ]] && . ~/git/liquidprompt/liquidprompt
 
 # zprof
