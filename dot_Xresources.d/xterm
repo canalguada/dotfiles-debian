@@ -12,8 +12,9 @@ xterm*bellIsUrgent: true
 !xterm*faceName: DejaVu Sans Mono
 !xterm*faceName: Hack
 !xterm*faceName: SF Mono
-xterm*faceName: Input Mono Condensed
-xterm*faceSize:  9.0
+! xterm*faceName: Input Mono Condensed
+xterm*faceName: Menlo
+xterm*faceSize:  8.0
 xterm*faceSize1: 7.0
 xterm*faceSize2: 8.0
 xterm*faceSize3: 9.0
