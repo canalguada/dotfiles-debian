@@ -28,6 +28,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sk1418/Join'
 Plug 'Townk/vim-autoclose'
 Plug 'cespare/vim-toml'
+Plug 'vito-c/jq.vim'
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat' }
 Plug 'psf/black', { 'branch': 'stable', 'on': 'Black' }
 Plug 'WolfgangMehner/bash-support'
@@ -182,7 +183,7 @@ let g:airline#extensions#tagbar#flags = ''
 " let g:powerline_pycmd = 'py3'
 " }}}
 " => General{{{
-set shell=/usr/bin/zsh
+set shell=/bin/bash
 set history=700 "Sets how many lines of history VIM has to remember
 set autoread " Set to auto read when a file is changed from the outside
 set hlsearch "Highlight search things
