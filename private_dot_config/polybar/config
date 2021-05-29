@@ -29,9 +29,9 @@ format-foreground = ${colors.foreground}
 format-background = ${colors.lightbg}
 format-underline =
 format-overline =
-format-spacing =
-format-padding = 2
-format-margin =
+format-spacing = 0
+format-padding = 1
+format-margin = 1
 format-offset =
 
 ;compositing-background = xor
@@ -112,15 +112,19 @@ padding-right = 1
 module-margin-left = 0
 module-margin-right = 0
 
+; font-0 = Input Mono Narrow:style=Thin:pixelsize=8;1
 font-0 = SF Compact Display:style=Light:pixelsize=9;1
 font-1 = SF Pro Display:style=Light:pixelsize=9;1
-font-2 = SF Compact Display:style=Light:pixelsize=9;1
-;font-2 = SF Mono:style=Light:pixelsize=8;1
+; font-2 = SF Compact Display:style=Light:pixelsize=9;1
+; font-2 = SF Mono:style=Light:pixelsize=8;1
 font-3 = feather:style=Regular:pixelsize=9;1
 font-4 = feather:style=Regular:pixelsize=10;2
 ;font-2 = SF Compact Text:style=Regular:pixelsize=8;1
-;font-2 = Terminus:style=Medium:pixelsize=8;1
-;font-2 = Roboto Mono Light for Powerline:style=Light,Regular:pixelsize=8;1
+; font-2 = Terminus:style=Medium:pixelsize=8;1
+; font-2 = Fira Code Light:pixelsize=8;2
+; font-2 = Monoisome:style=Regular:pixelsize=7;1
+font-2 = Input Mono:style=Extra Light:pixelsize=8;1
+; font-2 = Roboto Mono Light for Powerline:style=Light,Regular:pixelsize=8;1
 ;font-2 = Ubuntu Mono:style=Regular:pixelsize=9.5;1
 ;font-2 = Digital\-7 Mono,Digital\-7:style=Mono:pixelsize=9;1
 ;font-2 = Unifont:fontformat=truetype:size=8:antialias=false;0
