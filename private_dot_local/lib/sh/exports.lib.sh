@@ -17,10 +17,27 @@ export TEMPDIR=$TMPDIR
 #export TERMINFO=/usr/share/terminfo/r/rxvt-256color
 #export COLORTERM=rxvt
 #export URXVT_PERL_LIB=
+
+case "$TERM" in
+#    xterm*)
+#        if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+#            export TERM=xterm-256color
+#        elif [ -e /usr/share/terminfo/x/xterm-color ]; then
+#            export TERM=xterm-color;
+#        else
+#            export TERM=xterm
+#        fi
+#        ;;
+    linux)
+        [ -n "$FBTERM" ] && export TERM=fbterm
+        ;;
+esac
+
 export RXVT_SOCKET=/run/user/$(id -ru)/urxvtd-$(hostname)
 
 export NVIM_PATH=/usr/bin/nvim
-export NVIM_LISTEN_ADDRESS=127.0.0.1:$(($(id -ru) + 7777))
+# export NVIM_LISTEN_ADDRESS=127.0.0.1:$(($(id -ru) + 7777))
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
 LOCKBG="--image-fill $HOME/Images/Backgrounds/default.png"
@@ -59,7 +76,7 @@ export JAVA_FONTS=/usr/share/fonts/TTF
 export MYNVIMRC=$HOME/.config/nvim/init.vim
 #export VIM_OPTIONS="-p"
 
-export EDITOR="nvim -u NONE"
+export EDITOR=nv
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 
@@ -106,8 +123,16 @@ export PYTHONDOCS=/usr/share/doc/python/html/
 #-c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 #-c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 
+export FZF_DEFAULT_OPTS="--extended  --cycle --bind '?:preview:batcat --color=always --style=numbers --line-range=:500 {}'"
+
 # Use a default width of 80 for manpages for more convenient reading
 export MANWIDTH=${MANWIDTH:-80}
+# export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+export MANPAGER="less -RF"
+
+export BAT_THEME="Monokai Extended"
+export BAT_PAGER="less -RF"
+alias bat='batcat'
 
 export LESS="-s -M +Gg"
 export PAGER="/usr/bin/less"
