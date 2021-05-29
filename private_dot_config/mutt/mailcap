@@ -4,7 +4,7 @@
 # Plain text
 text/plain; $EDITOR %s ;
 # HTML
-text/html; elinks -force-html -no-home -no-numbering -no-references -dump ; copiousoutput;
+text/html; /usr/bin/elinks -force-html -no-home -no-numbering -no-references -dump ; copiousoutput;
 # ICS
 text/calendar; mutt-ics; copiousoutput
 application/ics; mutt-ics; copiousoutput
@@ -27,4 +27,5 @@ application/pgp-keys; gpg --import '%s'; copiousoutput;
 
 # Unidentified files
 #application/octet-stream; xdg-open %s "-"
-application/*; mimeo %s &> /dev/null &;
+# application/*; mimeo %s &> /dev/null &;
+application/*; xdg-open %s &> /dev/null &;
