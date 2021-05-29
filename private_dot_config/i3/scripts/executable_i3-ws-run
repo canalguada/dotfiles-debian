@@ -18,24 +18,17 @@
 
 ws=$1
 shift
-
-focused="/tmp/$USER/i3/cache/focused"
-[ ! -d "$(dirname "$focused")" ] &&
-  mkdir -p "$(dirname "$focused")"
+cmd=$(shell-quote "$@")
+unset msg
 
 get_focused_ws () {
 	jq_filter='.[] | { name: .name, focused: .focused } | 
-	select(.focused == true) | .name'
+		first(select(.focused == true)) | .name'
 	i3-msg -t get_workspaces | \
-		jq -r "$jq_filter" >"$focused"
+		jq -r "$jq_filter"
 }
 
-get_focused_ws &
-pid=$!
-cmd=$(pyquote "$@")
-unset msg
-wait $pid
-[ "$ws" != "$(head -n1 $focused)" ] &&
+[ "$ws" != "$(get_focused_ws)" ] &&
 	msg='workspace "'$ws'"; '
 msg="${msg}exec $cmd"
 
