@@ -16,6 +16,7 @@ elif ! tty -s; then
   exit 1
 fi
 
-exec $prepend /usr/bin/tmux attach -d -t $USER \; source $HOME/.tmux.conf
+#exec $prepend /usr/bin/tmux attach -d -t $USER \; source $HOME/.tmux.conf
+exec $prepend /usr/bin/tmux attach -d -t $USER
 
 # vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
