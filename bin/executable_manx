@@ -18,7 +18,7 @@ if [ -z "$available" ]; then
   exit 2
 fi
 
-cmd="man -a"
+cmd="man -a -L C "
 tabbed=n
 
 if xset q >/dev/null 2>&1; then
@@ -31,7 +31,7 @@ fi
 # shellcheck disable=SC2086
 for item in $available; do
 	if [ "$tabbed" = "y" ]; then
-		urxvtc -title "$cmd $item" -e $cmd $item
+		urxvtc -title "$cmd $item" -e zsh -c "$cmd $item"
 	else
 		$cmd $item
 	fi
