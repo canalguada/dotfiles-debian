@@ -11,5 +11,6 @@
 	hub = repo hub
 [core]
 	excludesfile = /home/canalguada/.gitignore_global
+	pager = batcat
 [hub]
 	protocol = https
