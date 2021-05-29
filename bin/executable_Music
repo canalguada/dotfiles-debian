@@ -1,11 +1,15 @@
 #!/bin/sh
 
-#exec Terminal --icon=audio-player \
-#	--name=music --title=ncmpcpp -- ncmpcpp "$@"
-
-#PLAYER=vlc
-#urxvtc -name music -title pyradio -e pyradio -u $PLAYER
-
-urxvtc -name music -title ncmpcpp -e ncmpcpp
+if [ "$1" = "-2" ]; then
+	shift
+	PLAYER="mpv"
+	exec Terminal -i audio-player -n music \
+		-t "Internet radio player - pyradio" \
+		-- pyradio -u "$PLAYER" "$@"
+else
+	exec Terminal -i audio-player -n music \
+		-t "Mopidy/MPD client - Ncmpcpp" \
+		-- ncmpcpp "$@"
+fi
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:
