@@ -83,6 +83,8 @@ alias scu-mask-now="systemctl --user mask --now"
 
 alias sc='sudo systemctl '
 alias scu='systemctl --user '
+alias jc='journalctl '
+alias jcu='journalctl --user '
 # }}}
 # History {{{
 alias h='fc -l -16 -1'
@@ -151,7 +153,7 @@ alias resticprofile='python3 -m resticprofile -c $XDG_CONFIG_HOME/resticprofile/
 # }}}
 # Others {{{
 alias qnv='nvim-qt -- -u NONE'
-alias nv='nvim -u NONE'
+# alias nv='nvim -u NONE'
 #alias vit_tmux='tmux new-window -n vit vit \; split-window -h -p 25 column -t -s\; -c 40 -N CMD,DESC -T DESC -d ~/Bureau/vit_help.txt'
 alias Less='/usr/bin/less'
 
