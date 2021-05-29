@@ -4,4 +4,5 @@ Documentation=man:xsettingsd(1)
 PartOf=graphical-session.target
 
 [Service]
+Slice=session.slice
 ExecStart=/usr/bin/xsettingsd
