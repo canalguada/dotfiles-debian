@@ -3,5 +3,5 @@ Description=Check for package updates service
 
 [Service]
 Type=oneshot
-Slice=cpu16.slice
+Slice=nicy.slice
 ExecStart=/usr/local/bin/pkgs check
