@@ -26,6 +26,7 @@ if [[ "$TERM" == "xterm" ]] && [[ "$LINES" -ge 50 ]] \
 	&& [[ "$COLUMNS" -ge 100 ]] && [[ -z "$SSH_CONNECTION" ]] ; then
 	large
 fi
+# [ -n "$XTERM_VERSION" ] && picom-trans -w "$WINDOWID" 90 >/dev/null
 
 # Remembering recent directories
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
