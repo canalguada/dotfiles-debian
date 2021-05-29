@@ -1,4 +1,4 @@
-# vim: set ft=sh fdm=indent ts=4 sw=4 tw=79 noet:
+# vim: set ft=sh fdm=indent ts=4 sw=4 tw=79 et:
 
 # Enable zapping (C-A-<Bksp> kills X)
 setxkbmap -option terminate:ctrl_alt_bksp
@@ -9,4 +9,44 @@ xset s blank
 xset s 300 240
 xset +dpms dpms 600 720 900
 xset b 100
+
+if [ -z "$XDG_DATA_HOME" ]; then
+    export XDG_DATA_HOME="$HOME/.local/share"
+fi
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+    export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+if [ -z "$XDG_DATA_DIRS" ]; then
+    XDG_DATA_DIRS="$XDG_DATA_HOME:/usr/local/share:/usr/share"
+else
+	case ":${XDG_DATA_DIRS}:" in
+        *":/usr/share:"*) ;;
+        *) XDG_DATA_DIRS="$XDG_DATA_DIRS:/usr/share" ;;
+	esac
+fi
+export XDG_DATA_DIRS
+
+if [ -z "$XDG_CONFIG_DIRS" ]; then
+    export XDG_CONFIG_DIRS="/etc:/etc/xdg:/usr/share"
+else
+	case ":${XDG_CONFIG_DIRS}:" in
+        *":/etc/xdg:"*) ;;
+        *) XDG_CONFIG_DIRS="$XDG_CONFIG_DIRS:/etc/xdg" ;;
+	esac
+fi
+export XDG_CONFIG_DIRS
+
+if [ -z "$XDG_CACHE_HOME" ]; then
+    export XDG_CACHE_HOME="$HOME/.cache"
+fi
+
+# Ensure the existance of the 'Desktop' folder
+if [ -e "$XDG_CONFIG_HOME/user-dirs.dirs" ]; then
+    . "$XDG_CONFIG_HOME/user-dirs.dirs"
+else
+    XDG_DESKTOP_DIR="$HOME/Bureau"
+fi
+mkdir -p "$XDG_DESKTOP_DIR"
 
