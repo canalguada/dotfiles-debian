@@ -4,5 +4,7 @@ Documentation=man:picom(1)
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=picom
+Slice=session.slice
+LimitNICE=30
+ExecStart=nice -n -10 /usr/bin/picom
 
