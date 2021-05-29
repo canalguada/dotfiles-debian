@@ -1,8 +1,11 @@
 #!/bin/sh
 # vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 noet:
 
+use_service=no
+
 until ps -U $(id -ru) ao comm |grep -v grep|grep -q urxvtd; do
-	if systemctl --user list-unit-files |grep -q urxvtd.service; then
+	if [ "$use_service" = "yes" ] &&
+		(systemctl --user list-unit-files |grep -q urxvtd.service) ; then
 		if [ "$(systemctl --user is-active urxvtd.service)" != "active" ]; then
 			echo "Starting urxvtd daemon..." | \
 				notify -i terminal --id urxvtc -t "urxvtc" - &
