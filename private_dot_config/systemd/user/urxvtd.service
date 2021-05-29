@@ -2,7 +2,7 @@
 Description=Urxvt Terminal Daemon
 Documentation=man:urxvtd(1) man:urxvtc(1)
 Requires=urxvtd.socket
-PartOf=graphical-session.target
+#PartOf=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/urxvtd -o -q
