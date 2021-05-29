@@ -3,19 +3,22 @@
 @theme "common"
 
 window {
- width: 40%;
- location: center;
- anchor: center;
- y-offset: 0;
+	width: 40%;
+	location: center;
+	/*anchor: center;*/
+	/*y-offset: 0;*/
+	y-offset: -36;
 }
 
 listview {
- background-color: @background;
- columns: 1;
- /*lines: 5;*/
+	background-color: @background;
+	columns: 1;
+	/*lines: 5;*/
+	lines: 10;
 }
 
+/*
 mainbox {
- children: [ listview ];
+	children: [ listview ];
 }
-
+*/
