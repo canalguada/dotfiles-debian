@@ -22,8 +22,6 @@ fi
 
 # User specific environment and startup programs
 
-#source /etc/profile.d/vte.sh
-
 ## Command not found
 #source /usr/share/doc/pkgfile/command-not-found.bash
 # Auto "cd" when entering just a path
@@ -58,14 +56,7 @@ shopt -s histverify
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-#export TERM="xterm-256color"
-[ -n "$XTERM_VERSION" ] && transset-df --id "$WINDOWID" 0.90 >/dev/null
-
-# Laisser à la fin !
-#. /etc/profile.d/vte.sh
-
-## Running under xterm ?
-#[ -n "${XTERM_VERSION}" ] && return 0
+# [ -n "$XTERM_VERSION" ] && picom-trans -w "$WINDOWID" 90 >/dev/null
 
 # ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 # Bash completion
@@ -154,5 +145,5 @@ eval "$(fasd --init auto)"
 systemctl --user import-environment PATH
 
 # Only load liquidprompt in interactive shells, not from a script or from scp
-echo $- | grep -q i 2>/dev/null && . /usr/share/liquidprompt/liquidprompt
+echo $- | grep -q i 2>/dev/null && . ~/git/liquidprompt/liquidprompt
 
