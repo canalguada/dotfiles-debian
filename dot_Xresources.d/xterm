@@ -13,14 +13,24 @@ xterm*bellIsUrgent: true
 !xterm*faceName: Hack
 !xterm*faceName: SF Mono
 ! xterm*faceName: Input Mono Condensed
-xterm*faceName: Menlo
-xterm*faceSize:  8.0
-xterm*faceSize1: 7.0
+
+! xterm*faceName: Menlo
+! xterm*faceSize:  8.0
+! xterm*faceSize1: 7.0
+! xterm*faceSize2: 8.0
+! xterm*faceSize3: 9.0
+! xterm*faceSize4: 10.0
+! xterm*faceSize5: 11.0
+! xterm*faceSize6: 12.0
+
+xterm*faceName: Terminus
+xterm*faceSize:  10.0
+xterm*faceSize1: 6.0
 xterm*faceSize2: 8.0
-xterm*faceSize3: 9.0
-xterm*faceSize4: 10.0
-xterm*faceSize5: 11.0
-xterm*faceSize6: 12.0
+xterm*faceSize3: 10.0
+xterm*faceSize4: 12.0
+xterm*faceSize5: 14.0
+xterm*faceSize6: 16.0
 
 xterm*utf8: 2
 xterm*utf8Title: on
