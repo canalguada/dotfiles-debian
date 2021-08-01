@@ -78,7 +78,7 @@ select_flags=6
 editor_backup_extension=~
 mcview_eof=
 ignore_ftp_chattr_errors=true
-skin=xoria256
+skin=yadt256
 
 editor_filesize_threshold=64M
 filepos_max_saved_entries=1024
