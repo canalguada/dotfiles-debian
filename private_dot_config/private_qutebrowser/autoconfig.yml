@@ -28,7 +28,14 @@ settings:
         <: tab-prev
         <Alt+Left>: back
         <Alt+Right>: forward
+        <Ctrl+r>: config-cycle content.user_stylesheets "~/.config/qutebrowser/css/apprentice-all-sites.css"
+          "~/.config/qutebrowser/css/gruvbox-all-sites.css" "~/.config/qutebrowser/css/solarized-dark-all-sites.css"
+          "~/.config/qutebrowser/css/solarized-light-all-sites.css" "" "~/.config/qutebrowser/css/darculized-all-sites.css"
         '>': tab-next
+        zl: spawn --userscript qute-pass
+        zol: spawn --userscript qute-pass --otp-only
+        zpl: spawn --userscript qute-pass --password-only
+        zul: spawn --userscript qute-pass --username-only
   completion.open_categories:
     global:
     - bookmarks
@@ -36,7 +43,7 @@ settings:
     - searchengines
     - quickmarks
   content.blocking.enabled:
-    global: true
+    global: false
   content.blocking.hosts.lists:
     global:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
@@ -52,12 +59,22 @@ settings:
   content.images:
     global: true
   content.javascript.enabled:
+    '*://golang.org/*': true
+    '*://localhost/*': true
     '*://mobile.twitter.com/*': true
+    '*://pkg.go.dev/*': true
+    '*://play.golang.org/*': true
     global: false
+  content.proxy:
+    global: system
   content.user_stylesheets:
-    global: ~/.config/qutebrowser/css/apprentice-all-sites.css
+    global: null
   content.webgl:
     global: false
+  content.xss_auditing:
+    global: false
+  downloads.location.directory:
+    global: null
   fonts.default_family:
     global:
     - SF Pro Display Light
@@ -67,6 +84,16 @@ settings:
     global: 7pt default_family
   fonts.tabs.unselected:
     global: 7pt default_family
+  fonts.web.family.cursive:
+    global: null
+  fonts.web.family.fixed:
+    global: Fira Mono for Powerline
+  fonts.web.family.sans_serif:
+    global: Aleo Light
+  fonts.web.family.serif:
+    global: Aller Light
+  fonts.web.family.standard:
+    global: Aleo Light
   qt.force_platformtheme:
     global: qt5ct
   qt.force_software_rendering:
@@ -90,3 +117,9 @@ settings:
       DEFAULT: https://lite.duckduckgo.com/lite/?q={}
   url.start_pages:
     global: https://lite.duckduckgo.com/lite/
+  window.hide_decoration:
+    global: false
+  window.title_format:
+    global: '{perc}{current_title}{title_sep}qutebrowser'
+  window.transparent:
+    global: false
