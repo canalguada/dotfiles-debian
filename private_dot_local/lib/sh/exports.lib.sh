@@ -2,76 +2,23 @@
 
 #shellcheck disable=SC2155
 
-export MYTERMINAL=urxvt
-#export TERMINAL="$HOME/bin/Terminal"
-export TERMINAL=x-terminal-emulator
-export BROWSER="$HOME/bin/Browser"
-
-#export TMPDIR=$HOME/.local/tmp
-export TMPDIR=/tmp
-export TMP=$TMPDIR
-export TEMP=$TMPDIR
-export TEMPDIR=$TMPDIR
-
-#export TERM=rxvt-unicode
-#export TERMINFO=/usr/share/terminfo/r/rxvt-256color
-#export COLORTERM=rxvt
-#export URXVT_PERL_LIB=
+## Common ######################################################
 
 case "$TERM" in
-#    xterm*)
-#        if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-#            export TERM=xterm-256color
-#        elif [ -e /usr/share/terminfo/x/xterm-color ]; then
-#            export TERM=xterm-color;
-#        else
-#            export TERM=xterm
-#        fi
-#        ;;
     linux)
         [ -n "$FBTERM" ] && export TERM=fbterm
         ;;
 esac
 
-export RXVT_SOCKET=/run/user/$(id -ru)/urxvtd-$(hostname)
+export TMPDIR=/tmp
+#export TMPDIR=$HOME/.local/tmp
+export TMP=$TMPDIR
+export TEMP=$TMPDIR
+export TEMPDIR=$TMPDIR
 
 export NVIM_PATH=/usr/bin/nvim
-# export NVIM_LISTEN_ADDRESS=127.0.0.1:$(($(id -ru) + 7777))
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-
-I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
-LOCKBG="--image-fill $HOME/Images/Backgrounds/default.png"
-export I3LOCKER="$I3SCRIPTS/lockmore $LOCKBG --blur --lock-icon  --nofork -f -e"
-export I3SLIDESHOW="$I3SCRIPTS/slideshow"
-
-export MYBACKGROUNDS="$HOME/Images/Backgrounds/Favorites"
-
-# Setup:
-#
-#  1. Create a directory to hold the virtual environments.
-#     (mkdir $HOME/.virtualenvs).
-#  2. Add a line like "export WORKON_HOME=$HOME/.virtualenvs"
-#     to your .bashrc.
-#  3. Add a line like "source /path/to/this/file/virtualenvwrapper.sh"
-#     to your .bashrc.
-#  4. Run: source ~/.bashrc
-#  5. Run: workon
-#  6. A list of environments, empty, is printed.
-#  7. Run: mkvirtualenv temp
-#  8. Run: workon
-#  9. This time, the "temp" environment is included.
-# 10. Run: workon temp
-# 11. The virtual environment is activated.
-#
-#export WORKON_HOME=~/.virtualenvs
-# shellcheck disable=SC1090
-#source ~/.local/bin/virtualenvwrapper.sh
-
-## export JAVA_HOME JDK ##
-# export JAVA_HOME="/usr/java/latest"
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dsun.java2d.opengl=true'
-export JAVA_FONTS=/usr/share/fonts/TTF
-#export MOZ_PLUGIN_PATH=/usr/lib64/mozilla/plugins
+# export NVIM_LISTEN_ADDRESS=127.0.0.1:$(($(id -ru) + 7777))
 
 export MYNVIMRC=$HOME/.config/nvim/init.vim
 #export VIM_OPTIONS="-p"
@@ -79,27 +26,6 @@ export MYNVIMRC=$HOME/.config/nvim/init.vim
 export EDITOR=nv
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
-
-export ELINKS_XTERM="urxvtc -e"
-#export SAL_USE_VCLPLUGIN=kde4
-
-##export LIBVA_DRIVER_NAME=vdpau
-#export LIBVA_DRIVER_NAME=radeonsi
-#export VDPAU_DRIVER=r600
-## VDPAU/VA-GL driver
-#export VDPAU_DRIVER=va_gl
-
-# uniquement si installé
-# Pepper Flash and Chromium
-## Avec Chromium-Pepper-Flash
-#export PEPPER_FLASH_VERSION=$(grep '"version":' /usr/lib/PepperFlash/manifest.json| grep -Po '(?<=version": ")(?:\d|\.)*')
-#export CHROMIUM_USER_FLAGS="--disk-cache-dir=/tmp/cache --disk-cache-size=50000000 --ppapi-flash-path=/usr/lib/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$PEPPER_FLASH_VERSION"
-## Avec Chrome
-#export PEPPER_FLASH_VERSION=$(grep '"version":' /opt/google/chrome/PepperFlash/manifest.json| grep -Po '(?<=version": ")(?:\d|\.)*')
-#export CHROMIUM_USER_FLAGS="--disk-cache-dir=/tmp/cache --disk-cache-size=50000000 --ppapi-flash-path=/opt/google/chrome/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$PEPPER_FLASH_VERSION"
-
-#export PYTHONPATH=$PYTHONPATH:/home/canalguada/.local/lib/python/site-packages
-export PYTHONDOCS=/usr/share/doc/python/html/
 
 # export LESS_TERMCAP_mb=$'\e[1;32m'
 # export LESS_TERMCAP_md=$'\e[1;32m'
@@ -123,13 +49,6 @@ export PYTHONDOCS=/usr/share/doc/python/html/
 #-c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
 #-c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 
-export FZF_DEFAULT_OPTS="--extended  --cycle --bind '?:preview:batcat --color=always --style=numbers --line-range=:500 {}'"
-
-# Use a default width of 80 for manpages for more convenient reading
-export MANWIDTH=${MANWIDTH:-80}
-# export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
-export MANPAGER="less -RF"
-
 export BAT_THEME="Monokai Extended"
 export BAT_PAGER="less -RF"
 alias bat='batcat'
@@ -139,9 +58,18 @@ export PAGER="/usr/bin/less"
 # shellcheck disable=SC2139
 alias zless="$PAGER"
 
-export SDL_VIDEO_FULLSCREEN_HEAD=0
+# Use a default width of 80 for manpages for more convenient reading
+export MANWIDTH=${MANWIDTH:-80}
+# export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+export MANPAGER="less -RF"
+
+# Fzf
+export FZF_DEFAULT_OPTS="--extended  --cycle --bind '?:preview:batcat --color=always --style=numbers --line-range=:500 {}'"
 
 export PROJECT_PATHS="$HOME/PycharmProjects:$HOME/Scripts:$HOME/Projects"
+
+#export PYTHONPATH=$PYTHONPATH:/home/canalguada/.local/lib/python/site-packages
+export PYTHONDOCS=/usr/share/doc/python/html/
 
 
 #BUILDROOT="$HOME/builds/openwrt-dg834gt/src/openwrt"
@@ -214,11 +142,7 @@ export CXXFLAGS="-march=native -O2 -pipe -fno-plt"
 export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 #export MAKEFLAGS="-j2"
 
-export WINEPREFIX=$HOME/.wine
-export WINEARCH=win32
-
-export QML_DISABLE_DISK_CACHE=1
-
+# Restic
 #MOUNT_ROOT="/run/media/canalguada"
 MOUNT_ROOT="/media/Freebox"
 BACKUP_ROOT="${MOUNT_ROOT}/LIVE/Backup"
@@ -237,3 +161,61 @@ export TASKDPORT=53859
 export GITHUB_USER=$USER
 #export GITHUB_PASSWORD=$(pass show "web/github.com/$USER"|head -n1)
 
+DEBEMAIL="guadalupe.david@gmail.com"
+DEBFULLNAME="David GUADALUPE"
+export DEBEMAIL DEBFULLNAME
+
+## Graphical ###################################################
+
+export MYTERMINAL=urxvt
+#export TERMINAL="$HOME/bin/Terminal"
+export TERMINAL=x-terminal-emulator
+export BROWSER="$HOME/bin/Browser"
+
+export RXVT_SOCKET=/run/user/$(id -ru)/urxvtd-$(hostname)
+
+I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
+LOCKBG="--image-fill $HOME/Images/Backgrounds/default.png"
+export I3LOCKER="$I3SCRIPTS/lockmore $LOCKBG --blur --lock-icon --nofork -f -e"
+export I3SLIDESHOW="$I3SCRIPTS/slideshow"
+
+export MYBACKGROUNDS="$HOME/Images/Backgrounds/Favorites"
+
+## export JAVA_HOME JDK ##
+# export JAVA_HOME="/usr/java/latest"
+# export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dsun.java2d.opengl=true'
+export JAVA_FONTS=/usr/share/fonts/TTF
+#export MOZ_PLUGIN_PATH=/usr/lib64/mozilla/plugins
+
+export SDL_VIDEO_FULLSCREEN_HEAD=0
+
+export ELINKS_XTERM="urxvtc -e"
+export WWW_HOME="https://lite.duckduckgo.com/lite/"
+
+##export LIBVA_DRIVER_NAME=vdpau
+#export LIBVA_DRIVER_NAME=radeonsi
+#export VDPAU_DRIVER=r600
+## VDPAU/VA-GL driver
+#export VDPAU_DRIVER=va_gl
+
+export WINEPREFIX=$HOME/.wine
+export WINEARCH=win32
+
+# Gtk
+export GTK_CSD=1
+export GTK2_RC_FILES=$HOME/.gtkrc-2.0
+
+# QT, KDE
+#export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_LOGGING_RULES='*=false'
+# export QML_DISABLE_DISK_CACH=1
+export QML_FORCE_DISK_CACHE=1
+export QT_ACCESSIBILITY=0
+export QSG_RENDERER_LOOP=basic
+
+# Wayland
+export XCURSOR_PATH=$HOME/.icons:/usr/local/share/icons:/usr/share/icons
+export XCURSOR_SIZE=24
+
+export EXPORTS=true
