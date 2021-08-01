@@ -109,6 +109,8 @@ ZSH_THEME="liquidprompt"
 ZSH_CUSTOM=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh/custom
 
 # ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_FIXTERM=true
+ZSH_TMUX_UNICODE=true
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -135,8 +137,9 @@ plugins=(
 	sudo
 	systemadmin
 	systemd
-	taskwarrior
+	#taskwarrior
 	themes
+	tig
 	tmux
 	urltools
 	#vi-mode
@@ -172,6 +175,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+unalias t
+xsource "$HOME/.local/lib/sh/aliases.lib.sh"
 alias -g B='| batcat'
 
 # this allows us to put own modifications in ~/.zshrc.local
@@ -184,3 +189,44 @@ systemctl --user import-environment PATH
 # [[ -o interactive ]] && . ~/git/liquidprompt/liquidprompt
 
 # zprof
+
+# mc related
+export HISTCONTROL=ignoreboth
+. /usr/lib/mc/mc.sh
+
+if [ "$TERM" = "linux" ]; then
+	# black
+	echo -en "\e]P0000000"
+	# darkgreen
+	echo -en "\e]P8222222"
+	# darkred
+	# echo -en "\e]P1803232"
+	# red
+	# echo -en "\e]P9982b2b"
+	# darkgreen
+	# echo -en "\e]P25b762f"
+	# green
+	# echo -en "\e]PA89b83f"
+	# brown
+	# echo -en "\e]P3aa9943"
+	# yellow
+	# echo -en "\e]PBefef60"
+	# darkblue
+	# echo -en "\e]P4324c80"
+	# blue
+	# echo -en "\e]PC2b4f98"
+	# darkmagenta
+	# echo -en "\e]P5706c9a"
+	# magenta
+	# echo -en "\e]PD826ab1"
+	# darkcyan
+	# echo -en "\e]P692b19e"
+	# cyan
+	# echo -en "\e]PEa1cdcd"
+	# lightgrey
+	# echo -en "\e]P7ffffff"
+	# white
+	# echo -en "\e]PFdedede"
+	# clear
+fi
+
