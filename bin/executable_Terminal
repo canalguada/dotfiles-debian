@@ -1,0 +1,263 @@
+#!/bin/sh
+# vim: set ft=sh fdm=marker ai ts=2 sw=2 tw=79 noet:
+
+PROG=$(basename "$0")
+DEFAULT_WORKING_DIRECTORY="$PWD"
+
+if [ -z "$VERBOSITY" ]; then
+	if [ -t 1 ]; then
+		VERBOSITY=1
+	else
+		VERBOSITY=0
+	fi
+fi
+
+# # Detect if the script was called with a different user who logged in{{{
+# logged_user=$LOGNAME
+# if [ $(id -ru) -eq 0 ] && [ "$logged_user" != "$USER" ]; then
+#   su "$logged_user" -c "$0 $*"
+#   exit 0
+# fi
+# #}}}
+# Show information about how to use this terminal_bin{{{
+usage() {
+	cat <<-EOF | column -t -s ';'
+	;Usage: $PROG [options]
+	;;
+	;Options:;
+	;      --tab;Open a new tab
+	;      --windows;Open a new window
+	;  -w, --working-directory=DIRECTORY;Set the working directory to DIRECTORY
+	;      --homedir;Set the working directory to the user's home.
+	;  -t, --title=TITLE;Set the title to TITLE
+	;  -c, --class=CLASS;terminal_bin class as used by the window manager
+	;  -n, --name=NAME;terminal_bin name as used by the window manager
+	;  -i, --icon=ICON;terminal_bin icon as used by the window manager
+	;  -r, --role=ROLE;terminal_bin role as used by the window manager
+	;  -p, --pause;Pause the shell execution after the command has terminated
+	;  -H, --hold;Retain the tab or window after the shell exits;
+	;  -e, --command=COMMAND;Run this command.
+	;  -x, --, --execute;Catch all the remaining arguments as the last command.
+	;  -h, --help;Show help about options.
+	;;
+	EOF
+	return 0
+} #}}}
+# Colors {{{
+COLORIZED=n
+if [ "$COLORIZED" = "y" ]; then
+	COLORR=`tput setaf 1`
+	COLORG=`tput setaf 2`
+	COLORY=`tput setaf 3`
+	COLORW=`tput setaf 7`
+	RESET=`tput sgr0`
+fi
+#}}}
+error_exit() { #{{{
+	/usr/bin/echo -e "${COLORR}$PROG: error: ${2:-'unknown error'}${RESET}" 1>&2
+	exit "${1:-1}"
+} #}}}
+debug() { #{{{
+	[ $VERBOSITY -lt 3 ] && return
+		while read -r line; do
+			/usr/bin/echo -e "${COLORY}$PROG: debug: ${line}${RESET}" >&2
+		done
+} #}}}
+warning() { #{{{
+	[ $VERBOSITY -lt 2 ] && return
+		while read -r line; do
+			/usr/bin/echo -e "${COLORG}$PROG: warning: ${line}${RESET}" >&2
+		done
+} #}}}
+info() { #{{{
+	[ $VERBOSITY -lt 1 ] && return
+	while read -r line; do
+		/usr/bin/echo -e "${COLORW}$PROG: info: ${line}${RESET}"
+	done
+} #}}}
+command_exists() { command -v "$1" >/dev/null 2>&1 ; }
+# quote() { [ $# -eq 0 ] && return ; pyquote "$@" ; }
+# split() { [ $# -eq 0 ] && return ; pysplit "$1" ; }
+# Temporary files management {{{
+tmpfiles=$(mktemp -p /tmp "$PROG-tmp-XXXXXX")
+clean() { xargs -d '\n' -a "$tmpfiles" rm -f ; rm -f "$tmpfiles" ; }
+trap clean EXIT
+#}}}
+# Buffers
+params=$(mktemp -p /tmp "$PROG-buffer-XXXXXX")
+echo "$params" >> "$tmpfiles"
+init_params() { truncate -s 0 "$params" ; }
+push_params() { for arg; do printf '%s\n' "$arg" >>"$params" ; done ; }
+get_params() { xargs -d '\n' -a "$params" shell-quote -- ; }
+prepend_params() {
+	buffer=$(cat "$params")
+	init_params
+	for arg; do printf '%s\n' "$arg" >> "$params"; done
+	[ -n "$buffer" ] && echo "$buffer" >> "$params"
+}
+cmdlist=$(mktemp -p /tmp "$PROG-cmdlist-XXXXXX")
+echo "$cmdlist" >> "$tmpfiles"
+push_command() { get_params >>"$cmdlist" ; }
+
+# Parsing functions
+add_switch() { [ -n "$1" ] && push_params "-$1" ; }
+allow_build() { can_build_command="y" ; }
+start_new() { #{{{
+	dest=${1:-"tab"}
+	[ "$dest" != "window" ] && [ "$dest" != "tab" ] && return
+	[ "$can_build_command" = "y" ] && serialize_command
+	[ "$dest" = "tab" ] && add_switch "T" || add_switch "W"
+	allow_build
+} #}}}
+set_terminal_option() { push_params "$@" ; allow_build ; }
+set_title() { set_terminal_option "-t" "$1" ; }
+set_directory() { #{{{
+	[ ! -d "$1" ] && error_exit 2 "Directory '$1' does not exist"
+	set_terminal_option "-w" "$(realpath "$1")"
+} #}}}
+set_class() { set_terminal_option "-c" "$1" ; }
+set_name() { set_terminal_option "-n" "$1" ; }
+set_icon() { set_terminal_option "-i" "$1" ; }
+set_command() { eval set -- "$1" ; serialize_command "$@" ; }
+reset_options() { init_params ; pause_flag="n" ; can_build_command="n" ; }
+has_option() { grep -qE '^'"${1}"'$' "$params" ; }
+serialize_command() { #{{{
+	# Set default working directory if needed
+	has_option "-w" || prepend_params "-w" "$DEFAULT_WORKING_DIRECTORY"
+
+	if [ $# -gt 0 ]; then
+		if ! command_exists $1; then
+			echo "$1 not found" | warning
+			shift $#
+		fi
+	fi
+
+	if [ $# -gt 0 ]; then
+		if [ "$pause_flag" = "y" ]; then
+			# Build script
+			script="$(mktemp -p /tmp "$PROG-session-XXXXXX")"
+			cat >"$script" <<-EOF
+				#!/bin/bash
+				trap "rm -f '$script' 2>/dev/null" EXIT
+				$(shell-quote -- "$@")
+				echo
+				echo -n "Appuyez sur une touche pour continuer..."
+				read -r -n 1 key > /dev/null 2>&1
+			EOF
+			chmod +x "$script"
+			push_params "-x" "$script"
+		else
+			push_params "-x" "$@"
+		fi
+	fi
+	push_command
+	# Reset options
+	reset_options
+} #}}}
+
+# Backends
+urxvt_get_params() { #{{{
+	OPTIND=1
+	while getopts :TWHw:t:c:n:r:i:e:x option "$@"; do
+		case $option in
+			T) ;; # New tab
+			W) ;; # New window
+			H) push_params "-hold" ;;
+			w) push_params "-cd" "$OPTARG" ;;
+			t) push_params "-title" "$OPTARG" ;;
+			c) ;; # Set wm class
+			n) push_params "-name" "$OPTARG" ;;
+			r) ;; # Set wm role
+			i)
+				# Find icon file path for current theme
+				iconpath=$(python3 -m local.find_icon "$OPTARG")
+				[ -n "$iconpath" ] &&
+					push_params "-icon" "$iconpath"
+				;;
+			# e) push_params "-e" $(split "$OPTARG") ;;
+			e) ( eval set -- "$OPTARG" ; push_params "-e" "$@" ; ) ;;
+			x) push_params "-e"; break ;; # Greedy command
+			\?) usage; error_exit 1 "unknown option '$OPTARG'." ;;
+			:) usage; error_exit 1 "missing argument for option '$OPTARG'." ;;
+		esac
+	done
+	parsed=$(($OPTIND - 1))
+	if [ $parsed -gt 0 ]; then
+		shift $parsed
+	fi
+	[ $# -gt 0 ] && push_params "$@"
+} #}}}
+
+### Main function
+
+# Global variables {{{
+pause_flag="n"
+can_build_command="n"
+#}}}
+reset_options
+# Parse command line options {{{
+OPTIND=1
+while getopts :-:hw:pHt:T:c:n:i:r:e:x option; do
+	case $option in
+		-)
+			case "$OPTARG" in
+				help) usage; exit 0 ;;
+				homedir) set_directory "$HOME" ;;
+				working-directory=*) set_directory "${OPTARG#*=}" ;;
+				pause) pause_flag="y" ;;
+				hold) add_switch "H" ;;
+				tab) start_new "tab" ;;
+				window) start_new "window" ;;
+				title=*) set_title "${OPTARG#*=}" ;;
+				class=*) set_class "${OPTARG#*=}" ;;
+				name=*) set_name "${OPTARG#*=}" ;;
+				icon=*) set_icon "${OPTARG#*=}" ;;
+				role=*) ;;  # TODO
+				command=*) set_command "${OPTARG#*=}" ;;
+				execute) break ;;
+				*) error_exit 1 "unknown option '$OPTARG'." ;;
+			esac
+			;;
+		h) usage; exit 0 ;;
+		w) set_directory "$OPTARG" ;;
+		p) pause_flag="y" ;;
+		H) add_switch "H" ;;
+		t | T) set_title "$OPTARG" ;;
+		c) set_class "$OPTARG" ;;
+		n) set_name "$OPTARG" ;;
+		i) set_icon "$OPTARG" ;;
+		r) ;;  # TODO
+		e) set_command "$OPTARG" ;;
+		x) break ;;
+		\?) usage; error_exit 1 "unknown option '$OPTARG'." ;;
+		:) usage; error_exit 1 "missing argument for option '$OPTARG'." ;;
+	esac
+done
+parsed=$(($OPTIND - 1))
+if [ $parsed -gt 0 ]; then
+	shift $parsed
+fi
+unset parsed
+#}}}
+
+if [ -n "$*" ] || [ "$can_build_command" = "y" ]; then
+	serialize_command "$@"
+fi
+
+# TODO: Choose between : termite, urxvtc, xfce4-terminal and gnome-terminal
+case "${MYTERMINAL:-"urxvtc"}" in
+	urxvt*)
+		terminal_bin=urxvtc
+		terminal_get_params=urxvt_get_params
+		;;
+esac
+
+cat "$cmdlist" | while read -r cmd; do
+	init_params
+	eval $terminal_get_params "$cmd"
+	cmdline="$terminal_bin $(get_params)"
+	echo "$cmdline" | info
+	eval "$cmdline"
+done
+
+exit 0
