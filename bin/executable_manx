@@ -9,7 +9,7 @@ if [ -z "$*" ]; then
 fi
 
 while [ -n "$*" ]; do
-	man -f "$1" >/dev/null 2>&1 && available="$available $1"
+	/usr/bin/man -f "$1" >/dev/null 2>&1 && available="$available $1"
 	shift
 done
 
@@ -18,7 +18,7 @@ if [ -z "$available" ]; then
   exit 2
 fi
 
-cmd="man -a -L C "
+cmd="/usr/bin/man -a -L C "
 tabbed=n
 
 if xset q >/dev/null 2>&1; then
@@ -28,12 +28,38 @@ elif [ $(LANG=C tty) = "not a tty" ]; then
 	exit 1
 fi
 
+## From custom.zsh support colors in less
+# export LESS_TERMCAP_mb=$'\E[01;31m'
+# export LESS_TERMCAP_md=$'\E[01;31m'
+# export LESS_TERMCAP_me=$'\E[0m'
+# export LESS_TERMCAP_se=$'\E[0m'
+# export LESS_TERMCAP_so=$'\E[01;44;33m'
+# export LESS_TERMCAP_ue=$'\E[0m'
+# export LESS_TERMCAP_us=$'\E[01;32m'
+
+mkdir -p /tmp/$USER
+
 # shellcheck disable=SC2086
 for item in $available; do
+	tmpscript=$(mktemp -p /tmp/$USER)
+	cat <<-_EOF_ >"$tmpscript"
+	#!/usr/bin/zsh
+	export LESS_TERMCAP_mb=$'\E[01;31m'
+	export LESS_TERMCAP_md=$'\E[01;31m'
+	export LESS_TERMCAP_me=$'\E[0m'
+	export LESS_TERMCAP_se=$'\E[0m'
+	export LESS_TERMCAP_so=$'\E[01;44;33m'
+	export LESS_TERMCAP_ue=$'\E[0m'
+	export LESS_TERMCAP_us=$'\E[01;32m'
+	$cmd $item
+	rm $tmpscript
+	_EOF_
+	chmod +x $tmpscript
+
 	if [ "$tabbed" = "y" ]; then
-		urxvtc -title "$cmd $item" -e zsh -c "$cmd $item"
+		urxvtc -title "$cmd $item" -e $tmpscript
 	else
-		$cmd $item
+		$tmpscript
 	fi
 done
 
