@@ -12,21 +12,26 @@ mkdir -p /tmp/$USER/i3/cache
 grep -oP "set [$]ws[[:digit:]]+.*" ${XDG_CONFIG_HOME:-$HOME/.config}/i3/config \
 	|sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g' > /tmp/$USER/i3/cache/workspaces
 
+systemctl --user import-environment
+
+printenv > ~/i3.env
+
 case "$XDG_SESSION_DESKTOP" in
 	i3)
-		i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-session.target'
+		systemctl --user start --no-block i3-session.target
+		# i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-session.target'
 
-		I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
-		I3LOCKER=${I3LOCKER:-"$I3SCRIPTS/lockmore --blur --lock-icon --nofork -f -e"}
-		# I3LOCKER="light-locker-command -l"
-		# msg="light-locker --no-lock-on-lid --no-idle-hint"
-		# i3-msg "exec --no-startup-id $msg"
-		I3SLIDESHOW=${I3SLIDESHOW:-"$I3SCRIPTS/slideshow"}
-
-		# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-		# screen before suspend. Use loginctl lock-session to lock your screen.
-		msg="xss-lock --transfer-sleep-lock -n $I3SLIDESHOW -- $I3LOCKER"
-		# i3-msg "exec --no-startup-id exec $msg"
+		# I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
+		# I3LOCKER=${I3LOCKER:-"$I3SCRIPTS/lockmore --blur --lock-icon --nofork -f -e"}
+		# # I3LOCKER="light-locker-command -l"
+		# # msg="light-locker --no-lock-on-lid --no-idle-hint"
+		# # i3-msg "exec --no-startup-id $msg"
+		# I3SLIDESHOW=${I3SLIDESHOW:-"$I3SCRIPTS/slideshow"}
+    #
+		# # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+		# # screen before suspend. Use loginctl lock-session to lock your screen.
+		# msg="xss-lock --transfer-sleep-lock -n $I3SLIDESHOW -- $I3LOCKER"
+		# # i3-msg "exec --no-startup-id exec $msg"
 		;;
 	*)
 		i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-wm.target'
