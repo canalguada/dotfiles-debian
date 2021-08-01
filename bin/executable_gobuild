@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# # From wiki.archlinux.org
+# export CGO_CPPFLAGS="${CPPFLAGS}"
+# export CGO_CFLAGS="${CFLAGS}"
+# export CGO_CXXFLAGS="${CXXFLAGS}"
+# export CGO_LDFLAGS="${LDFLAGS}"
+# export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+
+#nicy run -c cpu33 go build -v -x -ldflags="-s" "$@"
+# go.nicy build -v -x -ldflags="-s" "$@"
+# go.nicy build -ldflags="-s" "$@"
+nicy run -c cpu33 go build -ldflags="-s" "$@"
+
+# vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 et:
