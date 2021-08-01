@@ -1,7 +1,7 @@
 [Unit]
 Description=Polybar
 Documentation=man:polybar(1) man:polybar(5)
-PartOf=graphical-session.target
+#PartOf=graphical-session.target
 
 [Service]
 Slice=session.slice
