@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && exit 1
+
+if command -v "$1" >/dev/null 2>&1; then
+	pid=`pidof -x -d $'\n' $1 | sort | head -n1`
+	[ -z "$pid" ] && exit 2
+	LC_ALL=C schedtool $pid
+	LC_ALL=C ionice -p $pid
+	LC_ALL=C choom -p $pid
+else
+	command -V "$1"
+fi
+
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 et:
