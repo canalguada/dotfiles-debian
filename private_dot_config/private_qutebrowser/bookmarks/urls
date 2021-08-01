@@ -187,3 +187,35 @@ https://raw.githubusercontent.com/codeforester/base/master/lib/stdlib.sh
 https://milestone-of-se.nesuke.com/en/nw-advanced/nw-security/meltdown-spectre/ Illustrate : CPU vulnerabilities [Spectre], [Meltdown] and Speculative Execution (Branch Prediction, Out of Order Execution) | SEの道標
 file:///usr/share/doc/i3-wm/userguide.html i3 User’s Guide
 https://ericren.me/posts/2019-01-27-minimal-ubuntu-tiling-wm-setup/ Minimal Ubuntu and i3 Setup
+file:///usr/share/doc/python3/html/index.html 3.9.2 Documentation
+http://www.schweikhardt.net/man_page_howto.html#q9 Linux Man Page Howto
+https://www.eyrie.org/~eagle/notes/debian/git.html Using Git for Debian Packaging
+https://wiki.debian.org/Packaging Packaging - Debian Wiki
+https://linuxconfig.org/easy-way-to-create-a-debian-package-and-local-package-repository Easy way to create a Debian package and local package repository - LinuxConfig.org
+https://wiki.debian.org/PackagingWithGit PackagingWithGit - Debian Wiki
+https://dillinger.io/ Online Markdown Editor - Dillinger, the Last Markdown Editor ever.
+http://www.lpenz.org/articles/debgit/index.html Debianization with git-buildpackage
+https://golang.org/doc/effective_go Effective Go - The Go Programming Language
+https://golang.org/doc/code How to Write Go Code - The Go Programming Language
+https://golang.org/pkg/flag/ flag - The Go Programming Language
+https://golang.org/pkg/ src - The Go Programming Language
+https://golang.org/pkg/os/exec/ exec - The Go Programming Language
+https://pkg.go.dev/github.com/alecthomas/kong kong · pkg.go.dev
+https://gobyexample.com/spawning-processes Go by Example: Spawning Processes
+https://gobyexample.com/ Go by Example
+https://www.kernel.org/doc/html/latest/block/ioprio.html Block io priorities — The Linux Kernel documentation
+https://play.golang.org/ The Go Playground
+https://www.brandur.org/go-worker-pool The Case For A Go Worker Pool — brandur.org
+https://riptutorial.com/go/example/14633/simple-worker-pool Go - Simple worker pool | go Tutorial
+https://www.golangprograms.com/ Golang Tutorial, Blog, Articles and Examples - golangprograms.com
+https://golangdocs.com/golang-read-json-file Golang - Read JSON File - GoLang Docs
+https://www.geeksforgeeks.org/slices-in-golang/ Slices in Golang - GeeksforGeeks
+https://github.com/tmrts/go-patterns tmrts/go-patterns: Curated list of Go design patterns, recipes and idioms
+https://github.com/urfave/cli/blob/v2.3.0/docs/v2/manual.md cli/manual.md at v2.3.0 · urfave/cli
+https://yourbasic.org/golang/ Go go-to guide · YourBasic
+https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes Git - Working with Remotes
+https://www.phoronix.com/scan.php?page=home Linux Hardware Reviews, Open-Source Benchmarks & Linux Performance - Phoronix
+https://old.reddit.com/r/golang/ The Go Programming Language
+http://localhost:6060/pkg/ Packages - Go Documentation Server
+https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches Git - Remote Branches
+https://docs.kde.org/stable5/en/konsole/konsole//scripting.html Chapter 4. Scripting Konsole
