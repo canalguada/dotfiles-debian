@@ -1,6 +1,6 @@
 [Unit]
 Description=Main service for i3 graphical session
-PartOf=graphical-session.target
+#PartOf=graphical-session.target
 
 [Service]
 Slice=session.slice
