@@ -5,9 +5,5 @@ export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 export ZDOTDIR="$HOME/.zsh"
 export GPG_TTY=$(tty)
 
-# [[ -r "$HOME/.shinit" ]] && source "$HOME/.shinit"
+export ENV="$HOME/.shinit"
 
-[[ -r "$HOME/.local/lib/sh/aliases.lib.sh" ]] &&
-	source "$HOME/.local/lib/sh/aliases.lib.sh"
-[[ -r "$HOME/.local/lib/sh/exports.lib.sh" ]] &&
-	source "$HOME/.local/lib/sh/exports.lib.sh"
