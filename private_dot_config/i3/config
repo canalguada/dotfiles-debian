@@ -37,7 +37,7 @@ set $term i3-sensible-terminal
 #set $term Terminal
 #bindsym $mod+Return exec $term --icon=terminal --name=zsh -e "/usr/bin/zsh -l"
 #bindsym $mod+Shift+Return exec $term --icon=terminal --name=bash
-bindsym $mod+Return exec --no-startup-id urxvtc -name zsh
+bindsym $mod+Return exec --no-startup-id urxvtc -name shell
 bindsym $mod+Shift+Return exec --no-startup-id env SHELL=/usr/bin/bash urxvtc -name bash -ls
 # }}}
 # Get me to the next open terminal instance {{{
@@ -46,12 +46,8 @@ bindsym $mod+t [class="(?i)urxvt"] focus
 # Font for window titles. {{{
 # Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-# font pango:Input Sans Condensed Light 7.5
-font pango:Input Mono Extra Light 7.5
-#font pango:Terminus Medium 8
+font pango:SF Compact Display 10
 #font pango:DejaVu Sans Mono, Font Awesome 5 Free, Font Awesome 5 Brands 8
-#font pango:SF Compact Display Light 8
-#font pango:SF Pro Display Medium 8
 # }}}
 # Colors {{{
 # Yaru {{{
@@ -63,15 +59,23 @@ font pango:Input Mono Extra Light 7.5
 #client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 #client.background #df4a16
 # }}}
-# Dracula {{{
-# class                 border  bground text    indicator child_border
-#client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-client.focused          #6D5890 #6D5890 #F8F8F2 #6D5890   #6D5890
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #1E1F29 #1E1F29 #BFBFBF #1E1F29   #1E1F29
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #1E1F29 #1E1F29 #F8F8F2 #1E1F29   #1E1F29
-client.background       #F8F8F2
+# set_from_resource $<name> <resource_name> <fallback> {{{
+set_from_resource $primary	 i3wm.primary		#77216f
+set_from_resource $secondary i3wm.secondary #5e2750
+set_from_resource $darkbg		 i3wm.darkbg		#151515
+set_from_resource $lightbg 	 i3wm.lightbg		#2c2c2c
+set_from_resource $lightfg	 i3wm.lightfg		#f8f8f2
+set_from_resource $grey			 i3wm.color8		#555753
+set_from_resource $alert		 i3wm.alert			#df4a16
+set_from_resource $silver		 i3wm.silver		#dddddd
+# xrdb
+# class                 border bground text indicator child_border
+client.focused          $primary $primary	$lightfg $primary	$primary
+client.focused_inactive $grey		 $grey		$lightfg $grey		$grey
+client.unfocused        $darkbg	 $darkbg	$silver	 $darkbg	$darkbg
+client.urgent           $grey 	 $alert		$lightfg $alert		$alert
+client.placeholder      $darkbg	 $darkbg	$lightfg $darkbg 	$darkbg
+client.background       $lightfg
 # }}}
 # }}}
 # Polybar {{{
@@ -96,7 +100,7 @@ bindsym $mod+Mod1+m exec --no-startup-id polybar-msg cmd restart
 # }
 # }}}
 # Dmenu {{{
-bindsym $mod+Shift+d exec "dmenu_run -nf '#F8F8F2' -nb '#1E1F29' -sb '#6D5890' -sf '#F8F8F2' -fn 'SF Pro Display-9' -p 'dmenu:'"
+bindsym --release $mod+Shift+d exec "dmenu_run -nf '$lightfg' -nb '$darkbg' -sb '$primary' -sf '$lightfg' -fn 'SF Compact Display-10' -p 'dmenu:'"
 # }}}
 # Orientation for new workspace {{{
 default_orientation vertical
@@ -142,20 +146,20 @@ exec --no-startup-id $mic_mute && $refresh_status
 bindsym $mod+Shift+q kill
 # }}}
 # Start rofi (a program launcher) {{{
-bindsym $mod+d exec rofi_runner
-#bindsym $mod+Shift+d exec rofi_runner -drun-show-actions
-bindsym $mod+q exec rofi_apps
-bindsym $mod+c exec rofi_mpd
-bindsym $mod+o exec rofi_volume
-bindsym $mod+Mod1+b exec rofi_categories -drun-categories WebBrowser
-bindsym $mod+Mod1+f exec rofi_categories -drun-categories FileManager
-bindsym $mod+Mod1+p exec rofi_categories -drun-categories Player
-bindsym $mod+Mod1+t exec rofi_categories -drun-categories TerminalEmulator
-bindsym $mod+Mod1+e exec rofi_categories -drun-categories TextEditor
-bindsym $mod+Mod1+o exec rofi_categories -drun-categories Office
-bindsym $mod+Mod1+u exec rofi_categories -drun-categories Utility
-bindsym $mod+Mod1+s exec rofi_categories -drun-categories System
-bindsym $mod+Mod1+n exec rofi_categories -drun-categories Network
+bindsym --release $mod+d exec rofi_runner
+#bindsym --release $mod+Shift+d exec rofi_runner -drun-show-actions
+bindsym --release $mod+q exec rofi_apps
+bindsym --release $mod+c exec rofi_mpd
+bindsym --release $mod+o exec rofi_volume
+bindsym --release $mod+Mod1+b exec rofi_categories -drun-categories WebBrowser
+bindsym --release $mod+Mod1+f exec rofi_categories -drun-categories FileManager
+bindsym --release $mod+Mod1+p exec rofi_categories -drun-categories Player
+bindsym --release $mod+Mod1+t exec rofi_categories -drun-categories TerminalEmulator
+bindsym --release $mod+Mod1+e exec rofi_categories -drun-categories TextEditor
+bindsym --release $mod+Mod1+o exec rofi_categories -drun-categories Office
+bindsym --release $mod+Mod1+u exec rofi_categories -drun-categories Utility
+bindsym --release $mod+Mod1+s exec rofi_categories -drun-categories System
+bindsym --release $mod+Mod1+n exec rofi_categories -drun-categories Network
 # }}}
 # Change focus {{{
 bindsym $mod+$left focus left
@@ -310,7 +314,7 @@ bindsym $mod+Ctrl+twosuperior move scratchpad
 bindsym $mod+twosuperior scratchpad show
 # }}}
 # Shutdown, reboot, lock screen {{{
-bindsym Pause exec rofi_powermenu
+bindsym --release Pause exec rofi_powermenu
 # }}}
 # Swap two containers {{{
 mode "swap" {
@@ -387,6 +391,7 @@ for_window [class="(?i)mpv"] floating enable
 for_window [class="(?i)celluloid"] floating enable
 for_window [class="(?i)gradio"] floating enable
 for_window [class="(?i)ulauncher"] floating enable
+for_window [class="(?i)rofi"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable
 for_window [class="(?i)enpass"] floating enable
 for_window [class="(?i)joplin"] floating enable
@@ -431,14 +436,15 @@ assign [class="(?i)clementine"] $ws9
 #}}}
 # More bindings {{{
 #bindsym $mod+Tab exec --no-startup-id xwinmosaic
-bindsym $mod+Tab exec --no-startup-id rofi_switcher
+bindsym --release $mod+Tab exec --no-startup-id rofi_switcher
 bindsym Mod1+Tab exec --no-startup-id i3-cycle-focus --switch
 bindsym Mod1+F3 exec --no-startup-id exec gmrun
 bindsym --release Mod1+F5 exec --no-startup-id xkill
 bindsym --release Mod1+F6 exec --no-startup-id urxvtc -hold -name xprop -e xprop
 bindsym --release Print exec --no-startup-id rofi_screenshot
-bindsym $mod+p exec exec rofi-pass
-bindsym $mod+Shift+p exec exec rofi-pass --bmarks
+bindsym --release Ctrl+Print exec --no-startup-id scrot
+bindsym --release $mod+p exec exec rofi-pass
+bindsym --release $mod+Shift+p exec exec rofi-pass --bmarks
 #bindsym $mod+p exec passmenu --type
 #bindsym $mod+p exec passmenu -window-title "pass" -no-show-icons
 #bindsym Mod1+Ctrl+v exec selpaste
@@ -456,8 +462,17 @@ exec --no-startup-id exec wakeup 90s -- copyq
 bindcode $mod+135 exec --no-startup-id copyq menu
 bindcode $mod+134 exec --no-startup-id copyq show
 # }}}
+# Session autostart {{{
+exec --no-startup-id systemctl --user start --no-block xsettingsd.service
+exec --no-startup-id systemctl --user start --no-block polybar@top.service
+exec --no-startup-id systemctl --user start --no-block polybar@bottom.service
+exec --no-startup-id systemctl --user start --no-block picom.service
+exec --no-startup-id systemctl --user start --no-block i3-cycle-focus.service
+exec --no-startup-id systemctl --user start --no-block policykit-agent.service
+# }}}
 # Autostart always {{{
 #exec_always --no-startup-id exec i3-cycle-focus --history 16
+# exec_always --no-startup-id systemctl --user import-environment
 exec_always --no-startup-id i3-session.sh
 #}}}
 
