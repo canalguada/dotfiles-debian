@@ -50,3 +50,4 @@ else
 fi
 mkdir -p "$XDG_DESKTOP_DIR"
 
+export XSESSIONRC=true
