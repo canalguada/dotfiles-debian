@@ -1,0 +1,97 @@
+# ~/.xsession
+#
+# Executed by startx (run your window manager from here)
+
+# Make sure this is before the 'exec' command or it won't be sourced.
+sysmodmap=/etc/X11/xinit/.Xmodmap
+# merge in defaults and keymaps
+if [ -f $sysmodmap ]; then
+	xmodmap $sysmodmap
+fi
+
+usermodmap=$HOME/.Xmodmap
+if [ -f "$usermodmap" ]; then
+	xmodmap "$usermodmap"
+fi
+
+# start some nice programs
+
+
+# Put here what is kept as default
+session=${1:-i3}
+# session=${1:-lxqt}
+
+case $session in
+	# gnome)
+	#     export XDG_SESSION_DESKTOP=gnome
+	#     export XDG_CURRENT_DESKTOP=GNOME
+	#     exec gnome-session
+	#     ;;
+	# gnome-flashback)
+	#     export XDG_SESSION_DESKTOP=gnome-flashback-metacity
+	#     export XDG_CURRENT_DESKTOP=GNOME-Flashback:GNOME
+	#     exec gnome-session --session=gnome-flashback-metacity
+	#     ;;
+	# gnome-i3)
+	#     export XDG_SESSION_DESKTOP=i3-gnome
+	#     export XDG_CURRENT_DESKTOP=GNOME
+	#     exec gnome-session-i3
+	#     ;;
+	# gnome-wayland) XDG_SESSION_TYPE=wayland dbus-run-session gnome-session ;;
+	kde) export XDG_CURRENT_DESKTOP=KDE ; /usr/bin/startplasma-x11 ;;
+	kde-wayland)
+		export XDG_CURRENT_DESKTOP=KDE
+		XDG_SESSION_TYPE=wayland dbus-run-session /usr/bin/startplasma-wayland
+		;;
+	lxqt)
+		export XDG_SESSION_DESKTOP=lxqt
+		export XDG_CURRENT_DESKTOP=LXQt
+		exec startlxqt
+		;;
+	# xfce | xfce4) exec startxfce4 ;;
+	i3 | i3wm)
+		export XDG_SESSION_DESKTOP=i3
+		export XDG_CURRENT_DESKTOP=i3
+		exec i3
+		;;
+	# kodi) exec kodi-standalone ;;
+	# deepin) exec startdde ;;
+	# budgie)
+	#     export XDG_SESSION_DESKTOP=budgie-desktop
+	#     export XDG_CURRENT_DESKTOP=Budgie:GNOME
+	#     exec /usr/bin/budgie-desktop
+	#     ;;
+	# enlightenment) exec enlightenment_start ;;
+	# openbox)
+	#     export XDG_SESSION_DESKTOP=openbox
+	#     export XDG_CURRENT_DESKTOP=OPENBOX
+	#     exec openbox-session
+	#     ;;
+	# openbox-kde) export XDG_CURRENT_DESKTOP=KDE ; exec openbox-kde-session ;;
+	# awesome           ) exec awesome;;
+	# bspwm             ) exec bspwm;;
+	# catwm             ) exec catwm;;
+	# cinnamon          ) exec cinnamon-session;;
+	# dwm               ) exec dwm;;
+	# ede               ) exec startede;;
+	# fluxbox           ) exec startfluxbox;;
+	# gnome-flashback-compiz   )
+	#     export XDG_CURRENT_DESKTOP=GNOME-Flashback:GNOME
+	#     exec gnome-session --session=gnome-flashback-compiz;;
+	# gnome-classic     )
+	#     export XDG_CURRENT_DESKTOP=GNOME-Classic:GNOME
+	#     export GNOME_SHELL_SESSION_MODE=classic
+	#     exec gnome-session --session=gnome-classic;;
+	# icewm             ) exec icewm-session;;
+	# jwm               ) exec jwm;;
+	# mate              ) exec mate-session;;
+	# monster|monsterwm ) exec monsterwm;;
+	# notion            ) exec notion;;
+	# unity             ) exec unity;;
+	# xmonad            ) exec xmonad;;
+
+	# No known session, try to run it as command
+	*) exec $1 ;;
+esac
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:
