@@ -18,7 +18,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+" Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs', { 'on': 'NERDTreeTabsToggle' }
 Plug 'jlanzarotta/bufexplorer'
@@ -55,6 +56,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake', IfCond(g:devel)
 " }}}
 " Devel {{{
+Plug 'fatih/vim-go', IfCond(g:devel)
 Plug 'Shougo/neosnippet.vim', IfCond(g:devel)
 Plug 'Shougo/neosnippet-snippets', IfCond(g:devel)
 " Snippets are separated from the engine. Add this if you want them:
@@ -143,8 +145,9 @@ set background=dark
 let g:material_theme_style = 'palenight'
 let g:material_terminal_italics = 1
 let g:palenight_terminal_italics=1
-" Alternatives: Tomorrow-Night-Eighties, gruvbox, jellybeans, onehalfdark
-colorscheme material
+" Alternatives: Tomorrow-Night-Eighties, gruvbox, jellybeans, onehalfdark,
+material
+colorscheme default
 
 " }}}
 " => Airline {{{
@@ -444,8 +447,36 @@ let g:NERDToggleCheckAllLines = 1
 " => Tagbar {{{
 " You can now use the ":TagbarToggle" command to open/close the taglist window.
 " F4: Switch on/off TagBar
-nnoremap <silent> <F4> :TagbarToggle<CR>
+" nnoremap <silent> <F4> :TagbarToggle<CR>
+nnoremap <silent> <F4> :TagbarOpenAutoClose<CR>
 let g:tagbar_usearrows = 1
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 " }}}
 " => BufExplorer {{{
 " nnoremap <leader>l :BufExplorer<CR>
@@ -536,6 +567,8 @@ let g:deoplete#sources#jedi#extra_path = [
 			\ '/home/canalguada/PycharmProjects/cglibrary',
 			\ '/home/canalguada/.local/lib/python3.9/site-packages',
 			\ ]
+
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " As per https://github.com/Shougo/deoplete.nvim/issues/989
 " inoremap <silent><expr> <TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
