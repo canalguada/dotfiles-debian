@@ -1,0 +1,12 @@
+#!/bin/bash
+
+mapfile -t files <<<"$(chezmoi diff |grep --color=auto -e "^install"|cut -d" " -f5)"
+
+for f in "${files[@]}"; do
+	echo ">> $f"
+	nv -d "$f" "$(chezmoi source-path "$f")"
+	chezmoi edit "$f"
+	# chezmoi merge "$f" && chezmoi edit "$f"
+done
+
+# vim: set ft=sh ai ts=4 sw=4 tw=79:
