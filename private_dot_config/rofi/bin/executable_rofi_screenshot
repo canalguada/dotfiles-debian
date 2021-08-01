@@ -16,7 +16,7 @@ if [ -z "$choice" ]; then
 fi
 args=
 sleep 1
-if [ "$XDG_SESSION_DESKTOP" = "i3" ]; then
+if [ "$XDG_SESSION_DESKTOP" = "i3" ] || [ "$XDG_CURRENT_DESKTOP" = "i3" ]; then
 	scrot_dest='Screenshot_%Y-%m-%d-%S_$wx$h.png'
 	scrot_post_cmd='mv $f '"$dest_dir"' ; '"$image_viewer"' '"$dest_dir"'/$f'
 	case $choice in
