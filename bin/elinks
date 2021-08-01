@@ -1,0 +1,97 @@
+#!/bin/bash
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 et:
+
+PROG="elinks"
+
+# Functions to show error and warning messages
+VERBOSITY=0
+error_exit() {
+	echo  "$PROG: error: ${2:-'unknown error'}" 1>&2
+	exit "${1:-1}"
+}
+
+warning() {
+	[ $VERBOSITY -ge 2 ] &&
+		{
+			while read -r line; do
+				echo "$PROG: warning: ${line}" >&2
+			done
+		}
+}
+
+scheme='(https?|ftp|file)'
+authority="[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*"
+authority+="[-A-Za-z0-9\+&@#/%=~_|]\."
+authority+="[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*"
+authority+="[-A-Za-z0-9\+&@#/%=~_|]"
+
+pattern="^${scheme}://${authority}$"
+
+is_valid_url() { [[ "$1" =~ $pattern ]] ; }
+is_running() { ps -u $UID -o comm |grep -q "elinks" ; }
+
+declare -a opts
+declare -a remote
+declare -a urls
+urls=
+while [ -n "$1" ]; do
+	case "$1" in
+		-\?|-h|-help)
+      opts=("-help")
+      shift $#
+      break
+      ;;
+		-long-help|-version)
+      opts=("$1")
+      shift $#
+      break
+      ;;
+		-anonymous|-auto-submit|-config-dump|-config-help|-default-keys|-dump| \
+			-force-html|-localhost|-no-connect|-no-home|-no-libevent|-no-numbering| \
+			-no-references|-source|-terminfo|-touch-files)
+      opts+=("$1")
+      shift
+      ;;
+		-base-session|-bind-address|-bind-address-ipv6|-config-dir|-config-file| \
+			-default-mime-type|-dump-charset|-dump-color-mode|-dump-width|-eval| \
+			-lookup|-remote|-session-ring|-verbose)
+			case "x$2" in
+				x-*|x)
+					error_exit 1 "missing argument for option '$1'."
+					;;
+			esac
+			if [ "$1" = "-remote" ]; then
+        remote+=("$1" "$2")
+			else
+        opts+=("$1" "$2")
+			fi
+			shift 2
+			;;
+		--)
+			shift ; break ;;
+		*)
+			error_exit 1 "unknown option '$OPTARG'." ;;
+	esac
+done
+
+while [ $# -gt 0 ]; do
+	if is_valid_url "$1"; then
+    urls+=("$1")
+	else
+		echo "not a valid url '$1'" |warning
+	fi
+	shift
+done
+
+if [ ${#opts[@]} -gt 0 ] || [ ${#remote[@]} -gt 0 ] || ! is_running ; then
+  # New instance required
+  /usr/bin/elinks "${opts[@]}" "${remote[@]}" "${urls[@]}"
+else
+  # Open new tabs in remote instance
+  for url in "${urls[@]}"; do
+    /usr/bin/elinks -remote 'openURL("'$url'", new-tab)'
+  done
+fi
+  
+
+
