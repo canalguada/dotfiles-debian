@@ -1,0 +1,155 @@
+#!/bin/sh
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:
+
+PROG="$(basename $0)"
+
+# ANSI escape codes
+# Colors
+COLORR=$(tput setaf 1)
+COLORG=$(tput setaf 2)
+COLORY=$(tput setaf 3)
+COLORB=$(tput setaf 4)
+COLORM=$(tput setaf 5)
+COLORW=$(tput setaf 6)
+# More
+MOVE_UP=$(tput cuu 1)
+CLEAR_LINE=$(tput el 1)
+BOLD=$(tput bold)
+UNDERLINE=$(tput smul)
+RESET=$(tput sgr0)
+
+# Functions to show error and warning messages
+VERBOSITY=1
+error_exit() {
+  echo "${COLORR}$PROG: error: ${2:-'unknown error'}${RESET}" 1>&2
+  exit "${1:-1}"
+}
+
+debug() {
+  [ $VERBOSITY -ge 3 ] &&
+    {
+      while read -r line; do
+        echo "${COLORY}$PROG: debug: ${line}${RESET}" >&2
+      done
+    }
+}
+warning() {
+  [ $VERBOSITY -ge 2 ] &&
+    {
+      while read -r line; do
+        echo "${COLORG}$PROG: warning: ${line}${RESET}" >&2
+      done
+    }
+  #echo "${COLORY}$PROG: warning: ${1:-'unknown error'}${RESET}" 1>&2
+}
+
+info() {
+  [ $VERBOSITY -ge 1 ] &&
+    {
+      while read -r line; do
+        echo "${COLORW}$PROG: info: ${line}${RESET}"
+      done
+    }
+  #echo "${COLORW}$PROG: info: ${*}${RESET}" >&2
+}
+
+is_running()  {
+  ps -U $(id -ru) ao cmd | grep -v grep | grep -q "$0"
+  #pgrep -lx -u $UID -U $UID "$PROG" >/dev/null
+}
+
+usage()  {
+  cat <<-EOF | column -t -s ';'
+	;  Change GTK or icon theme.
+	;
+	;Usage: $PROG (-g|--gtk-theme)
+	;       $PROG (-i|--icon-theme)
+	;
+	;Options:
+	;-g, --gtk-theme  	change gtk theme
+	;-i, --icon-theme 	change icon theme
+	;-h, --help       	show this message
+	EOF
+}
+
+find_gtk_themes()  {
+  for dir in "$HOME/.themes" \
+    "$HOME/.local/share/themes" \
+    "/usr/local/share/themes" \
+    "/usr/share/themes"; do
+    [ -d "$dir" ] &&
+      find "$dir/" -maxdepth 3 -type f -iwholename "*/gtk-3.0/gtk.css" \
+        -print |
+      while read -r found; do
+        subdir=$(dirname $(dirname "$found"))
+        basename ${subdir}
+      done
+  done | sort -u
+}
+
+change_gtk_theme () {
+	choice=$(find_gtk_themes | rofi -dmenu -p "gtk theme:")
+	[ -z "$choice" ] && exit 0
+
+	echo $choice | info
+	sed -i -e '/^#Net\/ThemeName/d' $HOME/.xsettingsd \
+		-e 's/Net\/ThemeName ".*"/Net\/ThemeName "'$choice'"/g' $HOME/.xsettingsd
+	systemctl --user --no-block restart xsettingsd.service
+}
+
+find_icon_themes()  {
+  for dir in "$HOME/.icons" \
+    "$HOME/.local/share/icons" \
+    "/usr/local/share/icons" \
+    "/usr/share/icons"; do
+    [ -d "$dir" ] &&
+      find "$dir/" -maxdepth 2 -type f -iname "index.theme" \
+        -print |
+      while read -r found; do
+				# inipy -e "Icon Theme:Directories" "$found" || continue
+        subdir=$(dirname "$found")
+        basename ${subdir}
+      done
+  done | sort -u
+}
+
+change_icon_theme () {
+	choice=$(find_icon_themes | rofi -dmenu -p "icon theme:")
+	[ -z "$choice" ] && exit 0
+
+	echo $choice | info
+	sed -i -e '/^#Net\/IconThemeName/d' $HOME/.xsettingsd \
+		-e 's/Net\/IconThemeName ".*"/Net\/IconThemeName "'$choice'"/g' $HOME/.xsettingsd
+	systemctl --user --no-block restart xsettingsd.service
+	sed -i 's/icon_theme=.*/icon_theme='$choice'/g' $HOME/.config/qt5ct/qt5ct.conf
+}
+
+if ! is_running xsettingsd; then
+	error_exit 2 "xsettingsd is not running"
+fi
+
+if [ $# -ne 1 ]; then
+	usage
+	exit 1
+fi
+
+while getopts ":-:hgi" option; do
+	case $option in
+		-)
+			case "$OPTARG" in
+				help) usage ;;
+				gtk-theme) change_gtk_theme ;;
+				icon-theme) change_icon_theme ;;
+				*) error_exit 1 "unknown option '$OPTARG'." ;;
+			esac
+			;;
+		h) usage ;;
+		g) change_gtk_theme ;;
+		i) change_icon_theme ;;
+		\?) error_exit 1 "unknown option '$OPTARG'." ;;
+		:) error_exit 1 "missing argument for option '$OPTARG'." ;;
+	esac
+	break
+done
+
+exit 0
