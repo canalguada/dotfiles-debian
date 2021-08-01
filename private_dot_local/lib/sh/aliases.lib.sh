@@ -107,6 +107,10 @@ pyclean() {
 # Grep among .py files
 alias pygrep='grep --include="*.py"'
 # }}}
+# Go {{{
+# Grep among .py files
+alias gogrep='grep --include="*.go"'
+# }}}
 ### Pacman aliases # {{{
 ##if necessary, replace 'pacman' with your favorite AUR helper and adapt the commands accordingly
 ## default action    - install one or more packages
@@ -171,4 +175,6 @@ alias whatismyip='curl -s https://ipinfo.io/ip'
 alias xnvim='urxvtc -name nvim -title nvim -e nvim '
 alias xelinks='urxvtc -name web -title elinks -e elinks '
 alias urxvt-chfont="printf '\e]710;%s\007' "
+# alias gobuild='nicy run -c cpu33 go build -v -x '
 # }}}
+export ALIASES=true
