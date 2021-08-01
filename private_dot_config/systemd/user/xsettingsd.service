@@ -1,7 +1,7 @@
 [Unit]
 Description=X settings daemon
 Documentation=man:xsettingsd(1)
-PartOf=graphical-session.target
+#PartOf=graphical-session.target
 
 [Service]
 Slice=session.slice
