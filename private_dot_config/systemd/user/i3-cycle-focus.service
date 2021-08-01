@@ -1,6 +1,6 @@
 [Unit]
 Description=i3 cycle focus
-PartOf=graphical-session.target
+#PartOf=graphical-session.target
 
 [Service]
 Slice=session.slice
