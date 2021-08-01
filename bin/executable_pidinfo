@@ -1,0 +1,14 @@
+#!/bin/sh
+
+[ $# -eq 0 ] && exit 1
+
+if [ -f "/proc/$1/stat" ] ; then
+	pid=$1
+	LC_ALL=C schedtool $pid
+	LC_ALL=C ionice -p $pid
+	LC_ALL=C choom -p $pid
+else
+	echo " pid $1 not found"
+fi
+
+# vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 et:
