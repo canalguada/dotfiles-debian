@@ -1,28 +1,28 @@
 /* vim: set ft=css ai ts=2 sw=2 tw=79: */
 configuration {
-	modi:							"window,drun,run";
-	font:                           "SF Pro Display Light 14";
-	/*show-icons:                     true;*/
-	icon-theme: 					"McMojave-circle-purple-dark";
-	display-window:					" :";
-	display-windowcd:				" :";
+	modi:									"window,drun,run";
+	font:									"SF Pro Display Light 14";
+	/*show-icons:						true;*/
+	icon-theme:						"Yaru++-Dark";
+	display-window:				" :";
+	display-windowcd:			" :";
 	display-run:					" :";
 	display-drun:					" :";
-	drun-display-format:            "{name}";
-	/*window-format:					"{w} {t} ({c})";*/
-	window-format:					"{w:5} {c} {t}";
-	/*window-format:					"{c} {w} {t}";*/
-	/*windowcd-format:				"{w} {t} ({c})";*/
-	threads:                        0;
-	scroll-method:                  0;
-	disable-history:                false;
-	fullscreen:                     false;
-	hide-scrollbar: 				true;
-	sidebar-mode: 					false;
-	/*terminal:						"Terminal";*/
-	/*run-shell-command:				"{terminal} --title '{cmd}' -e {cmd}";*/
-	drun-show-actions:				false;
-	matching:						"normal";
+	drun-display-format:	"{name}";
+	/*window-format:				"{w} {t} ({c})";*/
+	window-format:				"{w:5} {c} {t}";
+	/*window-format:				"{c} {w} {t}";*/
+	/*windowcd-format:			"{w} {t} ({c})";*/
+	threads:							0;
+	scroll-method:				0;
+	disable-history:			false;
+	fullscreen:						false;
+	hide-scrollbar:				true;
+	sidebar-mode:					false;
+	/*terminal:							"Terminal";*/
+	/*run-shell-command:		"{terminal} --title '{cmd}' -e {cmd}";*/
+	drun-show-actions:		false;
+	matching:							"normal";
 	cache-dir:						"/home/canalguada/.config/rofi/cache";
 	kb-row-up:						"Up,Control+p,ISO_Left_Tab,KP_Up";
 	kb-row-down:					"Down,Control+n,KP_Down";
