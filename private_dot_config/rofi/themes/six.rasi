@@ -48,11 +48,13 @@ element-icon {
 element normal.active,
 element alternate.active {
  background-color: @on;
+ border-color: #00ff003f;
 }
 
 element normal.urgent,
 element alternate.urgent {
  background-color: @off;
+ border-color: #ff00003f;
 }
 
 element selected {
@@ -61,13 +63,11 @@ element selected {
 
 element selected.urgent {
  background-color: @on;
- border-color: @lightfg;
- /*border-color: @theme-unfocused-fg-color;*/
+ border-color: #00ff003f;
 }
 
 element selected.active {
  background-color: @off;
- border-color: @lightfg;
- /*border-color: @theme-unfocused-fg-color;*/
+ border-color: #ff00003f;
 }
 
