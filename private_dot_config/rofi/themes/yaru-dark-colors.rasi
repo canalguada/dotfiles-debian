@@ -4,55 +4,53 @@
 	/* widget text/foreground color */
 	theme-fg-color: #F7F7F7;
 	/* text color for entries, views and content in general */
-	theme-text-color: white;
+	/* theme-text-color: white; */
 	/* widget base background color */
 	theme-bg-color: #3e3e3e;
 	/* text widgets and the like base background color */
 	theme-base-color: #343434;
 	/* base background color of selections */
-	theme-selected-bg-color: #df4a16;
+	/* theme-selected-bg-color: #df4a16; */
 	/* text/foreground color of selections */
 	theme-selected-fg-color: #FFFFFF;
 	/* base background color of insensitive widgets */
-	insensitive-bg-color: #3a3a3a;
+	/* insensitive-bg-color: #3a3a3a; */
 	/* text foreground color of insensitive widgets */
-	insensitive-fg-color: #9b9b9b;
+	/* insensitive-fg-color: #9b9b9b; */
 	/* insensitive text widgets and the like base background color */
-	insensitive-base-color: #343434;
+	/* insensitive-base-color: #343434; */
 	/* widget text/foreground color on backdrop windows */
 	theme-unfocused-fg-color: #9b9b9b;
 	/* text color for entries, views and content in general on backdrop windows */
-	theme-unfocused-text-color: white;
+	/* theme-unfocused-text-color: white; */
 	/* widget base background color on backdrop windows */
 	theme-unfocused-bg-color: #3e3e3e;
 	/* text widgets and the like base background color on backdrop windows */
-	theme-unfocused-base-color: #373737;
+	/* theme-unfocused-base-color: #373737; */
 	/* base background color of selections on backdrop windows */
-	theme-unfocused-selected-bg-color: #df4a16;
+	/* theme-unfocused-selected-bg-color: #df4a16; */
 	/* text/foreground color of selections on backdrop windows */
-	theme-unfocused-selected-fg-color: #FFFFFF;
+	/* theme-unfocused-selected-fg-color: #FFFFFF; */
 	/* insensitive color on backdrop windows*/
-	unfocused-insensitive-color: #656565;
+	/* unfocused-insensitive-color: #656565; */
 	/* widgets main borders color */
 	borders: #222222;
 	/* widgets main borders color on backdrop windows */
-	unfocused-borders: #282828;
+	/* unfocused-borders: #282828; */
 	/* these are pretty self explicative */
 	warning-color: #f99b11;
 	error-color: #c7162b;
 	success-color: #109b26;
 
+	/* Aubergine colors*/
 	accent: @warning-color;
-	/*on: #773f72ff;*/
-	/*off: #ef5350ff;*/
-	selected: @theme-selected-bg-color;
-	/*urgent: #713fc6ff;*/
-	urgent: #773f72;
+	selected: #77216f;
+	urgent: #df4a16;
 
 
 	background: @theme-bg-color;
 	foreground: @theme-fg-color;
-	lightbg: #484848ff;
+	lightbg: #2c2c2cff;
 	lightfg: @theme-unfocused-fg-color;
 
 	basebg: @theme-base-color;
@@ -62,23 +60,26 @@
 	alternate-normal-background: @lightbg;
 	alternate-normal-foreground: @foreground;
 
-	active-background: #6272a4;
+	active-background: #5e2750;
 	active-foreground: @theme-selected-fg-color;
 	alternate-active-background: @active-background;
 	alternate-active-foreground: @active-foreground;
 
-	urgent-background: #773f72;
+	urgent-background: #df4a16;
 	urgent-foreground: @theme-selected-fg-color;
 	alternate-urgent-background: @urgent-background;
 	alternate-urgent-foreground: @urgent-foreground;
 
 	selected-normal-background: @selected;
 	selected-normal-foreground: @theme-selected-fg-color;
-	selected-active-background: @accent;
+	selected-active-background: @selected;
 	selected-active-foreground: @active-foreground;
 	selected-urgent-background: @urgent-background;
 	selected-urgent-foreground: @urgent-foreground;
 
+	/* selected-borders:						@normal-foreground; */
+	/* Full brightness + alpha */
+	selected-borders:						#ff47ee3f;
 	border-color: @borders;
 	separatorcolor: @borders;
 
