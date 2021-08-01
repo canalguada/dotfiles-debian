@@ -1,6 +1,14 @@
+#
+# This is the config file, and
+# a '#' or ';' character indicates
+# a comment
+#
+
 [user]
-	email = canalguada.spambox@free.fr
-	name = CanalGuada
+	; email = canalguada.spambox@free.fr
+	; name = CanalGuada
+	email = guadalupe.david@gmail.com
+	name = David GUADALUPE
 [url "ssh://aur@aur.archlinux.org/"]
 	insteadOf = git://aur.archlinux.org/
 [push]
