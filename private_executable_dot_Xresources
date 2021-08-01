@@ -1,11 +1,11 @@
 Xcursor.theme: Yaru++
 Xcursor.size:  24
 
-Xft.autohint: 0
-Xft.lcdfilter:  lcddefault
+Xft.autohint: true
+! Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
-Xft.hinting: 1
-Xft.antialias: 1
+Xft.hinting: true
+Xft.antialias: true
 Xft.rgba: rgb
 Xft.dpi: 96
 
@@ -14,48 +14,9 @@ Xft.dpi: 96
 
 ! ----------------------------------------------------------------------------
 ! Common colors
-!#include ".Xresources.d/themes/yaru"
-#include ".Xresources.d/themes/dracula"
+! #include ".Xresources.d/themes/breeze"
+! #include ".Xresources.d/themes/dracula"
+#include ".Xresources.d/themes/yaru"
 
-!#define t_current_line      	#eeeeec
-!#define t_cursor        	#d3d7cf
-!#define t_selection      	#d3d7cf
-!#define t_background       	#000000
-!#define t_foreground      	#ffffff
-
-!#define t_red		     	#cc0000
-!#define t_orange	     	#c3a000
-!#define t_yellow        	#fce94f
-!#define t_green	        	#4e9a06
-!#define t_aqua	        	#06989a
-!#define t_blue	        	#3465a4
-!#define t_purple        	#75507b
-
-!*.foreground:   t_foreground
-!*.background:   t_background
-!*.cursorColor:  t_foreground
-!! Black / Grey
-!*.color0:       #000000
-!*.color8:       #555753
-!! Red / Bright Red
-!*.color1:       t_red
-!*.color9:       #ef2929
-!! Green + Bright Green
-!*.color2:       t_green
-!*.color10:      #8ae234
-!! Yellow (Orange) + Bright Yellow (Yellow)
-!*.color3:       t_orange
-!*.color11:      t_yellow
-!! Blue + Bright Blue
-!*.color4:       t_blue
-!*.color12:      #739fcf
-!! Magenta (Purple) + Bright Magenta
-!*.color5:       t_purple
-!*.color13:      #ad7fa8
-!! Cyan (Aqua) + Bright Cyan
-!*.color6:       t_aqua
-!*.color14:      #34e2e2
-!! Light Grey (Selection) + White (Current Line)
-!*.color7:       t_selection
-!*.color15:      t_current_line
+#include ".Xresources.d/themes/i3_polybar"
 
