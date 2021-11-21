@@ -86,34 +86,37 @@ case $1 in
     if pactl set-sink-volume @DEFAULT_SINK@ +5% &&
       pactl set-sink-mute @DEFAULT_SINK@ 0; then
       CURVOL="$(get_curvol)"
-      notify-send -a "$PROG" -u low -t 1000 \
-        -i multimedia-volume-control \
-        --hint=int:transient:1 \
-        --hint=int:value:$CURVOL \
-        --hint=string:synchronous:volume \
-        "Volume up $ICON_UP $CURVOL %" ""
+			pgrep xob >/dev/null 2>&1 ||
+				notify-send -a "$PROG" -u low -t 1000 \
+					-i audio-volume-high \
+					--hint=int:transient:1 \
+					--hint=int:value:$CURVOL \
+					--hint=string:synchronous:volume \
+					"Volume up $ICON_UP $CURVOL %" ""
     fi
     ;;
   D | d | [D,d]own | [D,d]o)
     if pactl set-sink-volume @DEFAULT_SINK@ -5% &&
       pactl set-sink-mute @DEFAULT_SINK@ 0; then
       CURVOL="$(get_curvol)"
-      notify-send -a "$PROG" -u low -t 1000 \
-        -i multimedia-volume-control \
-        --hint=int:transient:1 \
-        --hint=int:value:$CURVOL \
-        --hint=string:synchronous:volume \
-        "Volume down $ICON_DOWN $CURVOL %" ""
+			pgrep xob >/dev/null 2>&1 ||
+				notify-send -a "$PROG" -u low -t 1000 \
+					-i audio-volume-low \
+					--hint=int:transient:1 \
+					--hint=int:value:$CURVOL \
+					--hint=string:synchronous:volume \
+					"Volume down $ICON_DOWN $CURVOL %" ""
     fi
     ;;
   M | m | [M,m]u | [M,m]ute)
     if pactl set-sink-mute @DEFAULT_SINK@ toggle; then
       CURVOL="$(get_curvol)"
       MUTED="$(is_muted)"
-      notify-send -a "$PROG" -u low -t 1000 \
-        --hint=int:transient:1 \
-        "Mute toggle" "Muted: $MUTED Volume $CURVOL %" \
-        --icon=audio-volume-muted
+			pgrep xob >/dev/null 2>&1 ||
+				notify-send -a "$PROG" -u low -t 1000 \
+					-i audio-volume-muted \
+					--hint=int:transient:1 \
+					"Mute toggle" "Muted: $MUTED Volume $CURVOL %"
     fi
     ;;
   status)
