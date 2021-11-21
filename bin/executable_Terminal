@@ -1,263 +1,582 @@
-#!/bin/sh
-# vim: set ft=sh fdm=marker ai ts=2 sw=2 tw=79 noet:
+#!/bin/zsh
+# vim: set ft=zsh fdm=marker ai ts=2 sw=2 tw=79 noet:
+
+# set -x
 
 PROG=$(basename "$0")
+PROG=${PROG%.*}
+
+backend=${MYTERMINAL:-"urxvt"}
+[[ "$backend" =~ ^(urxvt|mlterm|xterm|st|terminator|xfce4-terminal)$ ]] ||
+	backend=urxvt
+
 DEFAULT_WORKING_DIRECTORY="$PWD"
 
-if [ -z "$VERBOSITY" ]; then
-	if [ -t 1 ]; then
-		VERBOSITY=1
-	else
-		VERBOSITY=0
-	fi
-fi
+# TODO: Maximized implementation
 
-# # Detect if the script was called with a different user who logged in{{{
-# logged_user=$LOGNAME
-# if [ $(id -ru) -eq 0 ] && [ "$logged_user" != "$USER" ]; then
-#   su "$logged_user" -c "$0 $*"
-#   exit 0
-# fi
-# #}}}
-# Show information about how to use this terminal_bin{{{
+# Show information about how to use this terminal {{{
 usage() {
-	cat <<-EOF | column -t -s ';'
-	;Usage: $PROG [options]
-	;;
-	;Options:;
-	;      --tab;Open a new tab
-	;      --windows;Open a new window
-	;  -w, --working-directory=DIRECTORY;Set the working directory to DIRECTORY
-	;      --homedir;Set the working directory to the user's home.
-	;  -t, --title=TITLE;Set the title to TITLE
-	;  -c, --class=CLASS;terminal_bin class as used by the window manager
-	;  -n, --name=NAME;terminal_bin name as used by the window manager
-	;  -i, --icon=ICON;terminal_bin icon as used by the window manager
-	;  -r, --role=ROLE;terminal_bin role as used by the window manager
-	;  -p, --pause;Pause the shell execution after the command has terminated
-	;  -H, --hold;Retain the tab or window after the shell exits;
-	;  -e, --command=COMMAND;Run this command.
-	;  -x, --, --execute;Catch all the remaining arguments as the last command.
-	;  -h, --help;Show help about options.
-	;;
-	EOF
+	cat <<EOF
+Launch commands in terminals.
+
+Usage: $PROG [terminal options]... 
+
+Example: 
+  Ncmpcpp in first and xprop in second, checking properties. 
+  $ Terminal -name music --title "Mpd client (ncmpcpp)" -e ncmpcpp \ 
+    -pause -- xprop 
+
+Long options are also valid with a single dash and without = separator. 
+
+Common options: 
+  Always implemented, either by $PROG frontend or backend. 
+  -t, --title=TITLE      set title to TITLE
+  -p, --pause            pause execution after command
+  -e, --command=COMMAND  run COMMAND in terminal
+  -x, --, --execute      catch remaining arguments as last command
+  -v, --verbose          be verbose
+  -h, --help             show this message and exit
+
+Only X11 options:
+  -c, --class=CLASS      set window class to CLASS
+  -n, --name=NAME        set window class name to NAME
+  -r, --role=ROLE        set window role to ROLE
+
+Other options:
+  Mostly available if supplied by backend. 
+  -w, --working-directory=DIRECTORY
+                         set working directory to DIRECTORY
+      --homedir          set working directory to user's home
+  -i, --icon=ICON        set window icon to ICON
+  -H, --hold             retain tab or window after command exit
+      --tab              open new tab
+      --windows          open new window
+EOF
 	return 0
 } #}}}
-# Colors {{{
-COLORIZED=n
-if [ "$COLORIZED" = "y" ]; then
-	COLORR=`tput setaf 1`
-	COLORG=`tput setaf 2`
-	COLORY=`tput setaf 3`
-	COLORW=`tput setaf 7`
-	RESET=`tput sgr0`
-fi
-#}}}
-error_exit() { #{{{
-	/usr/bin/echo -e "${COLORR}$PROG: error: ${2:-'unknown error'}${RESET}" 1>&2
-	exit "${1:-1}"
-} #}}}
-debug() { #{{{
-	[ $VERBOSITY -lt 3 ] && return
-		while read -r line; do
-			/usr/bin/echo -e "${COLORY}$PROG: debug: ${line}${RESET}" >&2
-		done
-} #}}}
-warning() { #{{{
-	[ $VERBOSITY -lt 2 ] && return
-		while read -r line; do
-			/usr/bin/echo -e "${COLORG}$PROG: warning: ${line}${RESET}" >&2
-		done
-} #}}}
-info() { #{{{
-	[ $VERBOSITY -lt 1 ] && return
-	while read -r line; do
-		/usr/bin/echo -e "${COLORW}$PROG: info: ${line}${RESET}"
-	done
-} #}}}
-command_exists() { command -v "$1" >/dev/null 2>&1 ; }
-# quote() { [ $# -eq 0 ] && return ; pyquote "$@" ; }
-# split() { [ $# -eq 0 ] && return ; pysplit "$1" ; }
+
 # Temporary files management {{{
-tmpfiles=$(mktemp -p /tmp "$PROG-tmp-XXXXXX")
-clean() { xargs -d '\n' -a "$tmpfiles" rm -f ; rm -f "$tmpfiles" ; }
+typeset -ag tmpfiles
+mkdir -p /tmp/$USER
+mkfile() {
+	if (( $# )); then
+		pat="$1"
+	else
+		pat="tmp"
+	fi
+	f=$(mktemp -p /tmp/$USER "${PROG}-${pat}-XXXXXX")
+	tmpfiles+=("$f")
+	echo "$f"
+}
+clean() { (( $#tmpfiles )) && rm -f "${(@)tmpfiles}" ; }
 trap clean EXIT
 #}}}
-# Buffers
-params=$(mktemp -p /tmp "$PROG-buffer-XXXXXX")
-echo "$params" >> "$tmpfiles"
-init_params() { truncate -s 0 "$params" ; }
-push_params() { for arg; do printf '%s\n' "$arg" >>"$params" ; done ; }
-get_params() { xargs -d '\n' -a "$params" shell-quote -- ; }
-prepend_params() {
-	buffer=$(cat "$params")
-	init_params
-	for arg; do printf '%s\n' "$arg" >> "$params"; done
-	[ -n "$buffer" ] && echo "$buffer" >> "$params"
+
+# One-liners {{{
+command_exists() { command -v "$1" >/dev/null 2>&1 ; }
+get_iconpath() { (( $# )) && python3 -m local.find_icon "$1" ; }
+source_or_die() { #{{{
+	if [[ -f "$1" ]] ; then
+		. "$1"
+	else
+		echo "not found '$1'" >&2
+		exit 1
+	fi
+} #}}}
+#}}}
+
+source_or_die "$HOME/.local/lib/sh/errors.lib.sh"
+
+# Array buffer {{{
+typeset -ag params
+params__prepend() { params=("$@" "${(@)params}") ; }
+params__has() { (( ${params[(Ie)$1]} )) ; }
+# }}}
+
+# Job management {{{
+typeset -ag jobs
+jobs__create_new() { #{{{
+	unset params	# Empty buffer 
+	pause_flag="n"	# Reset pause and allow flags
+	allow_flag="n"
+	unset curcmd	# Unset current command
+} #}}}
+jobs__append_params() { params+=("$@") ; allow_flag="y" ; }
+jobs__save_current() {
+	unset fullcmd
+	(( $#params )) &&
+		fullcmd=(${(q-)params})
+	jobs+=("$curcmd|$fullcmd")
 }
-cmdlist=$(mktemp -p /tmp "$PROG-cmdlist-XXXXXX")
-echo "$cmdlist" >> "$tmpfiles"
-push_command() { get_params >>"$cmdlist" ; }
-
-# Parsing functions
-add_switch() { [ -n "$1" ] && push_params "-$1" ; }
-allow_build() { can_build_command="y" ; }
-start_new() { #{{{
-	dest=${1:-"tab"}
-	[ "$dest" != "window" ] && [ "$dest" != "tab" ] && return
-	[ "$can_build_command" = "y" ] && serialize_command
-	[ "$dest" = "tab" ] && add_switch "T" || add_switch "W"
-	allow_build
-} #}}}
-set_terminal_option() { push_params "$@" ; allow_build ; }
-set_title() { set_terminal_option "-t" "$1" ; }
-set_directory() { #{{{
-	[ ! -d "$1" ] && error_exit 2 "Directory '$1' does not exist"
-	set_terminal_option "-w" "$(realpath "$1")"
-} #}}}
-set_class() { set_terminal_option "-c" "$1" ; }
-set_name() { set_terminal_option "-n" "$1" ; }
-set_icon() { set_terminal_option "-i" "$1" ; }
-set_command() { eval set -- "$1" ; serialize_command "$@" ; }
-reset_options() { init_params ; pause_flag="n" ; can_build_command="n" ; }
-has_option() { grep -qE '^'"${1}"'$' "$params" ; }
-serialize_command() { #{{{
-	# Set default working directory if needed
-	has_option "-w" || prepend_params "-w" "$DEFAULT_WORKING_DIRECTORY"
-
-	if [ $# -gt 0 ]; then
-		if ! command_exists $1; then
+jobs__finalize() { #{{{
+	params__has "-w" || {	# Set default working directory if needed
+		[[ "$PWD" = "$DEFAULT_WORKING_DIRECTORY" ]] ||
+			params__prepend "-w" "$DEFAULT_WORKING_DIRECTORY"
+	}
+	if (( $# )); then
+		if ! command_exists $1; then	# Discard if not found
 			echo "$1 not found" | warning
 			shift $#
+			curcmd=${SHELL:t}
+		else
+			curcmd=${1:t}
 		fi
 	fi
-
-	if [ $# -gt 0 ]; then
-		if [ "$pause_flag" = "y" ]; then
-			# Build script
-			script="$(mktemp -p /tmp "$PROG-session-XXXXXX")"
+	if (( $# )); then #{{{
+		if [[ "$pause_flag" = "y" ]]; then
+			script="$(mkfile "session")"	# Build bash script
+			fullcmd=(${(q-)@})
 			cat >"$script" <<-EOF
 				#!/bin/bash
 				trap "rm -f '$script' 2>/dev/null" EXIT
-				$(shell-quote -- "$@")
+				$fullcmd
 				echo
 				echo -n "Appuyez sur une touche pour continuer..."
 				read -r -n 1 key > /dev/null 2>&1
 			EOF
 			chmod +x "$script"
-			push_params "-x" "$script"
+			params+=("-e" "$script")
 		else
-			push_params "-x" "$@"
+			params+=("-x" "$@")
 		fi
-	fi
-	push_command
-	# Reset options
-	reset_options
+	fi #}}}
+	jobs__save_current	# Save command name and terminal arguments
+	jobs__create_new	# Reset options
 } #}}}
-
-# Backends
-urxvt_get_params() { #{{{
-	OPTIND=1
-	while getopts :TWHw:t:c:n:r:i:e:x option "$@"; do
-		case $option in
-			T) ;; # New tab
-			W) ;; # New window
-			H) push_params "-hold" ;;
-			w) push_params "-cd" "$OPTARG" ;;
-			t) push_params "-title" "$OPTARG" ;;
-			c) ;; # Set wm class
-			n) push_params "-name" "$OPTARG" ;;
-			r) ;; # Set wm role
-			i)
-				# Find icon file path for current theme
-				iconpath=$(python3 -m local.find_icon "$OPTARG")
-				[ -n "$iconpath" ] &&
-					push_params "-icon" "$iconpath"
-				;;
-			# e) push_params "-e" $(split "$OPTARG") ;;
-			e) ( eval set -- "$OPTARG" ; push_params "-e" "$@" ; ) ;;
-			x) push_params "-e"; break ;; # Greedy command
-			\?) usage; error_exit 1 "unknown option '$OPTARG'." ;;
-			:) usage; error_exit 1 "missing argument for option '$OPTARG'." ;;
-		esac
-	done
-	parsed=$(($OPTIND - 1))
-	if [ $parsed -gt 0 ]; then
-		shift $parsed
-	fi
-	[ $# -gt 0 ] && push_params "$@"
-} #}}}
-
-### Main function
-
-# Global variables {{{
-pause_flag="n"
-can_build_command="n"
 #}}}
-reset_options
-# Parse command line options {{{
-OPTIND=1
-while getopts :-:hw:pHt:T:c:n:i:r:e:x option; do
-	case $option in
-		-)
-			case "$OPTARG" in
-				help) usage; exit 0 ;;
-				homedir) set_directory "$HOME" ;;
-				working-directory=*) set_directory "${OPTARG#*=}" ;;
-				pause) pause_flag="y" ;;
-				hold) add_switch "H" ;;
-				tab) start_new "tab" ;;
-				window) start_new "window" ;;
-				title=*) set_title "${OPTARG#*=}" ;;
-				class=*) set_class "${OPTARG#*=}" ;;
-				name=*) set_name "${OPTARG#*=}" ;;
-				icon=*) set_icon "${OPTARG#*=}" ;;
-				role=*) ;;  # TODO
-				command=*) set_command "${OPTARG#*=}" ;;
-				execute) break ;;
-				*) error_exit 1 "unknown option '$OPTARG'." ;;
-			esac
-			;;
-		h) usage; exit 0 ;;
-		w) set_directory "$OPTARG" ;;
-		p) pause_flag="y" ;;
-		H) add_switch "H" ;;
-		t | T) set_title "$OPTARG" ;;
-		c) set_class "$OPTARG" ;;
-		n) set_name "$OPTARG" ;;
-		i) set_icon "$OPTARG" ;;
-		r) ;;  # TODO
-		e) set_command "$OPTARG" ;;
-		x) break ;;
-		\?) usage; error_exit 1 "unknown option '$OPTARG'." ;;
-		:) usage; error_exit 1 "missing argument for option '$OPTARG'." ;;
+
+# Parsing functions {{{
+add_switch() { [[ -n "$1" ]] && params+=("-$1") ; }
+start_new_terminal() { #{{{
+	(( $# )) &&
+		dest=$1 ||
+		dest=tab
+	case "$dest" in
+		tab|window)	[[ "$allow_flag" = "y" ]] && jobs__finalize ;|
+		tab) 			 	add_switch "T" ;;
+		window) 		add_switch "W" ;;
+		*)				 	return ;;
 	esac
-done
-parsed=$(($OPTIND - 1))
-if [ $parsed -gt 0 ]; then
-	shift $parsed
-fi
-unset parsed
+	allow_flag="y"
+} #}}}
+set_option() { opt=$1 ; shift ; jobs__append_params $opt "$@" ; }
+alias set_title="set_option -t"
+alias set_class="set_option -c"
+alias set_name="set_option -n"
+alias set_icon="set_option -i"
+alias set_role="set_option -r"
+set_directory() { #{{{
+	[[ ! -d "$1" ]] &&
+		error_exit 2 "Directory '$1' does not exist" ||
+		jobs__append_params "-w" "$(realpath "$1")"
+} #}}}
+set_command() { cmd=$1 ; jobs__finalize ${(Q)"${(z)cmd}"} ; }
 #}}}
 
-if [ -n "$*" ] || [ "$can_build_command" = "y" ]; then
-	serialize_command "$@"
+# Backend management {{{
+term_prop_adjust() { #{{{
+	local wclassname
+	cmdargs=("xdotool" "set_window")
+	# Always change class name to track launched programs
+	wclassname=${winstance:-$cmd}
+	# If none required, change class to cmd when it's not some shell
+	if [[ -z "$wclass" ]]; then
+		case "$cmd" in
+			sh|bash|zsh) : ;;
+			*) wclass=$cmd ;;
+		esac
+	fi
+	# cmdargs+=("--classname" "$wclassname")
+	# [ -n "$wclass" ] && cmdargs+=("--class" "$wclass")
+	# [ -n "$wrole" ] && cmdargs+=("--role" "$wrole")
+	for opt ("classname" "class" "role") {
+		wopt="w$opt"
+		[ -n "${(P)wopt}" ] &&
+			cmdargs+=("--$opt" "${(P)wopt}")
+	}
+	cmdargs+=("$1")
+	# Set class name, class and role accordingly
+	print ${(q-)"${(@)cmdargs}"} | info
+	"${(@)cmdargs}" &
+	wait
+	# Reset changes
+	unset wclass
+	unset winstance
+	unset wrole
+} #}}}
+
+get_wids() {
+	instance=${instance:-$backend}
+	class=${class:-$backend}
+	wids=()
+	## With grep and awk
+	# wmctrl -lux | grep -iE "\<$instance\>.*\<$class\>" | awk '{ print $1 }'
+	## With bash-like regex
+	# pattern="\<$instance\>.*\<$class\>"
+	# for line (${(f)"$(wmctrl -lux)"}) {
+	#   [[ "${(L)line}" =~ ${(L)pattern} ]] &&
+	#     wids+=(${${(z)line}[1]})
+	# }
+	## Using zsh features
+	pattern="$instance.$class"
+	lines=(${(f)"$(wmctrl -lux)"})
+	for line (${(M)lines:#*${pattern}*}) { wids+=(${${(z)line}[1]}) ; }
+
+	echo ${(O)wids}  # echo requires ${(z)...} pattern substitution
+									 # print -l requires ${(f)...} pattern substitution
+}
+
+term_launch() { #{{{
+	[[ -z "$WAYLAND_DISPLAY" ]] &&
+			old=(${(z)$(get_wids)})
+	cmdargs=(${(z)bin})  # No quotes to expand
+	(( $#params )) &&
+		cmdargs+=("${(@)params}")
+	print ${(q-)"${(@)cmdargs}"} | info
+	# Required to ensure keeping terminal open
+	setsid "${(@)cmdargs}" & disown
+} #}}}
+
+run_job() { #{{{
+	local wid
+	unset params
+	term_options "$@"
+	term_launch
+	if [[ (-z "$WAYLAND_DISPLAY") && ("$adjust" != "no") ]]; then
+		# Find window id within 5 secs or skip properties adjustment
+		count=0
+		while [[ -z "$wid" ]] && (( $count < 10 )); do
+			(( count++ ))
+			sleep 0.5s
+			wids=(${(z)$(get_wids)})
+			(( $#old )) &&
+				wids=(${wids:|old})
+			(( $#wids )) &&
+				wid=$wids[1]
+		done
+		[[ -n "$wid" ]] &&
+			term_prop_adjust "$wid"
+	fi
+} #}}}
+#}}}
+
+# Main
+# ====
+
+jobs__create_new
+
+# Parse options {{{
+validate() {
+	[[ ($2 = "-"*) || (-z "$2") ]] &&
+		error_exit 1 "missing argument for option '$1'."
+}
+
+(( $# )) ||
+	allow_flag="y"
+
+while (( $# )); do  #{{{
+	case "$1" in
+		"-?"|-h|-help|--help)
+			usage ; exit 0 ;; 
+
+		-v|-verbose|--verbose)
+			allow_flag="y"
+			[[ ! -t 1 ]] && VERBOSITY=0 ||
+				(( VERBOSITY++ )) ;;
+
+		# Change backend
+		-2|-alt|--alt)
+			[[ "$backend" = "urxvt" ]] &&
+				backend="mlterm" ||
+				backend="urxvt"
+			;;
+
+		# On exit	
+		-p|-pause|--pause)
+			pause_flag="y" ;;
+		-H|-hold|--hold)
+			add_switch "H" ;;
+
+		# Window properties
+		-tab|--tab)
+			start_new_terminal "tab" ;;
+		-window|--window)
+			start_new_terminal "window" ;;
+
+		# Validating option
+		-w|-working-directory|--working-directory| \
+			-t|-T|-title|--title|-c|-class|--class|-n|-name|--name| \
+			-r|-role|--role|-i|-icon|--icon|-e|-command|--command)
+			validate "$@" ;|
+
+		# Working directory
+		-homedir|--homedir)
+			set_directory "$HOME" ;;
+		-w|-working-directory|--working-directory)
+			set_directory "$2" ; shift ;;
+		-working-directory=*|--working-directory=*)
+			set_directory "${1#*=}" ;;
+
+		# Title
+		-t|-T|-title|--title)
+			set_title "$2" ; shift ;;
+		-title=*|--title=*)
+			set_title "${1#*=}" ;;
+
+		# Class
+		-c|-class|--class)
+			set_class "$2" ; shift ;;
+		-class=*|--class=*)
+			set_class "${1#*=}" ;;
+		
+		# Instance name
+		-n|-name|--name)
+			set_name "$2" ; shift ;;
+		-name=*|--name=*)
+			set_name "${1#*=}" ;;
+		
+		# Role
+		-r|-role|--role)
+			set_role "$2" ; shift ;;
+		-role=*|--role=*)
+			set_role "${1#*=}" ;;
+
+		# Icon
+		-i|-icon|--icon)
+			set_icon "$2" ; shift ;;
+		-icon=*|--icon=*)
+			set_icon "${1#*=}" ;;
+
+		# Command
+		-e|-command|--command)
+			set_command "$2" ; shift ;;
+		-command=*|--command=*)
+			set_command "${1#*=}" ;;
+		-x|--|-execute|--execute)
+			allow_flag="y" ; shift ; break ;;
+
+		# Error
+		*)
+			error_exit 1 "unknown option '$1'." ;;
+	esac
+	shift
+done  #}}}
+
+typeset -g class wclass
+typeset -g instance winstance
+typeset -g role wrole
+
+case "$backend" in
+	mlterm)  #{{{
+		bin=mlclient
+		instance=xterm
+		class=mlterm
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) ;; # No new tab
+					-W) ;; # No new window
+					-H) ;;
+					-w) params+=("--working-directory=$2") ; shift ;;
+					-t) params+=("-T" "$2") ; shift ;;
+					-c) params+=("-N" "$2") ; class=$2 ; shift ;; # Set wm class
+					-n) winstance=$2 ; shift ;; # Set wm class name
+					-r) wrole=$2 ; shift ;; # Set wm role
+					-i)  # Find icon file path for current theme
+						iconpath=$(get_iconpath "$2")
+						[ -n "$iconpath" ] &&
+							params+=("--iconpath=$iconpath")
+						shift
+						;;
+					-e) cmd=$2 ; params+=("-e" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-e") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	urxvt)  #{{{
+		bin=urxvt
+		instance=urxvt
+		class=URxvt
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) ;; # No new tab
+					-W) ;; # No new window
+					-H) params+=("-hold") ;;
+					-w) params+=("-cd" "$2") ; shift ;;
+					-t) params+=("-title" "$2") ; shift ;;
+					-c) wclass=$2 ; shift ;; # Set wm class
+					-n) params+=("-name" "$2") ; instance=$2 ; shift ;; # Set wm class name
+					-r) wrole=$2 ; shift ;; # Set wm role
+					-i)  # Find icon file path for current theme
+						iconpath=$(get_iconpath "$2")
+						[ -n "$iconpath" ] &&
+							params+=("-icon" "$iconpath")
+						shift
+						;;
+					-e) cmd=$2 ; params+=("-e" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-e") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	xterm)  #{{{
+		bin="xterm -u8"
+		instance=xterm
+		class=UXTerm
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) ;; # No new tab
+					-W) ;; # No new window
+					-H) params+=("-hold") ;;
+					-w) shift ;;
+					-t) params+=("-title" "$2") ; shift ;;
+					-c) params+=("-class" "$2") ; class=$2 ; shift ;; # Set wm class
+					-n) winstance=$2 ; shift  ;; # Set wm class name
+					-r) wrole=$2 ; shift ;; # Set wm role
+					-i) shift ;;
+					-e) cmd=$2 ; params+=("-e" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-e") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	st)  #{{{
+		bin=st
+		instance=st-256color
+		class=st-256color
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) ;; # No new tab
+					-W) ;; # No new window
+					-H) ;;
+					-w) shift ;;
+					-t) params+=("-t" "$2") ; shift ;;
+					-c) params+=("-c" "$2") ; class=$2 ; shift ;; # Set wm class
+					-n) params+=("-n" "$2") ; instance=$2 ; shift  ;; # Set wm class name
+					-r) wrole=$2 ; shift ;; # Set wm role
+					-i) shift ;;
+					-e) cmd=$2 ; params+=("-e" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-e") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	terminator)  #{{{
+		bin=terminator
+		instance=terminator
+		class=Terminator
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) params+=("--new-tab") ;;
+					-W) ;;
+					-H) params+=("-p" "hold") ;;
+					-w) params+=("--working-directory=$2") ; shift ;;
+					-t) params+=("-T" "$2") ; shift ;;
+					-c) wclass=$2 ; shift ;; # Set wm class
+					-n) winstance=$2 ; shift ;; # Set wm class name
+					-r) params+=("-r" "$2") ; shift ;; # Set wm role
+					-i)
+						params+=("-i" "$2")
+						shift
+						;;
+					-e) cmd=$2 ; params+=("-x" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-x") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	xfce4-terminal)  #{{{
+		bin=xfce4-terminal
+		instance=xfce4-terminal
+		class=Xfce4-terminal
+		term_options () {
+			while (( $# )); do
+				case "$1" in
+					-T) params+=("--tab") ;;
+					-W) params+=("--window") ;;
+					-H) params+=("-H") ;;
+					-w) params+=("--working-directory=$2") ; shift ;;
+					-t) params+=("-T" "$2") ; shift ;;
+					-c) wclass=$2 ; shift ;; # Set wm class
+					-n) winstance=$2 ; shift ;; # Set wm class name
+					-r) wrole=$2 ; shift ;; # Set wm role
+					-i)
+						params+=("-I" "$2")
+						shift
+						;;
+					-e) cmd=$2 ; params+=("-e" ${(Q)"${(z)cmd}"}) ; shift ;;
+					-x) params+=("-x") ; shift ; break ;; # Greedy command
+					*)
+						usage
+						msg="unknown option '$1'.\nYou shouldn't see this."
+						error_exit 1 "$msg" ;;
+				esac
+				shift
+			done
+			(( $# )) &&
+				params+=("$@")
+		}
+		adjust=yes
+		;;  #}}}
+	*)
+		error_exit 1 "not valid backend '$1'." ;;
+esac
+#}}}
+
+if (( $# )) || [[ "$allow_flag" = "y" ]]; then
+	jobs__finalize "$@"
 fi
 
-# TODO: Choose between : termite, urxvtc, xfce4-terminal and gnome-terminal
-case "${MYTERMINAL:-"urxvtc"}" in
-	urxvt*)
-		terminal_bin=urxvtc
-		terminal_get_params=urxvt_get_params
-		;;
-esac
-
-cat "$cmdlist" | while read -r cmd; do
-	init_params
-	eval $terminal_get_params "$cmd"
-	cmdline="$terminal_bin $(get_params)"
-	echo "$cmdline" | info
-	eval "$cmdline"
+for job in $jobs; do
+	cmd=${job%%|*}
+	fullcmd=${job#*|}
+	cmdargs=(${(Q)${(z)fullcmd}})
+	run_job "${(@)cmdargs}"
 done
 
 exit 0
