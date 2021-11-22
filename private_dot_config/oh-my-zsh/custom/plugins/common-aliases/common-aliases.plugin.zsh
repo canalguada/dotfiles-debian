@@ -114,7 +114,7 @@ if is-at-least 4.2.0; then
   for ft in $_media_fts; do alias -s $ft=mpv; done
 
   #read documents
-  alias -s pdf=evince
+  alias -s pdf=qpdfview
   #alias -s ps=gv
   #alias -s dvi=xdvi
   #alias -s chm=xchm

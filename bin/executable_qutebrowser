@@ -1,10 +1,11 @@
 #!/bin/sh
 
 QUTE_BIN="/usr/bin/qutebrowser"
-QUTE_ARGS="-R"
-QUTE_ENV="JSC_useJIT=0"
+QUTE_ARGS="-R --backend webkit"
 
+QUTE_ENV="JSC_useJIT=0"
 export $QUTE_ENV
+
 #exec Cpu66 --slice -- $QUTE_BIN $QUTE_ARGS "$@"
 exec $QUTE_BIN $QUTE_ARGS "$@"
 

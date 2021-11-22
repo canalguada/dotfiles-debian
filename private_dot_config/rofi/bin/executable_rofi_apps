@@ -1,8 +1,17 @@
-#!/usr/bin/sh
+#!/bin/bash
 # vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 noet:
 
-##grep -oP "set [$]ws[[:digit:]]+.*" ~/.config/i3/config \
-##  |sed 's/set \$\([^[:blank:]]*\)[[:blank:]]*\(.*\)/\1=\2/g'
+rofi_command="rofi -theme themes/six.rasi"
+
+find_wid() {
+	wmctrl -lx |
+		grep -iE "\<$1\>\." |
+		awk '{ print $1 }' |
+		sort |tail -n1
+}
+
+# eval $(cat /tmp/$USER/i3/cache/workspaces)
+eval $(grep "set \$ws" $HOME/.config/i3/config|sed 's/set \$//g'|tr " " "=")
 # ws1=1:
 # ws2=2:
 # ws3=3:
@@ -14,55 +23,62 @@
 # ws9=9:
 # ws10=10:
 
-eval $(cat /tmp/$USER/i3/cache/workspaces)
-
-rofi_command="rofi -theme themes/six.rasi"
-
-# Links
-alt_terminal=
-filemanager=
-editor=
-browser=
-text_browser=
-music=
-settings=
-mail=
-sysmon=
-sysupdate=
-alt_filemanager=
-
-choice=$(
-	cat <<-EOF | $rofi_command -p "Most Used" -dmenu -selected-row 0
-	$browser
-	$filemanager
-	$editor
-	$music
-	$mail
-	$sysmon
-	$text_browser
-	$alt_filemanager
-	$alt_terminal
-	$sysupdate
-	$settings
-	EOF
+declare -a items=(
+ Browser $ws2
+ FileManager $ws3
+ Editor $ws4
+ Music $ws9
+ Mail $ws5
+ SysMon $ws1
+ TextWebBrowser $ws2
+ AltFileManager $ws3
+ AltTerminal $ws1
+ SysUpdate $ws6
+ Settings $ws6
 )
 
-case $choice in
-	$browser) i3-ws-run "$ws2" exec Browser ;;
-	$filemanager) i3-ws-run "$ws3" exec FileManager ;;
-	$editor) i3-ws-run "$ws4" exec Editor ;;
-	$music) i3-ws-run "$ws9" Music ;;
-	$mail) i3-ws-run "$ws5" Mail ;;
-	$sysmon) i3-ws-run "$ws1" SysMon ;;
-	$text_browser) i3-ws-run "$ws2" urxvtc -name web -title elinks -e elinks ;;
-	$alt_filemanager) i3-ws-run "$ws3" exec pcmanfm-qt ;;
-	$alt_terminal) i3-ws-run "$ws1" exec qterminal ;;
-	$sysupdate) i3-ws-run "$ws1" SysUpdate ;;
-	$settings)
-		case "$XDG_SESSION_DESKTOP" in
-			i3) i3-ws-run "$ws4" Editor -- -p ~/.config/i3/config ;;
-			i3-gnome) i3-ws-run "$ws6" exec gnome-control-center ;;
-			*) ;;
-		esac
-		;;
-esac
+declare -a icons
+declare -A apps
+declare -A ws
+
+for (( pos=0; pos<(${#items[@]}/3); pos++ )); do
+	i=$(( 3 * pos ))
+	icon=${items[$i]}
+	n=$(( i + 1 ))
+	m=$(( i + 2 ))
+	icons[$pos]=$icon
+	apps[$icon]=${items[$n]}
+	ws[$icon]=${items[$m]}
+done
+
+choice=$( \
+	printf "%s\n" "${icons[@]}" |
+	$rofi_command -p "Favorites" -dmenu -selected-row 0 \
+)
+
+if [ -n "$choice" ]; then
+	name=${apps[$choice]}
+	[[ "$name" =~ ^Alt ]] && name="${name#Alt} -2"
+
+	if [ "$XDG_SESSION_DESKTOP" = "i3" ]; then
+		ws=$( \
+			grep "\<${name% *}\>.*\$ws[[:digit:]]*" ~/.config/i3/config | \
+			grep -o "ws[[:digit:]]" | \
+			uniq \
+		)
+		[ -z "$ws" ] &&
+			ws=$(i3-msg -t get_workspaces | jq -r 'map(select(.focused))[0].name') ||
+			ws=${!ws}
+		# echo -e "icon: $choice\t\tws: $ws\tcmd: $name" >&2
+		msg="exec --no-startup-id $name , workspace --no-auto-back-and-forth $ws"
+		i3-msg "$msg"  >/dev/null 2>&1
+	else
+		desk=${ws[$choice]%:*}
+		wmctrl -s $(( desk - 1 ))
+		setsid $name & disown
+		sleep 2
+		wid=$(find_wid $name)
+		[ -z "$wid" ] && wmctrl -i -a $wid
+	fi
+fi
+exit 0

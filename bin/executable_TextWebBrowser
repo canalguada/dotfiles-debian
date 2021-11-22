@@ -2,6 +2,11 @@
 
 PROG=$(basename "$0")
 
+# Naming instance according to `basename $0`
+instance=$(basename $0)
+instance=${instance%.*}
+instance=${instance,,}
+
 # Functions to show error and warning messages
 VERBOSITY=0
 error_exit() {
@@ -28,7 +33,7 @@ pattern="^${scheme}://${authority}$"
 
 is_valid_url() { [[ "$1" =~ $pattern ]] ; }
 
-is_running() { wmctrl -lpGx |grep -qi "$PROG\." ; }
+is_running() { pgrep elinks >/dev/null 2>&1 ; }
 
 declare -a opts
 declare -a remote
@@ -86,15 +91,13 @@ done
 
 if [ ${#opts[@]} -gt 0 ] || [ ${#remote[@]} -gt 0 ] || ! is_running ; then
   # New instance required
-  exec Terminal -i browser -n $PROG -t elinks -- \
-    elinks "${opts[@]}" "${remote[@]}" "${urls[@]}"
+  Terminal -i browser -n $instance -c elinks -t "Navigateur Web (elinks)" -- \
+    elinks "${opts[@]}" "${remote[@]}" "${urls[@]}" &
 else
   # Open new tabs in remote instance
   for url in "${urls[@]}"; do
     /usr/bin/elinks -remote 'openURL("'$url'", new-tab)'
   done
 fi
-  
-# exec Terminal -i browser -n $PROG -t elinks -- elinks "$@"
 
 # vim: set ft=sh fdm=indent ai ts=2 sw=2 tw=79 et:

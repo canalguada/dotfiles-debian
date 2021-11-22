@@ -19,7 +19,8 @@
  *
  */
 
-@import "yaru-dark-colors"
+/* @import "yaru-dark-colors" */
+@import "mojave-dark-colors"
 /* @import "drakula-colors" */
 
 /* vim: set ft=css: */

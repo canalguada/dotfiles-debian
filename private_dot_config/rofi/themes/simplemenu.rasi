@@ -9,9 +9,10 @@ window {
 }
 
 listview {
-	dynamic: true;
-	fixed-height: false;
+	/* dynamic: true; */
+	/* fixed-height: false; */
 	columns: 4;
+	lines: 6;
 }
 
 /*mainbox {*/

@@ -1,11 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-exec Terminal --working-directory=$(xdg-user-dir DESKTOP) \
-	--icon=email-client --name=mail \
-	"--title=Client de courrier électronique - Neomutt" \
-	-- /usr/bin/neomutt "$@"
+# Naming instance according to `basename $0`
+instance=$(basename $0)
+instance=${instance%.*}
+instance=${instance,,}
 
-
-# urxvtc -cd $(xdg-user-dir DESKTOP) -name mail -title mutt -e /usr/bin/neomutt "$@"
+Terminal --working-directory=$(xdg-user-dir DESKTOP) \
+	--icon=applications-mail --name=$instance -c neomutt \
+	"--title=Client de courrier électronique (neomutt)" \
+	-- neomutt "$@" &
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

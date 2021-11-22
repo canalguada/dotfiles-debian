@@ -24,4 +24,5 @@ mpd)
 esac
 
 # shell-quote -- /usr/bin/ncmpcpp $more_args "$@"
-exec /usr/bin/ncmpcpp $more_args "$@"
+# exec /usr/bin/ncmpcpp $more_args "$@"
+exec /usr/bin/ncmpcpp $more_args -q "$@"

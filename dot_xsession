@@ -15,13 +15,40 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # start some nice programs
+xset s blank
+xset s 300 240
+xset +dpms dpms 600 720 900
+xset b 100
 
+xrdb -merge ~/.Xresources
 
 # Put here what is kept as default
-session=${1:-i3}
+ session=${1:-i3}
 # session=${1:-lxqt}
 
-case $session in
+case "$session" in
+	lxqt|i3)
+		:
+		# setsid ui-statuses -a >|/dev/null 2>&1 & disown
+		# setsid -f volume-notifier & disown
+		;;
+esac
+
+case "$session" in
+	lxqt)
+		#export XDG_SESSION_TYPE=x11
+		export XDG_SESSION_DESKTOP=lxqt
+		export XDG_CURRENT_DESKTOP=LXQt
+		export KWIN_COMPOSE=X
+		exec startlxqt
+		;;
+	# xfce | xfce4) exec startxfce4 ;;
+	i3 | i3wm)
+		export XDG_SESSION_DESKTOP=i3
+		export XDG_CURRENT_DESKTOP=i3
+		export QT_QPA_PLATFORMTHEME=lxqt
+		exec i3
+		;;
 	# gnome)
 	#     export XDG_SESSION_DESKTOP=gnome
 	#     export XDG_CURRENT_DESKTOP=GNOME
@@ -38,22 +65,31 @@ case $session in
 	#     exec gnome-session-i3
 	#     ;;
 	# gnome-wayland) XDG_SESSION_TYPE=wayland dbus-run-session gnome-session ;;
-	kde) export XDG_CURRENT_DESKTOP=KDE ; /usr/bin/startplasma-x11 ;;
-	kde-wayland)
-		export XDG_CURRENT_DESKTOP=KDE
-		XDG_SESSION_TYPE=wayland dbus-run-session /usr/bin/startplasma-wayland
-		;;
-	lxqt)
-		export XDG_SESSION_DESKTOP=lxqt
-		export XDG_CURRENT_DESKTOP=LXQt
-		exec startlxqt
-		;;
-	# xfce | xfce4) exec startxfce4 ;;
-	i3 | i3wm)
-		export XDG_SESSION_DESKTOP=i3
-		export XDG_CURRENT_DESKTOP=i3
-		exec i3
-		;;
+	# liquidshell)
+	#     export XDG_CURRENT_DESKTOP=KDE
+	#     export KWIN_COMPOSE=X
+	#     exec /usr/local/bin/start_liquidshell
+	#     ;;
+	# liquidshell-i3)
+	#     export XDG_CURRENT_DESKTOP=KDE
+	#     export KDEWM=/usr/bin/i3
+	#     exec /usr/local/bin/start_liquidshell
+	#     ;;
+	# kde)
+	#     export XDG_CURRENT_DESKTOP=KDE
+	#     export KWIN_COMPOSE=X
+	#     /usr/bin/startplasma-x11
+	#     ;;
+	# kde-i3)
+	#     export XDG_CURRENT_DESKTOP=KDE
+	#     export KDEWM=/usr/bin/i3
+	#     #exec /usr/local/bin/start_liquidshell
+	#     /usr/bin/startplasma-x11
+	#     ;;
+	# kde-wayland)
+	#     export XDG_CURRENT_DESKTOP=KDE
+	#     XDG_SESSION_TYPE=wayland dbus-run-session /usr/bin/startplasma-wayland
+	#     ;;
 	# kodi) exec kodi-standalone ;;
 	# deepin) exec startdde ;;
 	# budgie)

@@ -21,60 +21,33 @@ function isutfenv () {
 # set some important options (as early as possible)
 
 # warning if file exists ('cat /dev/null > ~/.zshrc')
-setopt NO_clobber
+setopt NO_CLOBBER
 # don't warn me about bg processes when exiting
-setopt nocheckjobs
+setopt NO_CHECK_JOBS
 # for autocompletion of command line switches for aliases
 setopt COMPLETE_ALIASES
 
 # History
 # save each command's beginning timestamp and the duration to the history file
-setopt extended_history
-## append history list to the history file; this is the default but we make sure
-## because it's required for share_history.
-#setopt append_history
-## import new commands from the history file also in other zsh-session
-#setopt share_history
+setopt EXTENDED_HISTORY
 # This option is a variant of INC_APPEND_HISTORY in  which,  where possible, 
 # the history entry is written out to the file after the command is finished,
 # so that the time taken by  the  command  is recorded  correctly in the 
 # history file in EXTENDED_HISTORY format.
-setopt inc_append_history_time
+setopt INC_APPEND_HISTORY_TIME
 # If a new command line being added to the history list duplicates an older
 # one, the older command is removed from the list
-setopt histignorealldups
+setopt HIST_IGNORE_ALL_DUPS
 # remove command lines from the history list when the first character on the
 # line is a space
-setopt histignorespace
+setopt HIST_IGNORE_SPACE
 
 setopt HIST_ALLOW_CLOBBER
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
+# setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
-
-ignore_prefixes=('exit' 'hist' 'echo' 'man' 'ls' 'dir' 'pikaur -Syu' 
-	'sudo pacman -Syu' 'cd' 'less'  'htop' 'cls' 'which' 'type' 'kill'
-	'whoami' 'xprop' 'obxprop' 'pkgfile' 'pgg' 'run-help')
-prefixes=""
-for arg in "${ignore_prefixes[@]}"
-do
-	[ -n "$prefixes" ] && prefixes="${prefixes}|${arg}" || prefixes="$arg"
-done
-#export HISTORY_IGNORE=$(printf "'(&|[ ]*|%s)'" "$prefixes")
-export HISTORY_IGNORE=$(printf "(%s)" "$prefixes")
-
-function zshaddhistory() {
-	emulate -L zsh
-	## uncomment if HISTORY_IGNORE
-	## should use EXTENDED_GLOB syntax
-	setopt extendedglob
-	#[[ $1 != ${~HISTORY_IGNORE} ]]
-	! [[ $1 =~ ^$HISTORY_IGNORE ]]
-}
 
 # History search
 #autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -86,37 +59,40 @@ function zshaddhistory() {
 
 # if a command is issued that can't be executed as a normal command, and the
 # command is the name of a directory, perform the cd command to that directory.
-setopt auto_cd
+setopt AUTO_CD
+
 # in order to use #, ~ and ^ for filename generation grep word
 # *~(*.gz|*.bz|*.bz2|*.zip|*.Z) -> searches for word not in compressed files
 # don't forget to quote '^', '~' and '#'!
-setopt extended_glob
-setopt extendedglob
+setopt EXTENDED_GLOB
+# setopt extendedglob
+
 # display PID when suspending processes as well
-setopt longlistjobs
+# setopt longlistjobs
+
 # report the status of backgrounds jobs immediately
-setopt notify
+setopt NOTIFY
 # whenever a command completion is attempted, make sure the entire command path
 # is hashed first.
-setopt hash_list_all
+setopt HASH_LIST_ALL
 # not just at the end
-setopt completeinword
+setopt COMPLETE_IN_WORD
 # Don't send SIGHUP to background processes when the shell exits.
-setopt nohup
+setopt NO_HUP
 # make cd push the old directory onto the directory stack.
-setopt auto_pushd
+setopt AUTO_PUSHD
 # avoid "beep"ing
-setopt nobeep
+setopt NO_BEEP
 # don't push the same dir twice.
-setopt pushd_ignore_dups
+setopt PUSHD_IGNORE_DUPS
 # * shouldn't match dotfiles. ever.
-setopt noglobdots
+setopt NO_GLOB_DOTS
 # use zsh style word splitting
-setopt noshwordsplit
+setopt NO_SH_WORD_SPLIT
 # don't error out when unset parameters are used
-setopt unset
+setopt UNSET
 # Allow comments even in interactive shells
-setopt interactivecomments
+setopt INTERACTIVE_COMMENTS
 
 # Colors on GNU
 
@@ -864,6 +840,18 @@ zle -N nocorrect-command-line
 #k# prepend the current command with "nocorrect"
 bind2maps emacs viins       -- -s '\en' nocorrect-command-line
 
+# run nicy command line
+function nicy-command-line () {
+	[[ -z $BUFFER ]] && return
+	if [[ $BUFFER != nicy\ run\ --\ * ]]; then
+		BUFFER="nicy run -- $BUFFER"
+		CURSOR=$(( CURSOR+12 ))
+	fi
+}
+zle -N nicy-command-line
+#k# prepend the current command with "nicy run -n --"
+bind2maps emacs viins       -- -s '\ey' nicy-command-line
+
 ### jump behind the first word on the cmdline.
 ### useful to add options.
 function jump_after_first_word () {
@@ -892,14 +880,14 @@ zle -N insert-unicode-char
 bind2maps emacs viins       -- -s '^xi' insert-unicode-char
 
 # use the new *-pattern-* widgets for incremental history search
-if zrcgotwidget history-incremental-pattern-search-backward; then
-	for seq wid in '^r' history-incremental-pattern-search-backward \
-		'^s' history-incremental-pattern-search-forward
-		do
-			bind2maps emacs viins vicmd -- -s $seq $wid
-		done
-		builtin unset -v seq wid
-fi
+# if zrcgotwidget history-incremental-pattern-search-backward; then
+#     for seq wid in '^r' history-incremental-pattern-search-backward \
+#         '^s' history-incremental-pattern-search-forward
+#         do
+#             bind2maps emacs viins vicmd -- -s $seq $wid
+#         done
+#         builtin unset -v seq wid
+# fi
 
 if zrcgotkeymap menuselect; then
 	#m# k Shift-tab Perform backwards menu completion

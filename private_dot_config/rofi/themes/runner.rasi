@@ -3,13 +3,22 @@
 @theme "common"
 
 window {
-	width: 40%;
-	location: north;
-	anchor: north;
-	y-offset: 18;
+	width: 35%;
+	/* location: north; */
+	/* anchor: north; */
+	/* y-offset: 18; */
+	location: center;
+	anchor: center;
+}
+listview {
+	/* layout: vertical; */
+	/* spacing: 3px; */
+	fixed-height: true;
+	dynamic: false;
+	lines: 6;
 }
 element-icon {
-	size: 24px;
+	size: 16px;
 	border: 0px;
 }
 

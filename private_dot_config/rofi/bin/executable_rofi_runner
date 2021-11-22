@@ -3,12 +3,14 @@
 span="weight='ultra-light' size='small'"
 drun_format="{name} [<span $span><i>({generic})</i></span>]"
 
-options="-show-icons -lines 10"
+options="-show-icons -no-disable-history -max-history-size 9"
+# options="-show-icons -lines 6"
 # options="-lines 10"
 
 rofi -no-lazy-grab -modi drun,run,window,windowcd -show drun \
-	$options \
 	-drun-display-format "$drun_format" \
-	-theme themes/runner.rasi "$@"
+	-theme themes/runner.rasi \
+	$options \
+	"$@"
 
 # vim: set foldmethod=indent ai ts=4 sw=4 tw=79:

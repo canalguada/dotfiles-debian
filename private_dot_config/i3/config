@@ -21,27 +21,27 @@ set $right KP_Right
 # Names for default workspaces  {{{
 # We configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
-set $ws4 "4:"
-set $ws5 "5:"
-set $ws6 "6:"
-set $ws7 "7:"
-set $ws8 "8:"
-set $ws9 "9:"
-set $ws10 "10:"
+set $ws1 1:
+set $ws2 2:
+set $ws3 3:
+set $ws4 4:
+set $ws5 5:
+set $ws6 6:
+set $ws7 7:
+set $ws8 8:
+set $ws9 9:
+set $ws10 10:
 # }}}
 # Start a terminal {{{
-set $term i3-sensible-terminal
-#set $term Terminal
-#bindsym $mod+Return exec $term --icon=terminal --name=zsh -e "/usr/bin/zsh -l"
-#bindsym $mod+Shift+Return exec $term --icon=terminal --name=bash
-bindsym $mod+Return exec --no-startup-id urxvtc -name shell
-bindsym $mod+Shift+Return exec --no-startup-id env SHELL=/usr/bin/bash urxvtc -name bash -ls
+# set $term i3-sensible-terminal
+set $term Terminal
+set $name urxvt
+bindsym $mod+Return exec --no-startup-id $term
+bindsym $mod+Shift+Return exec --no-startup-id env SHELL=/bin/bash $term -n bash -e "/bin/bash -l"
+# bindsym $mod+Shift+Return exec --no-startup-id konsole --profile Bash
 # }}}
-# Get me to the next open terminal instance {{{
-bindsym $mod+t [class="(?i)urxvt"] focus
+# Get me to the next open shell terminal instance {{{
+bindsym $mod+t [instance="(?i)$name"] focus
 # }}}
 # Font for window titles. {{{
 # Will also be used by the bar unless a different font
@@ -60,13 +60,13 @@ font pango:SF Compact Display 10
 #client.background #df4a16
 # }}}
 # set_from_resource $<name> <resource_name> <fallback> {{{
-set_from_resource $primary	 i3wm.primary		#77216f
-set_from_resource $secondary i3wm.secondary #5e2750
+set_from_resource $primary	 i3wm.primary		#315bef
+set_from_resource $secondary i3wm.secondary #39cccc
 set_from_resource $darkbg		 i3wm.darkbg		#151515
-set_from_resource $lightbg 	 i3wm.lightbg		#2c2c2c
-set_from_resource $lightfg	 i3wm.lightfg		#f8f8f2
+set_from_resource $lightbg 	 i3wm.lightbg		#2a2a2a
+set_from_resource $lightfg	 i3wm.lightfg		#dedede
 set_from_resource $grey			 i3wm.color8		#555753
-set_from_resource $alert		 i3wm.alert			#df4a16
+set_from_resource $alert		 i3wm.alert			#f012be
 set_from_resource $silver		 i3wm.silver		#dddddd
 # xrdb
 # class                 border bground text indicator child_border
@@ -100,7 +100,8 @@ bindsym $mod+Mod1+m exec --no-startup-id polybar-msg cmd restart
 # }
 # }}}
 # Dmenu {{{
-bindsym --release $mod+Shift+d exec "dmenu_run -nf '$lightfg' -nb '$darkbg' -sb '$primary' -sf '$lightfg' -fn 'SF Compact Display-10' -p 'dmenu:'"
+# bindsym --release $mod+Shift+d exec dmenu_run -nf '$lightfg' -nb '$darkbg' -sb '$primary' -sf '$lightfg' -fn 'SF Compact Display-10' -p 'dmenu:'
+bindsym --release $mod+Shift+d exec menu
 # }}}
 # Orientation for new workspace {{{
 default_orientation vertical
@@ -126,12 +127,12 @@ floating_modifier Mod1
 #set $refresh_i3status killall -SIGUSR1 i3status
 #set $refresh_status killall -SIGUSR1 py3status
 set $refresh_status true
-#set $raise_volume pactl set-sink-volume @DEFAULT_SINK@ +5%
-#set $lower_volume pactl set-sink-volume @DEFAULT_SINK@ -5%
-#set $mute pactl set-sink-mute @DEFAULT_SINK@ toggle
-set $raise_volume pavolume up
-set $lower_volume pavolume down
-set $mute pavolume mute
+set $raise_volume pactl set-sink-volume @DEFAULT_SINK@ +5%
+set $lower_volume pactl set-sink-volume @DEFAULT_SINK@ -5%
+set $mute pactl set-sink-mute @DEFAULT_SINK@ toggle
+# set $raise_volume pavolume up
+# set $lower_volume pavolume down
+# set $mute pavolume mute
 bindsym XF86AudioRaiseVolume \
 exec --no-startup-id $raise_volume && $refresh_status
 bindsym XF86AudioLowerVolume \
@@ -251,15 +252,15 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # }}}
 # Resize window (you can also use the mouse for that) {{{
 mode "resize" {
-	bindsym $left resize shrink width 5 px or 5 ppt
-	bindsym $down resize grow height 5 px or 5 ppt
-	bindsym $up resize shrink height 5 px or 5 ppt
-	bindsym $right resize grow width 5 px or 5 ppt
+	bindsym $left resize shrink width 2 px or 2 ppt
+	bindsym $down resize grow height 2 px or 2 ppt
+	bindsym $up resize shrink height 2 px or 2 ppt
+	bindsym $right resize grow width 2 px or 2 ppt
 	# same bindings, but for the arrow keys
-	bindsym Left resize shrink width 5 px or 5 ppt
-	bindsym Down resize grow height 5 px or 5 ppt
-	bindsym Up resize shrink height 5 px or 5 ppt
-	bindsym Right resize grow width 5 px or 5 ppt
+	bindsym Left resize shrink width 2 px or 2 ppt
+	bindsym Down resize grow height 2 px or 2 ppt
+	bindsym Up resize shrink height 2 px or 2 ppt
+	bindsym Right resize grow width 2 px or 2 ppt
 	# back to normal: Enter or Escape or $mod+r
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -363,26 +364,50 @@ bindsym $mod+Shift+i mark --add "swapee"; mode "swap"
 #   bindsym $mod+w mode "default"
 # }
 # bindsym $mod+1o mode "$mode_launcher"
-bindsym $mod+F1 exec --no-startup-id urxvtc -name zsh
-bindsym $mod+Shift+F1 exec --no-startup-id exec uxterm
-bindsym $mod+F2 exec i3-ws-run $ws2 exec Browser
-bindsym $mod+Shift+F2 exec i3-ws-run $ws2 exec Browser -2
-bindsym $mod+F3 exec i3-ws-run $ws3 exec FileManager
-bindsym $mod+Shift+F3 exec i3-ws-run $ws3 exec FileManager -2
-bindsym $mod+F4 exec i3-ws-run $ws4 exec Editor
-bindsym $mod+Shift+F4 exec i3-ws-run $ws4 exec Editor -- -p ~/.config/i3/config
-bindsym $mod+F5 exec i3-ws-run $ws5 exec Mail
-bindsym $mod+F6 exec i3-ws-run $ws1 exec SysMon
-bindsym $mod+F7 exec i3-ws-run $ws2 exec TextWebBrowser
-bindsym $mod+Shift+F7 exec i3-ws-run $ws2 exec Browser -3 http://lite.duckduckgo.com
-bindsym $mod+F8 exec i3-ws-run $ws1 exec SysUpdate
-bindsym $mod+F9 exec i3-ws-run $ws9 exec Music
-bindsym $mod+Shift+F9 exec i3-ws-run $ws9 exec Music -2
-bindsym $mod+F10 exec i3-ws-run $ws10 exec urxvtc -name tmux -title tmux -e tmux new -AD -s canalguada -n shell
+# set $fzf_keys urxvtc -geometry 44x15 -name launcher -title "F-keys menu" -e Fkeys
+# set $fzf_keys fzf-term -title "F-keys menu" -e Fkeys
+set $fzf_keys fzf-term -e Fkeys
+# set $fzf_keys terminator --geometry=300x200 --role=launcher --profile=launcher  -T "F-keys menu" -x Fkeys
+# set $fzf_keys xfce4-terminal --geometry=44x16 --role=launcher --font="SF Mono 10" -x Fkeys
+# Terminals
+# bindsym $mod+F1 exec --no-startup-id $fzf_keys -title "F1 menu" -e Fkeys F1
+bindsym $mod+F1 exec --no-startup-id $fzf_keys F1
+bindsym $mod+Ctrl+F1 exec --no-startup-id Terminal -n shell
+#Browsers
+bindsym $mod+F2 exec --no-startup-id $fzf_keys F2
+bindsym $mod+Ctrl+F2 exec --no-startup-id Browser
+# Filemanagers
+bindsym $mod+F3 exec --no-startup-id $fzf_keys F3
+bindsym $mod+Ctrl+F3 exec --no-startup-id FileManager
+# Editors
+bindsym $mod+F4 exec --no-startup-id $fzf_keys F4
+bindsym $mod+Ctrl+F4 exec --no-startup-id Editor
+# Mail and news
+bindsym $mod+F5 exec --no-startup-id $fzf_keys F5
+bindsym $mod+Ctrl+F5 exec --no-startup-id Mail
+# Others
+bindsym $mod+F6 exec --no-startup-id $fzf_keys F6
+bindsym $mod+Ctrl+F6 exec --no-startup-id SysMon
+# Text browsers
+bindsym $mod+F7 exec --no-startup-id $fzf_keys F7
+bindsym $mod+Ctrl+F7 exec --no-startup-id TextWebBrowser
+# Settings
+bindsym $mod+F8 exec --no-startup-id $fzf_keys F8
+bindsym $mod+Ctrl+F8 exec --no-startup-id Terminal -n man -- fzf-man
+# Music
+bindsym $mod+F9 exec --no-startup-id $fzf_keys F9
+bindsym $mod+Ctrl+F9 exec --no-startup-id Music
+# Tmux
+bindsym $mod+F10 exec --no-startup-id $fzf_keys F10
+# Wallpaper management
 bindsym $mod+Shift+F12 exec --no-startup-id /usr/bin/nitrogen --random --set-zoom-fill
 # }}}
 # Correct handling of floating dialogs {{{
 for_window [window_role="pop-up"] floating enable
+# for_window [instance="(?i)launcher"] floating enable; border none
+for_window [instance="(?i)launcher"] floating enable
+for_window [class="(?i)launcher"] floating enable
+for_window [window_role="(?i)launcher"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [class="(?i)lxqt-panel"] floating enable
 for_window [class="(?i)yad"] floating enable
@@ -398,19 +423,47 @@ for_window [class="(?i)joplin"] floating enable
 for_window [class="(?i)copyq"] floating enable
 for_window [class="(?i)xev"] floating enable
 for_window [class="(?i)qalculate-gtk"] floating enable
+# for_window [instance="(?i)konsole"] floating enable
+# KDE rules
+for_window [title="Bureau — Plasma"] kill; floating enable; border none
+for_window [class="plasmashell"] floating enable;
+for_window [class="Plasma"] floating enable; border none
+for_window [title="plasma-desktop"] floating enable; border none
+for_window [title="win7"] floating enable; border none
+for_window [class="krunner"] floating enable; border none
+for_window [class="(?i)kmix"] floating enable; border none
+for_window [class="Klipper"] floating enable; border none
+for_window [class="Plasmoidviewer"] floating enable; border none
+for_window [class="(?i)*nextcloud*"] floating disable
+# for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px
+for_window [class="plasmashell" window_type="notification"] floating enable; border none
+no_focus [class="plasmashell" window_type="notification"]
+# Liquidshell
+for_window [title="Liquid Desktop Workspace"] kill; floating enable; border none
+for_window [class="liquidshell"] floating enable
+for_window [class="liquidshell" window_type="notification"] floating enable; border none
+no_focus [class="liquidshell" window_type="notification"]
+# for_window [windows_role="osd"] floating enable
+bindsym Mod1+F1 exec xdotool mousemove --sync 27 749 click 1 mousemove restore
+bindsym Mod1+F2 exec --no-startup-id exec gmrun
 # }}}
 # Move windows to proper workspace {{{
 # workspace 1
-assign [instance="(?i)bash"] $ws1
-assign [instance="(?i)zsh"] $ws1
-assign [instance="(?i)sysmon"] $ws1
-assign [instance="(?i)sysupdate"] $ws1
-assign [instance="(?i)termite"] $ws1
-assign [instance="(?i)gnome-terminal-server"] $ws1
-assign [instance="(?i)xfce4-terminal"] $ws1
-assign [instance="(?i)tilix"] $ws1
+# assign [instance="(?i)bash"] $ws1
+# assign [instance="(?i)zsh"] $ws1
+assign [title="(?i)shell"] $ws1
+assign [title="(?i)htop"] $ws6
+assign [instance="(?i)sysmon"] $ws6
+assign [title="(?i)pkgs"] $ws6
+assign [instance="(?i)sysupdate"] $ws6
+# assign [instance="(?i)konsole"] $ws1
+# assign [instance="(?i)termite"] $ws1
+# assign [instance="(?i)gnome-terminal-server"] $ws1
+# assign [instance="(?i)xfce4-terminal"] $ws1
+# assign [instance="(?i)tilix"] $ws1
 # workspace 2
 assign [instance="(?i)web"] $ws2
+assign [title="(?i)elinks"] $ws2
 assign [class="(?i)qutebrowser"] $ws2
 assign [class="(?i)firefox"] $ws2
 assign [class="(?i)epiphany"] $ws2
@@ -420,34 +473,46 @@ assign [class="(?i)otter*"] $ws2
 assign [instance="(?i)files"] $ws3
 assign [class="(?i)thunar"] $ws3
 assign [class="(?i)pcmanfm-qt"] $ws3
+assign [class="(?i)dolphin"] $ws3
 assign [class="(?i)nautilus"] $ws3
 # workspace 4
 assign [instance="(?i)editor"] $ws4
 assign [class="(?i)nvim-qt"] $ws4
 # workspace 5
 assign [instance="(?i)mail"] $ws5
+assign [title="(?i)neomutt"] $ws5
 assign [class="(?i)trojita"] $ws5
 assign [class="(?i)claws-mail"] $ws5
 assign [class="(?i)thunderbird"] $ws5
+# workspace 6
+assign [class="(?i)quiterss"] $ws6
 # workspace 9
 assign [instance="(?i)music"] $ws9
+assign [title="(?i)ncmpcpp"] $ws9
+assign [title="(?i)pyradio"] $ws9
 assign [class="(?i)goodvibes"] $ws9
 assign [class="(?i)clementine"] $ws9
+# workspace 10
+assign [instance="(?i)tmux"] $ws10
 #}}}
 # More bindings {{{
 #bindsym $mod+Tab exec --no-startup-id xwinmosaic
-bindsym --release $mod+Tab exec --no-startup-id rofi_switcher
+bindsym $mod+Tab exec --no-startup-id rofi_switcher
 bindsym Mod1+Tab exec --no-startup-id i3-cycle-focus --switch
 bindsym Mod1+F3 exec --no-startup-id exec gmrun
 bindsym --release Mod1+F5 exec --no-startup-id xkill
-bindsym --release Mod1+F6 exec --no-startup-id urxvtc -hold -name xprop -e xprop
+bindsym --release $mod+Mod1+F5 exec --no-startup-id killall -9 mlterm
+bindsym --release Mod1+F6 exec --no-startup-id uxterm -hold -name xprop -e xprop
+bindsym Mod1+Shift+F12 exec --no-startup-id exec toggle-compositor
 bindsym --release Print exec --no-startup-id rofi_screenshot
 bindsym --release Ctrl+Print exec --no-startup-id scrot
 bindsym --release $mod+p exec exec rofi-pass
-bindsym --release $mod+Shift+p exec exec rofi-pass --bmarks
+bindsym --release $mod+b exec exec lximage-qt /home/canalguada/Bureau
+# bindsym --release $mod+Shift+p exec exec rofi-pass --bmarks
 #bindsym $mod+p exec passmenu --type
 #bindsym $mod+p exec passmenu -window-title "pass" -no-show-icons
 #bindsym Mod1+Ctrl+v exec selpaste
+bindsym $mod+Mod1+c exec --no-startup-id audtool --mainwin-show on
 # }}}
 # Autostart {{{
 #exec --no-startup-id xrdb -merge ~/.Xresources
@@ -463,12 +528,12 @@ bindcode $mod+135 exec --no-startup-id copyq menu
 bindcode $mod+134 exec --no-startup-id copyq show
 # }}}
 # Session autostart {{{
-exec --no-startup-id systemctl --user start --no-block xsettingsd.service
-exec --no-startup-id systemctl --user start --no-block polybar@top.service
-exec --no-startup-id systemctl --user start --no-block polybar@bottom.service
-exec --no-startup-id systemctl --user start --no-block picom.service
-exec --no-startup-id systemctl --user start --no-block i3-cycle-focus.service
-exec --no-startup-id systemctl --user start --no-block policykit-agent.service
+# exec --no-startup-id systemctl --user start --no-block xsettingsd.service
+# exec --no-startup-id systemctl --user start --no-block polybar@top.service
+# exec --no-startup-id systemctl --user start --no-block polybar@bottom.service
+# exec --no-startup-id systemctl --user start --no-block picom.service
+# exec --no-startup-id systemctl --user start --no-block i3-cycle-focus.service
+# exec --no-startup-id systemctl --user start --no-block policykit-agent.service
 # }}}
 # Autostart always {{{
 #exec_always --no-startup-id exec i3-cycle-focus --history 16

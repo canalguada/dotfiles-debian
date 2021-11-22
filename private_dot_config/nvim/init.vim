@@ -39,7 +39,7 @@ Plug 'WolfgangMehner/bash-support'
 " Colorschemes {{{
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-Plug 'dracula/vim'
+" Plug 'dracula/vim'
 " Plug 'morhetz/gruvbox'
 " Plug 'ayu-theme/ayu-vim'
 " let ayucolor="dark"
@@ -47,6 +47,9 @@ Plug 'dracula/vim'
 " Plug 'jacoborus/tender.vim'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'nanotech/jellybeans.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'nightsense/cosmic_latte'
+Plug 'chriskempson/base16-vim'
 " }}}
 " Completion {{{
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -145,9 +148,9 @@ set background=dark
 let g:material_theme_style = 'palenight'
 let g:material_terminal_italics = 1
 let g:palenight_terminal_italics=1
-" Alternatives: Tomorrow-Night-Eighties, gruvbox, jellybeans, onehalfdark,
-material
-colorscheme default
+" Alternatives: Tomorrow-Night-Eighties, gruvbox, jellybeans, onehalfdark, material
+" colorscheme default
+colorscheme jellybeans
 
 " }}}
 " => Airline {{{
@@ -548,13 +551,13 @@ vnoremap <silent><C-Insert> "*y
 vnoremap <silent><S-Delete> "*d
 vnoremap <silent><S-Insert> x<left>"*p
 nnoremap <silent><S-Insert> "*p
-inoremap <silent><S-Insert> <C-R>+
+inoremap <silent><S-Insert> <C-R>*
 " clipboard
-vnoremap <silent><C-C> "+y
-vnoremap <silent><C-X> "+d
-vnoremap <silent><C-V> x<left>"+p
-nnoremap <silent><C-V> "+p
-inoremap <silent><C-V> <C-R>"
+vnoremap <silent><C-S-c> "+y
+vnoremap <silent><C-S-x> "+d
+vnoremap <silent><C-S-v> x<left>"+p
+nnoremap <silent><C-S-v> "+p
+inoremap <silent><C-S-v> <C-R>+
 " }}}
 " => Deoplete {{{
 " Enable deoplete when InsertEnter.

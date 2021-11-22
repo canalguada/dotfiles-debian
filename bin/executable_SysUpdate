@@ -1,10 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-exec Terminal --icon=system-software-update --name=pkgs \
-	"--title=Mise à jour des paquets" \
-	-- pkgs -tp upgrade
+# Naming instance according to `basename $0`
+instance=$(basename $0)
+instance=${instance%.*}
+instance=${instance,,}
 
-# cmd="pkgs -t upgrade --all"
-# urxvtc -name sysupdate -title "$cmd" -e $cmd
+# Terminal --icon=system-software-update --name=$instance -c pkgs \
+#     "--title=Mise à jour des paquets (pkgs upgrade)" \
+#     -- pkgs -tp upgrade &
+
+Terminal \
+	-p \
+	--icon=system-software-update --name=$instance \
+	-c apt "--title=Mise à jour des paquets (apt full-upgrade)" \
+	-- sudo nicy run -- apt -y full-upgrade &
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

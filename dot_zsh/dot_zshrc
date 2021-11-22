@@ -20,16 +20,16 @@
 
 # Check if we can read given files and source those we can.
 function xsource () {
-    if (( ${#argv} < 1 )) ; then
-        printf 'usage: xsource FILE(s)...\n' >&2
-        return 1
-    fi
+	if (( ${#argv} < 1 )) ; then
+		printf 'usage: xsource FILE(s)...\n' >&2
+		return 1
+	fi
 
-    while (( ${#argv} > 0 )) ; do
-        [[ -r "$1" ]] && source "$1"
-        shift
-    done
-    return 0
+	while (( ${#argv} > 0 )) ; do
+		[[ -r "$1" ]] && source "$1"
+		shift
+	done
+	return 0
 }
 
 # load .zshrc.pre to give the user the chance to overwrite the defaults
@@ -66,13 +66,13 @@ ZSH_THEME="liquidprompt"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
- HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
- DISABLE_AUTO_UPDATE="true"
+# DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
- DISABLE_UPDATE_PROMPT="true"
+# DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -87,15 +87,15 @@ ZSH_THEME="liquidprompt"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
- ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
- COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
- DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -124,7 +124,7 @@ plugins=(
 	debian
 	extract
 	# fbterm
-	fzf
+	# fzf
 	git
 	globalias
 	jsontools
@@ -144,13 +144,26 @@ plugins=(
 	urltools
 	#vi-mode
 	web-search
+	zsh-fzf-history-search
 	# zsh-navigation-tools
-	zsh_reload
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+ignore_prefixes=(${(f@)"$(<$ZDOTDIR/ignore_prefixes)"})
+# export HISTORY_IGNORE=$(printf "'(&|[ ]*|%s)'" "$prefixes")
+export HISTORY_IGNORE="($(IFS="|" ; echo "${ignore_prefixes[*]}"))"
+
+function zshaddhistory() {
+	emulate -L zsh
+	# uncomment if HISTORY_IGNORE
+	# should use EXTENDED_GLOB syntax
+	setopt extendedglob
+	#[[ $1 != ${~HISTORY_IGNORE} ]]
+	! [[ $1 =~ ^$HISTORY_IGNORE ]]
+}
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -158,11 +171,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nvim'
- #else
-   #export EDITOR='mvim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+	export EDITOR='nvim'
+	#else
+	#export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -178,6 +191,7 @@ source $ZSH/oh-my-zsh.sh
 unalias t
 xsource "$HOME/.local/lib/sh/aliases.lib.sh"
 alias -g B='| batcat'
+alias bat='batcat'
 
 # this allows us to put own modifications in ~/.zshrc.local
 xsource "${ZDOTDIR:-${HOME}}/.zshrc.local"

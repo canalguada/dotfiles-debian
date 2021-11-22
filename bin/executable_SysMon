@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-exec Terminal --icon=htop --name=sysmon \
-	"--title=Visualiseur de processus - Htop" \
-	-- htop
+# Naming instance according to `basename $0`
+instance=$(basename $0)
+instance=${instance%.*}
+instance=${instance,,}
 
-# urxvtc -name sysmon -title htop -e htop "$@"
+Terminal --icon=htop --name=$instance -c htop \
+	"--title=Visualiseur de processus (htop)" \
+	-- htop &
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

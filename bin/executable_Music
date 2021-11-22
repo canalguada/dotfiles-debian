@@ -1,15 +1,34 @@
-#!/bin/sh
+#!/bin/bash
 
-if [ "$1" = "-2" ]; then
-	shift
-	PLAYER="mpv"
-	exec Terminal -i audio-player -n music \
-		-t "Internet radio player - pyradio" \
-		-- pyradio -u "$PLAYER" "$@"
-else
-	exec Terminal -i audio-player -n music \
-		-t "Mopidy/MPD client - Ncmpcpp" \
-		-- ncmpcpp "$@"
-fi
+# Naming instance according to `basename $0`
+instance=$(basename $0)
+instance=${instance%.*}
+instance=${instance,,}
+
+case "$1" in
+	-2|--pyradio)
+		shift
+		# PLAYER="mpv"
+		PLAYER="vlc"
+		# args="-u $PLAYER"
+		args=
+		Terminal -i audio-player -n $instance -c pyradio \
+			-t "Internet radio player (pyradio)" \
+			-- pyradio $args "$@" &
+		;;
+	-3|--youtube)
+		shift
+		Terminal -i youtube -n $instance -c mpsyt \
+			-t "YouTube player and downloader (mpsyt)" \
+			-- mpsyt "$@" &
+		;;
+	*)
+		shift
+		# Don't expect correct management of class with terminal and force it
+		Terminal -i audio-player -n $instance -c ncmpcpp \
+			-t "Mopidy/MPD client (ncmpcpp)" \
+			-- ncmpcpp "$@" &
+		;;
+esac
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

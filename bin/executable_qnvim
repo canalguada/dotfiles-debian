@@ -4,7 +4,6 @@
 set -o nounset # Treat unset variables as an error
 
 PROG=$(basename "$0")
-#NVIM_PATH=${NVIM_PATH:-$(command -v nvim)}
 NVIM_PATH=${NVIM_PATH:-/usr/bin/nvim}
 QT_PATH="/usr/bin/nvim-qt"
 NVR_PATH=$(command -v nvr)
@@ -84,13 +83,9 @@ OPTS=()
 FILES=()
 
 check_option() {
-  case "${OPTARG#*=}" in
-    -*) error_exit 1 "missing argument for option '${OPTARG%%=*}'." ;;
-  esac
-}
-
-append_long_option() {
-  OPTS+=("--${OPTARG}")
+  if [ -z "$1" ] || [[ "$1" =~ ^- ]]; then
+    error_exit 1 "missing argument for option '$2'."
+  fi
 }
 
 while getopts ":-:hv" option; do
@@ -101,20 +96,35 @@ while getopts ":-:hv" option; do
           usage
           exit 0
           ;;
+        timeout | geometry | stylesheet | qmljsdebugger)
+          check_option "${!OPTIND}" "${OPTARG}"
+          OPTS+=("--${OPTARG}" "${!OPTIND}")
+          let OPTIND++
+          ;;
         timeout=* | geometry=* | stylesheet=* | qmljsdebugger=*)
-          check_option
-          append_long_option
+          check_option "${OPTARG#*=}" "${OPTARG%%=*}"
+          OPTS+=("--${OPTARG}")
+          ;;
+        nvim)
+          check_option "${!OPTIND}" "${OPTARG}"
+          NVIM_PATH="${!OPTIND}"
+          let OPTIND++
           ;;
         nvim=*)
-          check_option
+          check_option "${OPTARG#*=}" "${OPTARG%%=*}"
           NVIM_PATH="${OPTARG#*=}"
           ;;
+        server)
+          check_option "${!OPTIND}" "${OPTARG}"
+          SERVER_ADDR="${!OPTIND}"
+          let OPTIND++
+          ;;
         server=*)
-          check_option
+          check_option "${OPTARG#*=}" "${OPTARG%%=*}"
           SERVER_ADDR="${OPTARG#*=}"
           ;;
         maximized | no-ext-tab-line | fullscreen | embed | spawn | nofork)
-          append_long_option
+          OPTS+=("--${OPTARG}")
           ;;
         help-all)
           help_all
@@ -200,7 +210,8 @@ case "$preferred_mode" in
 esac
 case "$mode" in
   embed | remote)
-    gui_cmd=("$(command -v nvim-qt)" "${OPTS[@]}")
+    # gui_cmd=("$(command -v nvim-qt)" "${OPTS[@]}")
+    gui_cmd=("$QT_PATH" "${OPTS[@]}")
     ;;&
   embed) gui_cmd+=(-- --listen "$NVIM_LISTEN_ADDRESS" --cmd "let has_gui = 1") ;;
   remote) gui_cmd+=(--server "$NVIM_LISTEN_ADDRESS") ;;

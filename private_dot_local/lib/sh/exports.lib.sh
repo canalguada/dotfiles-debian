@@ -24,6 +24,7 @@ export MYNVIMRC=$HOME/.config/nvim/init.vim
 #export VIM_OPTIONS="-p"
 
 export EDITOR=nv
+# export VISUAL="nvim-qt -- -u NONE"
 export VISUAL=$EDITOR
 export SUDO_EDITOR=$EDITOR
 
@@ -62,9 +63,14 @@ alias zless="$PAGER"
 export MANWIDTH=${MANWIDTH:-80}
 # export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
 export MANPAGER="less -RF"
+export MANPATH=$HOME/.local/share/man:
 
 # Fzf
-export FZF_DEFAULT_OPTS="--extended  --cycle --bind '?:preview:batcat --color=always --style=numbers --line-range=:500 {}'"
+# export FZF_DEFAULT_OPTS="--multi --extended  --cycle --bind '?:preview:batcat --color=always --style=numbers --line-range=:500 {}'"
+# export FZF_DEFAULT_OPTS="--multi --extended  --cycle --bind '?:preview:batcat --color=always --style=numbers {}'"
+export FZF_DEFAULT_COMMAND=fzf-tmux
+export FZF_DEFAULT_OPTS="-m -i --prompt='% ' --height=100% --cycle --layout=reverse-list --select-1 --preview='echo {1..-1}' --preview-window=up:2:noborder --color='dark,fg+:3,bg+:0'"
+	
 
 export PROJECT_PATHS="$HOME/PycharmProjects:$HOME/Scripts:$HOME/Projects"
 
@@ -125,6 +131,9 @@ if [ $(id -ru) -ge 1000 ]; then
 			prependpath "${HOME}/.config/$item/scripts"
 	done
 
+	# Tmux
+	[ -d "${HOME}/.tmux/scripts" ] && prependpath "${HOME}/.tmux/scripts"
+
 	prependpath "${HOME}/bin"
 	prependpath "${HOME}/.local/bin"
 
@@ -167,11 +176,17 @@ export DEBEMAIL DEBFULLNAME
 
 ## Graphical ###################################################
 
-export MYTERMINAL=urxvt
-#export TERMINAL="$HOME/bin/Terminal"
-export TERMINAL=x-terminal-emulator
 export BROWSER="$HOME/bin/Browser"
 
+# Non standard environment variable used by i3-sensible-terminal
+export TERMINAL="$HOME/bin/Terminal"
+export TERMINAL_COMMAND="$TERMINAL --"
+# export TERMINAL=x-terminal-emulator
+
+# Non standard environment variable used by Terminal
+# export MYTERMINAL=terminator
+
+# When using urxvtd
 export RXVT_SOCKET=/run/user/$(id -ru)/urxvtd-$(hostname)
 
 I3SCRIPTS="${XDG_CONFIG_HOME:-$HOME/.config}/i3/scripts"
@@ -189,8 +204,12 @@ export JAVA_FONTS=/usr/share/fonts/TTF
 
 export SDL_VIDEO_FULLSCREEN_HEAD=0
 
-export ELINKS_XTERM="urxvtc -e"
+export ELINKS_XTERM="$TERMINAL -e"
 export WWW_HOME="https://lite.duckduckgo.com/lite/"
+
+export XIVIEWER=feh
+
+export UI_STATUSES_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}/ui-statuses"
 
 ##export LIBVA_DRIVER_NAME=vdpau
 #export LIBVA_DRIVER_NAME=radeonsi
@@ -206,8 +225,8 @@ export GTK_CSD=1
 export GTK2_RC_FILES=$HOME/.gtkrc-2.0
 
 # QT, KDE
-#export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-export QT_QPA_PLATFORMTHEME=qt5ct
+# export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+# export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_LOGGING_RULES='*=false'
 # export QML_DISABLE_DISK_CACH=1
 export QML_FORCE_DISK_CACHE=1
@@ -216,6 +235,7 @@ export QSG_RENDERER_LOOP=basic
 
 # Wayland
 export XCURSOR_PATH=$HOME/.icons:/usr/local/share/icons:/usr/share/icons
+export XCURSOR_THEME=Yaru++
 export XCURSOR_SIZE=24
 
 export EXPORTS=true

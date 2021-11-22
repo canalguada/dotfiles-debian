@@ -16,8 +16,14 @@ systemctl --user import-environment
 
 printenv > ~/i3.env
 
-case "$XDG_SESSION_DESKTOP" in
+case "$XDG_CURRENT_DESKTOP" in
 	i3)
+		# systemctl --user start --no-block picom.service
+		systemctl --user start --no-block i3-cycle-focus.service
+		systemctl --user start --no-block xsettingsd.service
+		systemctl --user start --no-block polybar@top.service
+		systemctl --user start --no-block polybar@bottom.service
+		systemctl --user start --no-block policykit-agent.service
 		systemctl --user start --no-block i3-session.target
 		# i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-session.target'
 
@@ -33,8 +39,19 @@ case "$XDG_SESSION_DESKTOP" in
 		# msg="xss-lock --transfer-sleep-lock -n $I3SLIDESHOW -- $I3LOCKER"
 		# # i3-msg "exec --no-startup-id exec $msg"
 		;;
+	LXQt)
+		systemctl --user start --no-block polybar@top.service
+		systemctl --user start --no-block polybar@bottom.service
+		systemctl --user start --no-block xsettingsd.service
+		systemctl --user start --no-block i3-wm.target
+		;;
+	KDE)
+		# i3-msg 'bindsym Mod1+F1 exec xdotool mousemove --sync 27 749 click 1 mousemove restore'
+		# i3-msg 'bindsym Mod1+F2 exec --no-startup-id exec gmrun'
+		systemctl --user start --no-block i3-wm.target
+		;;
 	*)
-		i3-msg 'exec --no-startup-id exec systemctl --user start --no-block i3-wm.target'
+		systemctl --user start --no-block i3-wm.target
 		;;
 	# i3-gnome)
 		# i3-msg 'exec dunst'

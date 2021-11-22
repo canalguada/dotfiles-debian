@@ -1,12 +1,23 @@
 #!/bin/sh
 
-if [ "$1" = "-2" ]; then
-	cmd="nautilus"
-	shift
-else
-	cmd="pcmanfm-qt"
-fi
+case "$1" in
+	-2|--nautilus)
+		cmd="nautilus"
+		shift
+		;;
+	-3|--mc)
+		cmd="Terminal -n mc -- mc"
+		shift
+		;;
+	# -4|--dolphin)
+	#     cmd="dolphin"
+	#     shift
+	#     ;;
+	*)
+		cmd="pcmanfm-qt"
+		;;
+esac
 
-exec $cmd "$@"
+$cmd "$@" &
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

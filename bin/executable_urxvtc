@@ -1,9 +1,14 @@
 #!/bin/sh
 # vim: set filetype=sh foldmethod=indent ai ts=2 sw=2 tw=79 noet:
 
+# extra_args="+tr -bg #232629 -bd #232629 -cr #fdbc4b -geometry 80x24"
+#unset extra_args
+extra_args="-letsp -1"
 use_service=no
 
-until ps -U $(id -ru) ao comm |grep -v grep|grep -q urxvtd; do
+/usr/bin/urxvtc $extra_args "$@"
+
+if [ $? -eq 2 ]; then
 	if [ "$use_service" = "yes" ] &&
 		(systemctl --user list-unit-files |grep -q urxvtd.service) ; then
 		if [ "$(systemctl --user is-active urxvtd.service)" != "active" ]; then
@@ -14,9 +19,13 @@ until ps -U $(id -ru) ao comm |grep -v grep|grep -q urxvtd; do
 				notify -i terminal --id urxvtc -t "urxvtc" - &
 		fi
 	else
+		# /usr/bin/urxvtd -q -o -f -m
 		/usr/bin/urxvtd -q -o -f
 	fi
-	sleep 2
-done
+	sleep 0.5
+	exec /usr/bin/urxvtc $extra_args "$@"
+fi
 
-/usr/bin/urxvtc "$@"
+# until ps -U $(id -ru) ao comm |grep -v grep|grep -q urxvtd; do
+# done
+

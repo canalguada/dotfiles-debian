@@ -11,6 +11,7 @@ lock() {
 #        --dest=org.gnome.ScreenSaver \
 #        /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock
 #      ;;
+    LXQt) ${I3LOCKER:-lockmore --lock-icon --dpms 5 --nofork -e -f} ;;
     XFCE) xfce4-screensaver-command --lock ;;
   esac
 }

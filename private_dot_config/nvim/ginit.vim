@@ -13,6 +13,11 @@
 " set guifont=Source\ Code\ Pro\ Light:h8
 " set guifont=IBM\ Plex\ Mono\ Light:h8
 
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h8
+" set guifont=DejaVuSansMono\ Nerd\ Font:h7.5
+" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h7.5
 " set guifont=Ubuntu\ Mono\ derivative\ Powerline:h9
 " =< != ==
+
+if exists('g:GuiLoaded')
+	Guifont! monospace:h7.5
+endif

@@ -11,6 +11,6 @@ else
 	cmd="qutebrowser --target tab "
 fi
 
-exec $cmd "$@" >/dev/null 2>&1
+$cmd "$@" >/dev/null 2>&1 &
 
 # vim: set ft=sh ai ts=4 sw=4 tw=79:

@@ -3,71 +3,72 @@
 @theme "common"
 
 * {
- font: "SF Pro Display Light 18";
+	/* font: "SF Pro Display Light 18"; */
+	font: "feather 18";
 }
 
 window {
- width: 46px;
- location: east;
- anchor: east;
- x-offset: -3px;
- y-offset: 0%;
+	width: 46px;
+	location: east;
+	anchor: east;
+	x-offset: -3px;
+	y-offset: 0%;
 }
 
 listview {
- layout: vertical;
- spacing: 3px;
- lines: 6;
+	layout: vertical;
+	spacing: 3px;
+	lines: 6;
 }
 
 mainbox {
- children: [ listview ];
+	children: [ listview ];
 }
 
 element {
- background-color: @lightbg;
- border: 1px;
- border-radius: 2px;
- /*border-color: @lightfg;*/
- padding: 2px 2px 2px 0px;
+	background-color: @lightbg;
+	border: 1px;
+	border-radius: 2px;
+	/*border-color: @lightfg;*/
+	padding: 2px 2px 2px 0px;
 }
 
 element alternate {
- background-color: @lightbg;
+	background-color: @lightbg;
 }
 
 element-text {
- horizontal-align: 0.5;
- vertical-align: 0.5;
+	horizontal-align: 0.5;
+	vertical-align: 0.5;
 }
 
 element-icon {
- enable: false;
+	enable: false;
 }
 
 element normal.active,
 element alternate.active {
- background-color: @on;
- border-color: #00ff003f;
+	background-color: @on;
+	border-color: #00ff003f;
 }
 
 element normal.urgent,
 element alternate.urgent {
- background-color: @off;
- border-color: #ff00003f;
+	background-color: @off;
+	border-color: #ff00003f;
 }
 
 element selected {
- text-color: @selected-normal-foreground;
+	text-color: @selected-normal-foreground;
 }
 
 element selected.urgent {
- background-color: @on;
- border-color: #00ff003f;
+	background-color: @on;
+	border-color: #00ff003f;
 }
 
 element selected.active {
- background-color: @off;
- border-color: #ff00003f;
+	background-color: @off;
+	border-color: #ff00003f;
 }
 

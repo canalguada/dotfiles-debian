@@ -5,9 +5,9 @@
 window {
 	width: 40%;
 	location: center;
-	/*anchor: center;*/
+	anchor: center;
 	/*y-offset: 0;*/
-	y-offset: -36;
+	/* y-offset: -36; */
 }
 
 listview {

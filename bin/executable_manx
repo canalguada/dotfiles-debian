@@ -5,11 +5,14 @@ args="$*"
 available=
 
 if [ -z "$*" ]; then
+	# Find parent
 	set -- $(ps -q $PPID aho comm)
 fi
 
 while [ -n "$*" ]; do
-	/usr/bin/man -f "$1" >/dev/null 2>&1 && available="$available $1"
+	if /usr/bin/man -k "\<$1\>" | grep -q "^${1} " ; then
+		available="$available $1"
+	fi
 	shift
 done
 
@@ -19,10 +22,10 @@ if [ -z "$available" ]; then
 fi
 
 cmd="/usr/bin/man -a -L C "
-tabbed=n
+launch_terminal=n
 
-if xset q >/dev/null 2>&1; then
-	tabbed=y
+if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$DISPLAY" ]; then
+	launch_terminal=y
 elif [ $(LANG=C tty) = "not a tty" ]; then
 	echo "Session graphique ou terminal requis."
 	exit 1
@@ -37,29 +40,12 @@ fi
 # export LESS_TERMCAP_ue=$'\E[0m'
 # export LESS_TERMCAP_us=$'\E[01;32m'
 
-mkdir -p /tmp/$USER
-
 # shellcheck disable=SC2086
 for item in $available; do
-	tmpscript=$(mktemp -p /tmp/$USER)
-	cat <<-_EOF_ >"$tmpscript"
-	#!/usr/bin/zsh
-	export LESS_TERMCAP_mb=$'\E[01;31m'
-	export LESS_TERMCAP_md=$'\E[01;31m'
-	export LESS_TERMCAP_me=$'\E[0m'
-	export LESS_TERMCAP_se=$'\E[0m'
-	export LESS_TERMCAP_so=$'\E[01;44;33m'
-	export LESS_TERMCAP_ue=$'\E[0m'
-	export LESS_TERMCAP_us=$'\E[01;32m'
-	$cmd $item
-	rm $tmpscript
-	_EOF_
-	chmod +x $tmpscript
-
-	if [ "$tabbed" = "y" ]; then
-		urxvtc -title "$cmd $item" -e $tmpscript
+	if [ "$launch_terminal" = "y" ]; then
+		$HOME/bin/Terminal -t "$item (man)" -- $cmd $item
 	else
-		$tmpscript
+		$cmd $item
 	fi
 done
 

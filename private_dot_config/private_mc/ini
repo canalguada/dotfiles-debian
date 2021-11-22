@@ -102,7 +102,7 @@ menubar_visible=true
 free_space=true
 horizontal_split=false
 vertical_equal=true
-left_panel_size=72
+left_panel_size=73
 horizontal_equal=true
 top_panel_size=1
 
@@ -139,6 +139,10 @@ xterm-termite=
 rxvt-unicode-256color=
 
 rxvt-unicode=
+
+mlterm=
+
+mlterm-256color=
 
 [Panels]
 show_mini_info=true

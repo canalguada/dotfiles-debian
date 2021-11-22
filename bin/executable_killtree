@@ -1,20 +1,79 @@
 #!/bin/sh
 # vim: set ft=sh fdm=indent ts=2 sw=2 tw=79 noet:
 
-_killtree() {
-	local pid=$1
-	local sig=${2:--TERM}
-	# needed to stop quickly forking parent from producing children between child killing and parent killing
-	kill -stop ${pid}
-	for child in $(ps -o pid --no-headers --ppid ${pid}); do
-		_killtree ${child} ${sig}
-	done
-	kill -${sig} ${pid}
+usage() {
+	echo "Usage: $(basename $0) <pid> [15|TERM|9|KILL]" >&2
+}
+
+valid_signal() {
+	case "$1" in
+		15|TERM|9|KILL) return 0 ;;
+	esac
+	return 1
 }
 
 if [ $# -eq 0 ] || [ $# -gt 2 ]; then
-	echo "Usage: $(basename $0) <pid> [signal]"
+	usage
 	exit 1
 fi
 
-_killtree $@
+case "$1" in
+	-h|-help|--help) usage ; exit 0 ;;
+esac
+
+mainpid=$1
+signal=${2:-TERM}
+
+if ! valid_signal "$signal"; then
+	usage
+	exit 1
+fi
+
+# pid_exists() { ps -p $1 >/dev/null 2>&1 ; }
+# pid_pgrp() { ps -o pgrp --no-headers --pid "$1" ; }
+# _kill_pgrp() {
+#   pgrp=$(pid_pgrp "$1")
+#   [ -n "$pgrp" ] &&
+#     pkill -${2:-$signal} -g $pgrp
+# }
+# _killtree() {
+#   local pid=$1
+#   local sig=$2
+#
+#   pid_exists $pid || return 1
+#
+#   # needed to stop quickly forking parent from producing children between child killing and parent killing
+#   # command kill -stop ${pid}
+#   set -- $(ps -o pid --no-headers --ppid ${pid})
+#   for child; do
+#     _killtree ${child} ${sig} &&
+#       _kill_pgrp "$child"
+#   done
+#   _kill_pgrp "$pid"
+# }
+# # _killtree $mainpid $signal
+
+PGRP=$(ps -o pgrp --no-headers -p $mainpid)
+
+pids () {
+	# pstree -c -p $mainpid |grep -o "([[:digit:]]*)"|tr -d "()"|tac
+	ps -eo pid,pgrp --no-headers | awk "$(printf '/%d/ { print $1 }' $PGRP)"
+}
+
+if [ -n "$KILL_ONCE" ]; then
+	# /usr/bin/kill -$signal $(pids)
+	# pkill -$signal -g $PGRP
+	echo "yes"
+else
+	while set -- $(pids); [ $# -gt 0 ]; do
+		# /usr/bin/kill -$signal "$@"
+		# echo "Killing $PGRP process group..."
+		# pkill -$signal -g $PGRP
+		echo "yes"
+		sleep 1
+	done
+fi | while read -r job; do
+	echo "Killing $PGRP process group..."
+	pkill -$signal -g $PGRP
+done
+

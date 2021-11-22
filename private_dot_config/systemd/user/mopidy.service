@@ -6,7 +6,7 @@ After=pulseaudio.service
 
 [Service]
 LimitNICE=23
-ExecStart=nice -n -3 /usr/bin/mopidy -q
+ExecStart=nice -n -3 /usr/bin/mopidy --config /home/canalguada/.config/mopidy/mopidy.conf  -q
 
 # disallow writing to /usr, /bin, /sbin, ...
 ProtectSystem=yes

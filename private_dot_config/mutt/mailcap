@@ -9,18 +9,18 @@ text/html; /usr/bin/elinks -force-html -no-home -no-numbering -no-references -du
 text/calendar; mutt-ics; copiousoutput
 application/ics; mutt-ics; copiousoutput
 # Images
-image/jpg; eog %s &> /dev/null &;
-image/jpeg; eog %s &> /dev/null &;
-image/pjpeg; eog %s &> /dev/null &;
-image/png; eog %s &> /dev/null &;
-image/gif; eog %s &> /dev/null &;
+image/jpg; lximage-qt %s &> /dev/null &;
+image/jpeg; lximage-qt %s &> /dev/null &;
+image/pjpeg; lximage-qt %s &> /dev/null &;
+image/png; lximage-qt %s &> /dev/null &;
+image/gif; lximage-qt %s &> /dev/null &;
 image/*; mimeo %s &> /dev/null &;
 # Audio
 audio/*; audacious %s &>/dev/null &;
 # Video
 video/*; setsid mpv --quiet %s &; copiousoutput
 # PDFs
-application/pdf; evince %s &> /dev/null &;
+application/pdf; qpdfview %s &> /dev/null &;
 # PGP
 application/pgp-encrypted; gpg -d '%s'; copiousoutput;
 application/pgp-keys; gpg --import '%s'; copiousoutput;

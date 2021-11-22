@@ -9,14 +9,10 @@ Xft.antialias: true
 Xft.rgba: rgb
 Xft.dpi: 96
 
-#include ".Xresources.d/xterm"
-#include ".Xresources.d/rxvt"
+! Colors
+#include "/home/canalguada/.Xresources.d/themes/colors"
 
-! ----------------------------------------------------------------------------
-! Common colors
-! #include ".Xresources.d/themes/breeze"
-! #include ".Xresources.d/themes/dracula"
-#include ".Xresources.d/themes/yaru"
-
-#include ".Xresources.d/themes/i3_polybar"
+! Terminals
+#include "/home/canalguada/.Xresources.d/xterm"
+#include "/home/canalguada/.Xresources.d/rxvt"
 

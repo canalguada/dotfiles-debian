@@ -6,5 +6,6 @@ Documentation=man:picom(1)
 [Service]
 Slice=session.slice
 LimitNICE=30
-ExecStart=nice -n -10 /usr/bin/picom
+; ExecStart=nice -n -10 /usr/bin/picom -CG --experimental-backends
+ExecStart=nice -n -10 /usr/bin/picom -CG
 

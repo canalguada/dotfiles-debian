@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 # vim: set ft=sh ai ts=2 sw=2 tw=79 noet:
 
 [ $# -ge 2 ] || exit 1
@@ -19,17 +19,19 @@
 ws=$1
 shift
 cmd=$(shell-quote "$@")
-unset msg
 
-get_focused_ws () {
-	jq_filter='.[] | { name: .name, focused: .focused } | 
-		first(select(.focused == true)) | .name'
-	i3-msg -t get_workspaces | \
-		jq -r "$jq_filter"
-}
+# unset msg
+# get_focused_ws () {
+#   jq_filter='.[] | { name: .name, focused: .focused } |
+#     first(select(.focused == true)) | .name'
+#   i3-msg -t get_workspaces | \
+#     jq -r "$jq_filter"
+# }
+# [ "$ws" != "$(get_focused_ws)" ] &&
+#   msg='workspace "'$ws'"; '
+# msg="${msg}exec --no-startup-id $cmd"
+# i3-msg "$msg" >/dev/null 2>&1
 
-[ "$ws" != "$(get_focused_ws)" ] &&
-	msg='workspace "'$ws'"; '
-msg="${msg}exec $cmd"
+msg="exec --no-startup-id $cmd , workspace --no-auto-back-and-forth $ws"
+i3-msg "$msg"  >/dev/null 2>&1
 
-i3-msg "$msg" >/dev/null 2>&1

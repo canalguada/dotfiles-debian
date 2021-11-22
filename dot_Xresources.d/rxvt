@@ -14,6 +14,12 @@ URxvt*scrollTtyKeypress: true
 ! scrollback buffer in secondary screen
 URxvt*secondaryScreen: 1
 URxvt*secondaryScroll: 0
+
+! URxvt*font: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-15
+! URxvt*boldFont: -xos4-terminus-bold-r-normal--12-120-72-72-c-60-iso8859-15
+! URxvt*italicFont: -xos4-terminus-medium-o-normal--12-120-72-72-c-60-iso8859-15
+! URxvt*boldItalicFont: -xos4-terminus-bold-o-normal--12-120-72-72-c-60-iso8859-15
+
 ! Font
 ! Alternatives :
 ! Jetbrains Mono:pixelsize=12:antialias=false
@@ -25,11 +31,24 @@ URxvt*secondaryScroll: 0
 ! Droid Sans Mono Dotted for Powerline:style=Regular:pixelsize=11
 ! Terminus::pixelsize=12 / letterSpace: 1
 ! SF Mono::pixelsize=10:antialias=true
-URxvt*font: xft:DejaVu Sans Mono for Powerline:style=Regular:pixelsize=11
-URxvt*boldFont: xft:DejaVu Sans Mono for Powerline:style=Bold:pixelsize=11
-URxvt*italicFont: xft:DejaVu Sans Mono for Powerline:style=Oblique:pixelsize=11
-URxvt*boldItalicFont: xft:DejaVu Sans Mono for Powerline:style=Bold Oblique:pixelsize=11
+
+#define font1 Hack
+! #define font1 Droid Sans Mono Dotted for Powerline
+! #define font1 Hurmit Nerd Font Mono
+URxvt*font: xft:font1:style=Regular:pixelsize=11:minspace=True:antialias=False
+URxvt*boldFont: xft:font1:style=Bold:pixelsize=11:minspace=True:antialias=False:autohint=True
+URxvt*italicFont: xft:font1:style=Italic:pixelsize=11:minspace=True:antialias=False:autohint=True
+URxvt*boldItalicFont: xft:font1:style=Bold Italic:pixelsize=11:minspace=True:antialias=False
 URxvt*letterSpace: 0
+
+
+! ! #define font1 DejaVuSansMono Nerd Font
+! #define font1 DejaVu Sans Mono
+! URxvt*font: xft:font1:style=Book:pixelsize=11:minspace=True:antialias=False
+! URxvt*boldFont: xft:font1:style=Bold:pixelsize=11:minspace=True:antialias=False:autohint=True
+! URxvt*italicFont: xft:font1:style=Oblique:pixelsize=11:minspace=True:antialias=False:autohint=True
+! URxvt*boldItalicFont: xft:font1:style=Bold Oblique:pixelsize=11:minspace=True:antialias=False
+! URxvt*letterSpace: -1
 
 ! Slow performance when drawing glyphs
 URxvt*skipBuiltinGlyphs: true
@@ -45,8 +64,9 @@ URxvt*visualBell: false
 ! Perl extensions
 !
 !URxvt*perl-ext:  resize-font,bell-command,confirm-paste,digital-clock
-URxvt*perl-ext:
-!URxvt*perl-ext-common:  default,clipboard,url-select,keyboard-select,tabbed
+URxvt*perl-ext: 
+!URxvt*perl-ext-common:  default,clipboard,url-select,keyboard-select,tabbed or
+!tabbedex
 URxvt*perl-ext-common:  default,clipboard,url-select,keyboard-select,resize-font
 
 ! Copy into PRIMARY selection and also ensure that your CLIPBOARD selection
@@ -62,27 +82,22 @@ URxvt*keysym.M-u:           perl:url-select:select_next
 URxvt*keysym.M-Escape:      perl:keyboard-select:activate
 URxvt*keysym.M-s:           perl:keyboard-select:search
 
-! Clickable URLs (require matcher)
-!URxvt*url-launcher: /usr/bin/xdg-open
-!URxvt*matcher.button: 1
-!URxvt*matcher.rend.0: Uline Bold fg5
+! ! Simple tabs (require tabbed)
+! URxvt*tabbed.tabbar-fg: 2
+! URxvt*tabbed.tabbar-bg: 0
+! URxvt*tabbed.tab-fg: 3
+! URxvt*tabbed.tab-bg: 0
 
-!! Simple tabs (require tabbed)
-!URxvt*tabbed.tabbar-fg: 2
-!URxvt*tabbed.tabbar-bg: 0
-!URxvt*tabbed.tab-fg: 3
-!URxvt*tabbed.tab-bg: 0
-
-!! Tabbedex
-!URxvt*tabbed.no-tabbed-keys: true
-!URxvt*tabbed.autohide: true
-!URxvt*tabbed.reopen-on-close: false
-!URxvt*keysym.Control-t: perl:tabbed:new_tab
-!URxvt*keysym.Control-Tab: perl:tabbed:next_tab
-!URxvt*keysym.Control-Shift-Tab: perl:tabbed:prev_tab
-!URxvt*keysym.M-Up: perl:tabbed:new_tab
-!URxvt*keysym.M-Left: perl:tabbed:prev_tab
-!URxvt*keysym.M-Right: perl:tabbed:next_tab
+! ! Tabbedex
+! URxvt*tabbedex.reopen-on-close: false
+! URxvt*tabbedex.autohide: true
+! URxvt*tabbedex.title: true
+! URxvt*tabbedex.new-button: false
+! ! URxvt*tabbedex.no-tabbedex-keys: true
+! URxvt*keysym.Control-t: perl:tabbedex:new_tab_after_this
+! URxvt*keysym.Control-w: perl:tabbedex:kill_tab
+! URxvt*keysym.Control-Tab: perl:tabbedex:next_tab
+! URxvt*keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
 
 !! Resize font
 URxvt*resize-font.step: 1
@@ -98,10 +113,11 @@ URxvt*transparent: false
 URxvt*shading: 100
 
 ! Set icon
-URxvt*iconFile: /usr/local/share/icons/Yaru++-Dark/categories/48/terminal.svg
+URxvt*iconFile: /usr/local/share/icons/Yaru++-Dark/categories/48/urxvt.svg
 
 ! Bell Command
-URxvt*bell-command: canberra-gtk-play -i bell
+! URxvt*bell-command: canberra-gtk-play -i bell
+! URxvt*bell-command: paplay /usr/share/sounds/Yaru/stereo/bell.oga
 
 !
 URxvt*selection.pattern-0: ([[:word:]]+)
@@ -117,3 +133,10 @@ URxvt*keysym.C-M-v: eval:paste_clipboard
 
 URxvt*colorBD:  white
 URxvt*colorIT:  green
+
+URxvt*background: #232629
+URxvt*borderColor: #232629
+! URxvt*borderColor: #77216f
+URxvt*cursorColor: yellow
+
+URxvt*geometry: 80x24

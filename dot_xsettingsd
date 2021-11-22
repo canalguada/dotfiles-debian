@@ -11,7 +11,7 @@ Gtk/DecorationLayout "menu:minimize,maximize,close"
 Gtk/DialogsUseHeader 1
 Gtk/EnableAnimations 1
 Gtk/EnablePrimaryPaste 1
-Gtk/FontName "SF Pro Display Light 10"
+Gtk/FontName "SFNS Display 10"
 Gtk/IMModule "gtk-im-context-simple"
 Gtk/IMPreeditStyle "callback"
 Gtk/IMStatusStyle "callback"
@@ -19,7 +19,6 @@ Gtk/KeynavUseCaret 0
 Gtk/KeyThemeName "Default"
 Gtk/MenuBarAccel "F10"
 Gtk/MenuImages 1
-Gtk/Modules "canberra-gtk-module"
 Gtk/OverlayScrolling 1
 Gtk/RecentFilesEnabled 1
 Gtk/RecentFilesMaxAge 30
@@ -44,7 +43,7 @@ Net/EnableInputFeedbackSounds 1
 Net/FallbackIconTheme "Yaru"
 Net/IconThemeName "Yaru++-Dark"
 Net/SoundThemeName "Yaru"
-Net/ThemeName "Yaru-Aubergine-dark"
+Net/ThemeName "Mojave-dark-small"
 Xft/Antialias 1
 Xft/Hinting 1
 Xft/HintStyle "hintslight"

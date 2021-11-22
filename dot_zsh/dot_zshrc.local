@@ -57,8 +57,9 @@ done
 # autoload -Uz disable_proxy
 # disable_proxy
 
-# Completion for manx script
+# Completion for manx and some others scripts
 compdef _man manx
+compdef _kill killtree
 
 #[[ $- = *i* ]] && wq qotd 2>/dev/null
 

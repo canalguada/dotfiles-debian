@@ -94,8 +94,6 @@ settings:
     global: Aller Light
   fonts.web.family.standard:
     global: Aleo Light
-  qt.force_platformtheme:
-    global: qt5ct
   qt.force_software_rendering:
     global: software-opengl
   qt.highdpi:

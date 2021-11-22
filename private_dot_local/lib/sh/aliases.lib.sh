@@ -97,12 +97,12 @@ alias pyfind='find . -name "*.py"'
 
 # Remove python compiled byte-code and mypy cache in either current directory or in a
 # list of specified directories
-pyclean() {
-	PYCLEAN_PLACES=${*:-'.'}
-	find "${PYCLEAN_PLACES}" -type f -name "*.py[co]" -delete
-	find "${PYCLEAN_PLACES}" -type d -name "__pycache__" -delete
-	find "${PYCLEAN_PLACES}" -type d -name ".mypy_cache" -delete
-}
+#pyclean() {
+#	PYCLEAN_PLACES=${*:-'.'}
+#	find "${PYCLEAN_PLACES}" -type f -name "*.py[co]" -delete
+#	find "${PYCLEAN_PLACES}" -type d -name "__pycache__" -delete
+#	find "${PYCLEAN_PLACES}" -type d -name ".mypy_cache" -delete
+#}
 
 # Grep among .py files
 alias pygrep='grep --include="*.py"'
@@ -176,5 +176,6 @@ alias xnvim='urxvtc -name nvim -title nvim -e nvim '
 alias xelinks='urxvtc -name web -title elinks -e elinks '
 alias urxvt-chfont="printf '\e]710;%s\007' "
 # alias gobuild='nicy run -c cpu33 go build -v -x '
+alias sld='sway-launcher-desktop'
 # }}}
 export ALIASES=true
